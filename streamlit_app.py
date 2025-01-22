@@ -1,8 +1,24 @@
 import streamlit as st
 
 st.title("Alzheimer Help")
-st.write(
-    "Let's tart building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
-)
+st.write("Hello world")
+st.write({"key": ["value"]})
 
-#commit test (ignore)
+
+def user_interface():
+    pass
+
+def daily_routine():
+    pass
+
+def login():
+    pass
+
+def logout():
+    pass
+
+def create_account():
+    pass
+
+def gps():
+    pass
