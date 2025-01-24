@@ -7,11 +7,26 @@ st.write("Hello world")
 st.write({"key": ["value"]})
 
 login_account = None
+filename = "accounts.txt"
 
 def main_menu_UI():
-    pass
+    print("\n--- Alzheimer help ---")
+    print("1. Create Account")
+    print("2. Login")
+    print("3. Exit")
 
-def account_UI()
+    choice = input("Enter your choice: ").strip()
+    if choice == '1':
+        create_account(filename)
+    elif choice == '2':
+        if login(filename):
+            return  #Exit the main menu and into users account.
+    elif choice == '3':
+        print("Exiting the program. Goodbye!")
+    else:
+        print("Invalid choice. Please try again.")
+
+def account_UI():
     pass
 
 def daily_routine():
@@ -74,24 +89,9 @@ def gps():
 
 
 def main():
-    filename = "accounts.txt"
     check_or_create_file(filename)
 
-    print("\n--- Alzheimer help ---")
-    print("1. Create Account")
-    print("2. Login")
-    print("3. Exit")
-
-    choice = input("Enter your choice: ").strip()
-    if choice == '1':
-        create_account(filename)
-    elif choice == '2':
-        if login(filename):
-            return  #Exit the main menu and into users account.
-    elif choice == '3':
-        print("Exiting the program. Goodbye!")
-    else:
-        print("Invalid choice. Please try again.")
+    main_menu_UI()
 
 
 main()
