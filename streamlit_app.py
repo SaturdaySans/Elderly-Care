@@ -30,6 +30,7 @@ def account_UI():
     
     print("\n -- Dashboard --")
     print("1. Logout of Account")
+    choice = input("Enter your choice: ").strip()
     if choice == '1':
         login_account = None
         main_menu_UI()
@@ -107,6 +108,7 @@ main()
 
 
 #Todo: 
+#Fix login bug where cannot login even with correct information
 #Add a check in account creation. If a username/email is alr in use, request for renaming.
 #Refine input validation for account creation 
 #Set up streamlit UI
