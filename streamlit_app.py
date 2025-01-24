@@ -27,12 +27,18 @@ def main_menu_UI():
         print("Invalid choice. Please try again.")
 
 def account_UI():
-    pass
+    
+    print("\n -- Dashboard --")
+    print("1. Logout of Account")
+    if choice == '1':
+        login_account = None
+        main_menu_UI()
 
 def daily_routine():
     pass
 
 def login(filename):
+    check_or_create_file(filename)
     print("\n--- Login ---")
     identifier = input("Enter username or email: ").strip()
     password = input("Enter password: ").strip()
@@ -47,9 +53,11 @@ def login(filename):
             if (identifier == username or identifier == email) and password == stored_password:
                 login_account = username
                 print(f"Welcome, {username}!")
+                account_UI()
                 return True
 
     print("Invalid username/email or password. Please try again.")
+    login()
     return False
 
 def logout():
@@ -89,8 +97,6 @@ def gps():
 
 
 def main():
-    check_or_create_file(filename)
-
     main_menu_UI()
 
 
