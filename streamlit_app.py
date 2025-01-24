@@ -32,8 +32,7 @@ def account_UI():
     print("1. Logout of Account")
     choice = input("Enter your choice: ").strip()
     if choice == '1':
-        login_account = None
-        main_menu_UI()
+        logout()
 
 def daily_routine():
     pass
@@ -62,7 +61,8 @@ def login(filename):
     return False
 
 def logout():
-    pass
+    login_account = None
+    main_menu_UI()
 
 def create_account(filename):
     #Create a new account and save it to the text file.
