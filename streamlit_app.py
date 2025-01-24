@@ -8,7 +8,10 @@ st.write({"key": ["value"]})
 
 login_account = None
 
-def user_interface():
+def main_menu_UI():
+    pass
+
+def account_UI()
     pass
 
 def daily_routine():
@@ -74,7 +77,7 @@ def main():
     filename = "accounts.txt"
     check_or_create_file(filename)
 
-    print("\n--- Alxheimer help ---")
+    print("\n--- Alzheimer help ---")
     print("1. Create Account")
     print("2. Login")
     print("3. Exit")
