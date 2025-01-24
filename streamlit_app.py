@@ -6,6 +6,7 @@ st.title("Alzheimer Help") # Tests Ignore
 st.write("Hello world")
 st.write({"key": ["value"]})
 
+login_account = None
 
 def user_interface():
     pass
@@ -26,6 +27,7 @@ def login(filename):
         if len(lines) == 3:
             username, email, stored_password = lines
             if (identifier == username or identifier == email) and password == stored_password:
+                login_account = username
                 print(f"Welcome, {username}!")
                 return True
 
@@ -72,7 +74,7 @@ def main():
     filename = "accounts.txt"
     check_or_create_file(filename)
 
-    print("\n--- Account Manager ---")
+    print("\n--- Alxheimer help ---")
     print("1. Create Account")
     print("2. Login")
     print("3. Exit")
