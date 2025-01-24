@@ -6,6 +6,10 @@ st.title("Alzheimer Help") # Tests Ignore
 st.write("Hello world")
 st.write({"key": ["value"]})
 
+st_theme = st_javascript("""window.getComputedStyle(window.parent.document.getElementsByClassName("stApp")[0]).getPropertyValue("color-scheme")""")
+
+isLightMode = not (st_theme == "dark")
+
 login_account = None
 filename = "accounts.txt"
 
