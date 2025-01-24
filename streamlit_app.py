@@ -108,14 +108,17 @@ main()
 
 
 #Todo: 
+##########################################################################################################
 #Fix login bug where cannot login even with correct information
 #Add a check in account creation. If a username/email is alr in use, request for renaming.
 #Refine input validation for account creation 
 #Set up streamlit UI
-#GPS tracking
-#Daily routine
-#Reminders
-#Move main menu UI in main() to user_interface()
-#Admin account that can delete accounts?
 
-#make and edit
+#GPS tracking - Self-Explanatory
+#Daily routine - Customisable push notifications depending on daily tasks
+#Medication Alerts - Vibrations or soundbite for medication alert
+#Appointments and Events - Calendar specifically to keep track of stuff Alzheimers patients need to do. Uncomplicated, simple
+#Help with Cognitive Function - Communication 
+
+#Move main menu UI in main() to user_interface()
+#Admin account that can delete accounts??
