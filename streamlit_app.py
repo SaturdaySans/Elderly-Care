@@ -41,8 +41,6 @@ def login(filename):
     check_or_create_file(filename)
     print("\n--- Login ---")
     identifier = input("Enter username or email: ").strip()
-    password = input("Enter password: ").strip()
-
     with open(filename, 'r') as file:
         accounts = file.read().split("#\n")
 
@@ -50,14 +48,18 @@ def login(filename):
         lines = account.strip().split("\n")
         if len(lines) == 3:
             username, email, stored_password = lines
-            if (identifier == username or identifier == email) and password == stored_password:
-                login_account = username
-                print(f"Welcome, {username}!")
-                account_UI()
-                return True
-
-    print("Invalid username/email or password. Please try again.")
-    login()
+            if (identifier == username or identifier == email):
+                password = input("Enter password: ").strip()
+                if password == stored_password:
+                    login_account = username
+                    print(f"Welcome, {username}!")
+                    account_UI()
+                    return True
+                else:
+                    print("Incorrect password, please try again")
+            else:
+                print("Invalid username/email. Please try again.")
+    login(filename)
     return False
 
 def logout():
@@ -117,5 +119,4 @@ main()
 #Reminders
 #Move main menu UI in main() to user_interface()
 #Admin account that can delete accounts?
-
-#make and edit
+#Allow user to go back to main menu in the sub-menus.
