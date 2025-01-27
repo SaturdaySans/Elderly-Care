@@ -25,6 +25,7 @@ def main_menu_UI():
         print("Exiting the program. Goodbye!")
     else:
         print("Invalid choice. Please try again.")
+        main()
 
 def account_UI():
     
@@ -38,28 +39,33 @@ def daily_routine():
     pass
 
 def login(filename):
-    check_or_create_file(filename)
+    check_or_create_file(filename)  # Ensure file exists
     print("\n--- Login ---")
     identifier = input("Enter username or email: ").strip()
+
     with open(filename, 'r') as file:
         accounts = file.read().split("#\n")
 
     for account in accounts:
         lines = account.strip().split("\n")
-        if len(lines) == 3:
+        if len(lines) == 3:  # Ensure the account has all necessary details
             username, email, stored_password = lines
-            if (identifier == username or identifier == email):
+            if identifier == username or identifier == email:
+                # Match found; request password
                 password = input("Enter password: ").strip()
                 if password == stored_password:
-                    login_account = username
                     print(f"Welcome, {username}!")
+                    login_account = username
                     account_UI()
                     return True
                 else:
-                    print("Incorrect password, please try again")
-            else:
-                print("Invalid username/email. Please try again.")
-    login(filename)
+                    print("Incorrect password, please try again.")
+                    main()
+                    return False
+
+    # No match found
+    print("Invalid username/email. Please try again.")
+    main()
     return False
 
 def logout():
@@ -76,18 +82,42 @@ def create_account(filename):
     # Validate inputs
     if not username or not email or not password:
         print("All fields are required. Please try again.")
-        return
+        main()
     if "@" not in email:
         print("Invalid email.")
         main()
 
-    # Save the account details to the text file
+    users = []  # List to hold parsed users
+    if os.path.exists(filename):  # Check if the file exists
+        with open(filename, 'r') as file:
+            lines = file.readlines()
+            for i in range(0, len(lines), 4):
+                if i + 2 < len(lines):
+                    users.append({
+                        'username': lines[i].strip(),
+                        'email': lines[i+1].strip(),
+                        'password': lines[i+2].strip()
+                    })
+
+    # Check for username/email conflicts
+    for user in users:
+        if user['username'] == username:
+            print("Username already in use, please pick another one.")
+            main()
+        if user['email'] == email:
+            print("Email already in use, if this is you, please login.")
+            main()
+
+    # Append new user data to the file
     with open(filename, 'a') as file:
-        if os.path.getsize(filename) > 0:  # Check if there are other users of the app
+        if os.path.getsize(filename) > 0:  # Add separator if file is not empty
             file.write("#\n")
         file.write(f"{username}\n{email}\n{password}\n")
-        print("Account created successfully!")
-        main()
+    print("Account created successfully!")
+
+    main()
+
+##
 
 def check_or_create_file(filename):
     #Check if accounts.txt exists, and create it if it doesn't.
