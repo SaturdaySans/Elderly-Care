@@ -10,9 +10,11 @@ routine = "daily_routine.txt"
 
 def main_menu_UI():
     st.title("\n--- Alzheimer help ---")
-    st.button("1. Create Account")
+    st.divider()
+    test1=st.button("1. Create Account")
     st.button("2. Login")
     st.button("3. Exit")
+    st.write(test1)
 
     choice = input("Enter your choice: ").strip()
     if choice == '1':
