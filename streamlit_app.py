@@ -5,8 +5,8 @@ import pandas as pd
 
 login_account = None
 
-accounts = "accounts.txt"
-routine = "daily_routine.txt"
+accounts = pd.read_csv("accounts.txt") #Assign the data
+routine = pd.read_csv("daily_routine.txt")
 
 def main_menu_UI():
     st.title("\n--- Alzheimer help ---")
@@ -18,7 +18,7 @@ def main_menu_UI():
         if login(accounts):
             return  #Exit the main menu and into users account.
     elif st.button("3. Exit"):
-        print("Exiting the program. Goodbye!")
+        st.write("Exiting the program. Goodbye!")
 
 
 def account_UI():
@@ -30,49 +30,19 @@ def account_UI():
 
 #Daily routine functions
 def daily_routine():
-    #Create file if it does not exist
-    if not os.path.exists(routine):
-        with open(routine, 'w') as file:
-            pass
-    print("\n -- Daily Routine --")
-    print("1. Create Event")
-    print("2. Delete Event")
-    print("3. Edit Event")
-    print("4. View Events")
-    print("5. Back to Dashboard")
-    choice = input("Enter your choice: ").strip()
-    if choice == '1':
+    st.title("\n -- Daily Routine --")
+    if st.button("1. Create Event"):
         create_event()
-    elif choice == '2':
+    elif st.button("2. Delete Event"):
         delete_event()
-    elif choice == '3':
+    elif st.button("3. Edit Event"):
         edit_event()
-    elif choice == '4':
+    elif st.button("4. View Events"):
         view_events()
-    elif choice == '5':
+    elif st.button("5. Back to Dashboard"):
         account_UI()
-    else:
-        print("Invalid choice. Please try again.")
-        daily_routine()
 
-def create_event():
-    routine_file = "daily_routine.txt"
-    with open(routine_file, 'r') as file:
-        routine_content = file.read().split("#\n")
 
-    print("\n -- Create Event --")
-    event_name = input("Enter event name: ").strip()
-    event_start_time = int(input("Enter event start time(Please enter in HHMM format without ':'): ").strip())
-    event_end_time = int(input("Enter event end time(Please enter in HHMM format without ':'): ").strip())
-    event_duration = event_end_time - event_start_time
-
-    with open(routine_file, 'a') as file:
-        # Insert "#" between events
-        if os.path.getsize(routine_file) > 0:  # Add separator if file is not empty
-            file.write("#\n")
-        file.write(f"{event_name}\n{event_start_time}\n{event_end_time}\n{event_duration}\n")
-    print("Event created successfully!")
-    daily_routine()
 
 def delete_event():
     print("\n -- Delete Event --")
