@@ -13,6 +13,7 @@ def main_menu_UI():
     st.divider()
     if st.button("Schedule"):
         st.write("test")
+    st.page_link("pages/page_1.py", label="Page 1")
 
 
 def create_account(accounts):
