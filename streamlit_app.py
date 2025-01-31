@@ -5,6 +5,7 @@ import os
 st.title("Alzheimer Help") # Tests Ignore
 st.write("Hello world")
 st.write({"key": ["value"]})
+st.button("hi")
 
 login_account = None
 
