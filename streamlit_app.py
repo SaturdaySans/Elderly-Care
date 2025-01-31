@@ -13,7 +13,7 @@ accounts = "accounts.txt"
 routine = "daily_routine.txt"
 
 def main_menu_UI():
-    print("\n--- Alzheimer help ---")
+    st.title("\n--- Alzheimer help ---")
     print("1. Create Account")
     print("2. Login")
     print("3. Exit")
