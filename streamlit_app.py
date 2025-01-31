@@ -1,55 +1,93 @@
 import streamlit as st
 import os
-import pandas as pd
 
+
+st.title("Alzheimer Help") # Tests Ignore
+st.write("Hello world")
+st.write({"key": ["value"]})
 
 login_account = None
 
-accounts = pd.read_csv("accounts.txt") #Assign the data
-routine = pd.read_csv("daily_routine.txt")
+accounts = "accounts.txt"
+routine = "daily_routine.txt"
 
 def main_menu_UI():
-    st.title("\n--- Alzheimer help ---")
-    st.divider()
-    
-    if st.button("1. Create Account"):
+    print("\n--- Alzheimer help ---")
+    print("1. Create Account")
+    print("2. Login")
+    print("3. Exit")
+
+    choice = input("Enter your choice: ").strip()
+    if choice == '1':
         create_account(accounts)
-    elif st.button("2. Login"):
+    elif choice == '2':
         if login(accounts):
             return  #Exit the main menu and into users account.
-    elif st.button("3. Exit"):
-        st.write("Exiting the program. Goodbye!")
-
+    elif choice == '3':
+        print("Exiting the program. Goodbye!")
+    else:
+        print("Invalid choice. Please try again.")
+        main()
 
 def account_UI():
-    st.title("\n -- Dashboard --")
-    if st.button("1. Daily Routine"):
+    print("\n -- Dashboard --")
+    print("1. Daily Routine")
+    print("2. Logout of Account")
+    choice = input("Enter your choice: ").strip()
+    if choice == '1':
         daily_routine()
-    elif st.button("2. Logout of Account"):
+    elif choice == '2':
         logout()
 
 #Daily routine functions
 def daily_routine():
-    st.title("\n -- Daily Routine --")
-    if st.button("1. Create Event"):
+    #Create file if it does not exist
+    if not os.path.exists(routine):
+        with open(routine, 'w') as file:
+            pass
+    print("\n -- Daily Routine --")
+    print("1. Create Event")
+    print("2. Delete Event")
+    print("3. Edit Event")
+    print("4. View Events")
+    print("5. Back to Dashboard")
+    choice = input("Enter your choice: ").strip()
+    if choice == '1':
         create_event()
-    elif st.button("2. Delete Event"):
+    elif choice == '2':
         delete_event()
-    elif st.button("3. Edit Event"):
+    elif choice == '3':
         edit_event()
-    elif st.button("4. View Events"):
+    elif choice == '4':
         view_events()
-    elif st.button("5. Back to Dashboard"):
+    elif choice == '5':
         account_UI()
-
+    else:
+        print("Invalid choice. Please try again.")
+        daily_routine()
 
 def create_event():
-    st.write("check")
+    routine_file = "daily_routine.txt"
+    with open(routine_file, 'r') as file:
+        routine_content = file.read().split("#\n")
 
+    print("\n -- Create Event --")
+    event_name = input("Enter event name: ").strip()
+    event_start_time = int(input("Enter event start time(Please enter in HHMM format without ':'): ").strip())
+    event_end_time = int(input("Enter event end time(Please enter in HHMM format without ':'): ").strip())
+    event_duration = event_end_time - event_start_time
+
+    with open(routine_file, 'a') as file:
+        # Insert "#" between events
+        if os.path.getsize(routine_file) > 0:  # Add separator if file is not empty
+            file.write("#\n")
+        file.write(f"{event_name}\n{event_start_time}\n{event_end_time}\n{event_duration}\n")
+    print("Event created successfully!")
+    daily_routine()
 
 def delete_event():
-    st.title("\n -- Delete Event --")
-    event_to_remove = st.text_input("Enter event name: ").strip()
+    print("\n -- Delete Event --")
+    event_to_remove = input("Enter event name: ").strip()
 
     with open(routine, 'r') as file:
         lines = file.readlines()
@@ -84,8 +122,9 @@ def view_events():
 
 
 #Login, logout and account creation functions
-#I have 0 clue how to implement this in, should we just skip the accounts part
+
 def login(accounts):
+    check_or_create_file(accounts)  # Ensure file exists
     print("\n--- Login ---")
     identifier = input("Enter username or email: ").strip()
     #Insert "#" between accounts
@@ -173,6 +212,8 @@ def check_or_create_file(accounts):
 
 def gps():
     pass
+
+
 
 def main():
     main_menu_UI()
