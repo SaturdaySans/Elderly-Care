@@ -174,7 +174,8 @@ def check_or_create_file(accounts):
 def gps():
     pass
 
-
+def main():
+    main_menu_UI()
 #Call main
 main()
 
