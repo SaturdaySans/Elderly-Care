@@ -11,22 +11,17 @@ routine = "daily_routine.txt"
 def main_menu_UI():
     st.title("\n--- Alzheimer help ---")
     st.divider()
-    test1=st.button("1. Create Account")
-    st.button("2. Login")
-    st.button("3. Exit")
-    st.write(test1)
-
-    choice = input("Enter your choice: ").strip()
-    if choice == '1':
+    
+    if st.button("1. Create Account"):
         create_account(accounts)
-    elif choice == '2':
+    elif st.button("2. Login"):
         if login(accounts):
             return  #Exit the main menu and into users account.
-    elif choice == '3':
+    elif st.button("3. Exit"):
         print("Exiting the program. Goodbye!")
-    else:
+"""    else:
         print("Invalid choice. Please try again.")
-        main()
+        main()"""
 
 def account_UI():
     print("\n -- Dashboard --")
