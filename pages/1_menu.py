@@ -21,7 +21,11 @@ def main_menu_UI():
         st.write("Exiting the program. Goodbye!")
 
 
+def create_account(accounts):
+    st.write("hi")
 
+def login(accounts):
+    st.write("hi")
 
 def main():
     main_menu_UI()
