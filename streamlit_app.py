@@ -12,7 +12,7 @@ def main_menu_UI():
     st.title("--- Alzheimer help ---")
     st.divider()
     if st.button("Schedule"):
-        st.session_state.page = "events"
+        st.write("test")
 
 
 def create_account(accounts):
