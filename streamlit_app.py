@@ -85,6 +85,7 @@ def view_events():
 
 #Login, logout and account creation functions
 def login(accounts):
+    st.empty()
     st.write(accounts)
 ##
 
