@@ -19,9 +19,7 @@ def main_menu_UI():
             return  #Exit the main menu and into users account.
     elif st.button("3. Exit"):
         print("Exiting the program. Goodbye!")
-"""    else:
-        print("Invalid choice. Please try again.")
-        main()"""
+
 
 def account_UI():
     print("\n -- Dashboard --")
