@@ -22,13 +22,10 @@ def main_menu_UI():
 
 
 def account_UI():
-    print("\n -- Dashboard --")
-    print("1. Daily Routine")
-    print("2. Logout of Account")
-    choice = input("Enter your choice: ").strip()
-    if choice == '1':
+    st.title("\n -- Dashboard --")
+    if st.button("1. Daily Routine"):
         daily_routine()
-    elif choice == '2':
+    elif st.button("2. Logout of Account"):
         logout()
 
 #Daily routine functions
