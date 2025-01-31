@@ -2,23 +2,17 @@ import streamlit as st
 import os
 import pandas as pd
 
-
+#Variables
 login_account = None
-
 accounts = pd.read_csv("accounts.txt") #Assign the data
 routine = pd.read_csv("daily_routine.txt")
 
+#Functions
 def main_menu_UI():
     st.title("--- Alzheimer help ---")
     st.divider()
-    
-    if st.button("1. Create Account"):
-        create_account(accounts)
-    elif st.button("2. Login"):
-        if login(accounts):
-            return  #Exit the main menu and into users account.
-    elif st.button("3. Exit"):
-        st.write("Exiting the program. Goodbye!")
+    if st.button("Schedule"):
+        st.session_state.page = "events"
 
 
 def create_account(accounts):
