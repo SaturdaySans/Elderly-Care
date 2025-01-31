@@ -44,7 +44,8 @@ def daily_routine():
 
 
 def create_event():
-    
+    st.write("check")
+
 
 def delete_event():
     print("\n -- Delete Event --")
