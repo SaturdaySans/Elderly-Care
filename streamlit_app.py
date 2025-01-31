@@ -9,7 +9,7 @@ accounts = pd.read_csv("accounts.txt") #Assign the data
 routine = pd.read_csv("daily_routine.txt")
 
 def main_menu_UI():
-    st.title("\n--- Alzheimer help ---")
+    st.title("--- Alzheimer help ---")
     st.divider()
     
     if st.button("1. Create Account"):
