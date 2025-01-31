@@ -43,6 +43,8 @@ def daily_routine():
         account_UI()
 
 
+def create_event():
+    
 
 def delete_event():
     print("\n -- Delete Event --")
