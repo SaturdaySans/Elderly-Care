@@ -4,6 +4,8 @@ import pandas as pd
 
 routine = pd.read_csv("daily_routine.txt")
 
+st.title("Schedule")
+st.divider()
 st.write(routine)
 if st.button("Edit"):
     schedule_name = st.text_input("Event Name:")
