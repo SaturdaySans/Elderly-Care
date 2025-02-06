@@ -11,11 +11,8 @@ routine = pd.read_csv("daily_routine.txt")
 def main_menu_UI():
     st.title("--- Alzheimer help ---")
     st.divider()
-    if st.button("Schedule"):
-        st.write("test")
-    if st.button("Create Account"):
-        st.write("Account created")
-    st.page_link("pages/events.py", label="Page 1")
+    st.page_link("pages/settings.py", label="Settings")
+    st.page_link("pages/events.py", label="Schedule")
 
 
 def create_account(accounts):
