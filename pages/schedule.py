@@ -7,7 +7,14 @@ st.title("Schedule")
 st.divider()
 
 # Show existing schedule (if any)
-routine = pd.read_csv("daily_routine.csv") 
+if os.path.exists("daily_routine.csv"):
+    try:
+        routine = pd.read_csv("daily_routine.csv")
+    except Exception as e:
+        st.error(f"Error reading CSV file: {e}")
+        routine = pd.DataFrame(columns=["Events", "Start", "End", "Duration"])
+else:
+    routine = pd.DataFrame(columns=["Events", "Start", "End", "Duration"])  # Create an empty DataFrame
 st.write(routine)
 
 if "editing" not in st.session_state:
