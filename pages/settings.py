@@ -2,7 +2,8 @@ import streamlit as st
 import os
 import pandas as pd
 
-from streamlit_app.py import *
+
+from streamlit_app import *
 
 
 st.write("Settings")
