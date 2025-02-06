@@ -1,11 +1,4 @@
-username1
-email@1
-pwd1
-#
-username2
-email@2
-pwd2
-#
-username3
-email@3
-pwd3
+Username,Email,Password
+username1,email@1,pwd1
+username2,email@2,pwd2
+username3,email@3,pwd3
