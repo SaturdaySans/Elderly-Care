@@ -2,9 +2,8 @@ import streamlit as st
 import os
 import pandas as pd
 
-st.title("Schedule")
-st.divider()
 routine = pd.read_csv("daily_routine.txt")
+
 st.write(routine)
 if st.button("Edit"):
     schedule_name = st.text_input("Event Name:")
@@ -14,3 +13,12 @@ if st.button("Edit"):
     if st.button("Done!"):
         dataframe = pd.DataFrame({"Events": [schedule_name], "Start": [start_time], "End": [end_time], "Duration": [duration]})
         dataframe.to_csv("daily_routine.txt", mode='a', header=False, index=False)
+
+
+
+
+
+
+st.write(routine)
+if st.button("Edit"):
+    st.write("Test")
