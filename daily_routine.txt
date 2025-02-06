@@ -1,2 +1,4 @@
 Events,Start,End,Duration
 Breakfast,700,730,30
+Lunch,1300,1400,100
+Dinner,1800,1900,100
