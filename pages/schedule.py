@@ -7,8 +7,8 @@ st.title("Schedule")
 st.divider()
 
 # Show existing schedule (if any)
-st.write(routine)
 routine = pd.read_csv("daily_routine.csv") 
+st.write(routine)
 
 if "editing" not in st.session_state:
     st.session_state.editing = False
