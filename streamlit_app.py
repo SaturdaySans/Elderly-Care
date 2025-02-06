@@ -12,7 +12,7 @@ def main_menu_UI():
     st.title("--- Alzheimer help ---")
     st.divider()
     st.page_link("pages/settings.py", label="Settings")
-    st.page_link("pages/events.py", label="Schedule")
+    st.page_link("pages/schedule.py", label="Schedule")
 
 
 def create_account(accounts):
