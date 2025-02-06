@@ -2,52 +2,40 @@ import streamlit as st
 import os
 import pandas as pd
 
-routine = pd.read_csv("daily_routine.txt")
 
-st.write("--- Event Manager ---")
-if st.button("Create Event"):
-    st.write("Create Event")
-    event_name = st.text_input("Event Name")
-    event_date = st.text_input("Event Date")
-    event_time = st.text_input("Event Time")
-    event_location = st.text_input("Event Location")
-    event_description = st.text_input("Event Description")
-    event = pd.DataFrame({"Event Name": [event_name], "Event Date": [event_date], "Event Time": [event_time], "Event Location": [event_location], "Event Description": [event_description]})
-    #routine = routine.append(event)
-    routine.to_csv("daily_routine.txt", index=False)
-    st.write("Event created successfully.")
-    st.write(routine)
-if st.button("Edit Event"):
-    st.write("Edit Event")
-    event_name = st.text_input("Event Name")
-    event_date = st.text_input("Event Date")
-    event_time = st.text_input("Event Time")
-    event_location = st.text_input("Event Location")
-    event_description = st.text_input("Event Description")
-    event = pd.DataFrame({"Event Name": [event_name], "Event Date": [event_date], "Event Time": [event_time], "Event Location": [event_location], "Event Description": [event_description]})
-    #routine = routine.append(event)
-    routine.to_csv("daily_routine.txt", index=False)
-    st.write("Event edited successfully.")
-    st.write(routine)
-if st.button("Delete Event"):
-    st.write("Delete Event")
-    event_name = st.text_input("Event Name")
-    event_date = st.text_input("Event Date")
-    event_time = st.text_input("Event Time")
-    event_location = st.text_input("Event Location")
-    event_description = st.text_input("Event Description")
-    event = pd.DataFrame({"Event Name": [event_name], "Event Date": [event_date], "Event Time": [event_time], "Event Location": [event_location], "Event Description": [event_description]})
-    #routine = routine.append(event)
-    routine.to_csv("daily_routine.txt", index=False)
-    st.write("Event deleted successfully.")
-    st.write(routine)
-if st.button("View Events"):
-    st.write("View Events")
-    st.write(routine)
+st.title("Schedule")
+st.divider()
 
-
-
-
-
-
+# Show existing schedule (if any)
 st.write(routine)
+routine = pd.read_csv("daily_routine.csv") 
+
+if "editing" not in st.session_state:
+    st.session_state.editing = False
+
+if st.button("Edit"):
+    st.session_state.editing = True  # Set state to editing
+
+if st.session_state.editing:
+    schedule_name = st.text_input("Event Name:")
+    start_time = st.number_input("Start Time (xxxx):", min_value=0, max_value=2359, step=1)
+    end_time = st.number_input("End Time (xxxx):", min_value=0, max_value=2359, step=1)
+
+    # Validate input
+    if start_time and end_time and start_time < end_time:
+        duration = end_time - start_time
+
+        if st.button("Done!"):
+            # Save to CSV
+            dataframe = pd.DataFrame({
+                "Events": [schedule_name], 
+                "Start": [start_time], 
+                "End": [end_time], 
+                "Duration": [duration]
+            })
+            dataframe.to_csv("daily_routine.csv", mode='a', header=False, index=False)
+
+            st.success("Event added successfully!")
+            st.session_state.editing = False  # Exit edit mode
+    else:
+        st.warning("Please enter a valid start and end time.")
