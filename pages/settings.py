@@ -12,7 +12,7 @@ def account_UI():
     st.write("\n -- Dashboard --")
     st.write("1. Daily Routine")
     st.write("2. Logout of Account")
-    choice = input("Enter your choice: ").strip()
+    choice =  st.text_input("Enter your choice: ").strip()
     if choice == '1':
         #daily_routine()
         pass
@@ -22,7 +22,7 @@ def account_UI():
 def login(accounts):
     check_or_create_file(accounts)  # Ensure file exists
     st.write("\n--- Login ---")
-    identifier = input("Enter username or email: ").strip()
+    identifier =  st.text_input("Enter username or email: ").strip()
     #Insert "#" between accounts
     with open(accounts, 'r') as file:
         accounts = file.read().split("#\n")
@@ -33,19 +33,19 @@ def login(accounts):
             username, email, stored_password = lines
             if identifier == username or identifier == email:
                 # Match found; request password
-                password = input("Enter password: ").strip()
+                password =  st.text_input("Enter password: ").strip()
                 if password == stored_password:
-                    print(f"Welcome, {username}!")
+                    st.write(f"Welcome, {username}!")
                     login_account = username
                     account_UI()
                     return True
                 else:
-                    print("Incorrect password, please try again.")
+                    st.write("Incorrect password, please try again.")
                     main()
                     return False
 
     # No match found
-    print("Invalid username/email. Please try again.")
+    st.write("Invalid username/email. Please try again.")
     main()
     return False
 
@@ -55,17 +55,17 @@ def logout():
 
 def create_account(accounts):
     #Create a new account and save it to the text file.
-    print("\n--- Create New Account ---")
-    username = input("Enter username: ").strip()
-    email = input("Enter email: ").strip()
-    password = input("Enter password: ").strip()
+    st.write("\n--- Create New Account ---")
+    username =  st.text_input("Enter username: ").strip()
+    email =  st.text_input("Enter email: ").strip()
+    password =  st.text_input("Enter password: ").strip()
 
     # Validate inputs
     if not username or not email or not password:
-        print("All fields are required. Please try again.")
+        st.write("All fields are required. Please try again.")
         main()
     if "@" not in email:
-        print("Invalid email.")
+        st.write("Invalid email.")
         main()
 
     users = []  # List to hold parsed users
@@ -83,10 +83,10 @@ def create_account(accounts):
     # Check for username/email conflicts
     for user in users:
         if user['username'] == username:
-            print("Username already in use, please pick another one.")
+            st.write("Username already in use, please pick another one.")
             main()
         if user['email'] == email:
-            print("Email already in use, if this is you, please login.")
+            st.write("Email already in use, if this is you, please login.")
             main()
 
     # Append new user data to the file
@@ -94,7 +94,7 @@ def create_account(accounts):
         if os.path.getsize(accounts) > 0:  # Add separator if file is not empty
             file.write("#\n")
         file.write(f"{username}\n{email}\n{password}\n")
-    print("Account created successfully!")
+    st.write("Account created successfully!")
 
     main()
 
