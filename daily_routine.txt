@@ -1,2 +1,2 @@
-Events,Start,End,Total
+Events,Start,End,Duration
 Breakfast,700,730,30
