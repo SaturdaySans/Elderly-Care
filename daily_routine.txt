@@ -1,4 +1,2 @@
-event1
-1200
-1400
-200
+Events,Start,End,Total
+Breakfast,700,730,30
