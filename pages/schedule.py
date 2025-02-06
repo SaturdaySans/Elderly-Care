@@ -15,10 +15,3 @@ if st.button("Edit"):
         dataframe.to_csv("daily_routine.txt", mode='a', header=False, index=False)
 
 
-
-
-
-
-st.write(routine)
-if st.button("Edit"):
-    st.write("Test")
