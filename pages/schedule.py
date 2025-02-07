@@ -58,3 +58,5 @@ if st.session_state.editing:
             st.rerun()
     else:
         st.warning("Please enter a valid start and end time.")
+
+st.page_link("pages/streamlit_app.py", label="Mennu")
