@@ -17,6 +17,7 @@ if os.path.exists(file_path) and os.stat(file_path).st_size > 0:
 else:
     routine = pd.DataFrame(columns=["Events", "Start", "End", "Duration"])  # Empty DataFrame
 
+
 st.write(routine)
 
 # Initialize session state for editing mode
