@@ -2,7 +2,14 @@ import streamlit as st
 import os
 import pandas as pd
 
-#Variables
+#Page Name
+st.set_page_config(
+    page_title="Alzheimer's Disease Awareness",  # Set the title in the browser tab
+    page_icon="🧠",  # Optional: You can set an emoji or image as the page icon
+    layout="wide",  # Optional: Set layout style (centered or wide)
+)
+
+
 
 #Functions
 def main_menu_UI():
