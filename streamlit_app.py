@@ -9,6 +9,7 @@ st.set_page_config(
     layout="wide",  # Optional: Set layout style (centered or wide)
 )
 
+selected = st.sidebar.selectbox("menu", ["schedule", "settings"])
 
 
 #Functions
