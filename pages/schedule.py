@@ -17,10 +17,6 @@ if os.path.exists(file_path) and os.stat(file_path).st_size > 0:
 else:
     routine = pd.DataFrame(columns=["Events", "Start", "End", "Duration"])  # Empty DataFrame
 
-with open(file_path, mode='r') as file:
-    content = file.read()
-    print(content)
-
 
 st.write(routine)
 
