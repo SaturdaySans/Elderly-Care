@@ -5,7 +5,7 @@ import pandas as pd
 #Variables
 login_account = None
 accounts = pd.read_csv("accounts.txt") #Assign the data
-routine = pd.read_csv("daily_routine.txt")
+routine = pd.read_csv("daily_routine.csv")
 
 #Functions
 def main_menu_UI():
