@@ -40,7 +40,10 @@ if st.session_state.editing:
             
             # Check if the file exists before writing
             write_header = not os.path.exists(file_path) or os.stat(file_path).st_size == 0
-            new_entry.to_csv(file_path, mode='a', header=write_header, index=False)
+
+            # Open file in append mode, ensuring a newline is properly added
+            with open(file_path, mode='a', newline='') as file:
+                new_entry.to_csv(file, header=write_header, index=False)
 
             st.success("Event added successfully!")
 
@@ -50,9 +53,7 @@ if st.session_state.editing:
             st.session_state.start_time = 0
             st.session_state.end_time = 0
 
-            # Refresh routine to show the new data
-            routine = pd.read_csv(file_path, names=["Events", "Start", "End", "Duration"], header=None, usecols=[0, 1, 2, 3])
-            st.write(routine)
-
+            # Refresh the page to show the new data
+            st.rerun()
     else:
         st.warning("Please enter a valid start and end time.")
