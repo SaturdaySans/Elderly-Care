@@ -40,6 +40,7 @@ if st.session_state.editing:
             
             # Check if the file exists before writing
             write_header = not os.path.exists(file_path) or os.stat(file_path).st_size == 0
+            "\n".to_csv(file_path, mode='a')
             new_entry.to_csv(file_path, mode='a', header=write_header, index=False)
 
             st.success("Event added successfully!")
