@@ -105,3 +105,5 @@ def check_or_create_file(accounts):
     if not os.path.exists(accounts):
         with open(accounts, 'w') as file:
             pass
+
+account_UI()
