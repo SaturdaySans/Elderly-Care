@@ -3,8 +3,9 @@ import os
 import pandas as pd
 
 #Variables
+assert os.path.exists("daily_routine.csv"), "File not found!"
 login_account = None
-accounts = pd.read_csv("accounts.txt") #Assign the data
+accounts = pd.read_csv("accounts.txt")
 routine = pd.read_csv("daily_routine.csv")
 
 #Functions
@@ -13,13 +14,6 @@ def main_menu_UI():
     st.divider()
     st.page_link("pages/settings.py", label="Settings")
     st.page_link("pages/schedule.py", label="Schedule")
-
-
-def create_account(accounts):
-    st.write("hi")
-
-def login(accounts):
-    st.write("hi")
 
 def main():
     main_menu_UI()
