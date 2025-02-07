@@ -3,10 +3,12 @@ import os
 import pandas as pd
 
 #Variables
+'''
 assert os.path.exists("daily_routine.csv"), "File not found!"
 login_account = None
 accounts = pd.read_csv("accounts.txt")
 routine = pd.read_csv("daily_routine.csv")
+'''
 
 #Functions
 def main_menu_UI():
