@@ -40,7 +40,10 @@ if st.session_state.editing:
             
             # Check if the file exists before writing
             write_header = not os.path.exists(file_path) or os.stat(file_path).st_size == 0
-            new_entry.to_csv(file_path, mode='a', header=write_header, index=False)
+
+            # Open file in append mode, ensuring a newline is properly added
+            with open(file_path, mode='a', newline='') as file:
+                new_entry.to_csv(file, header=write_header, index=False)
 
             st.success("Event added successfully!")
 
@@ -54,4 +57,3 @@ if st.session_state.editing:
             st.rerun()
     else:
         st.warning("Please enter a valid start and end time.")
-
