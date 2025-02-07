@@ -50,8 +50,9 @@ if st.session_state.editing:
             st.session_state.start_time = 0
             st.session_state.end_time = 0
 
-            # Refresh the page to show the new data
-            st.rerun()
+            # Refresh routine to show the new data
+            routine = pd.read_csv(file_path, names=["Events", "Start", "End", "Duration"], header=None, usecols=[0, 1, 2, 3])
+            st.write(routine)
+
     else:
         st.warning("Please enter a valid start and end time.")
-
