@@ -10,14 +10,8 @@ st.write("Settings")
 
 def account_UI():
     st.write("\n -- Dashboard --")
-    st.write("1. Daily Routine")
-    st.write("2. Logout of Account")
-    choice =  st.text_input("Enter your choice: ").strip()
-    if choice == '1':
-        #daily_routine()
-        pass
-    elif choice == '2':
-        logout()
+    st.page_link("pages/schedule.py", label="Schedule")
+    st.button("Logout", on_click=logout)
 
 def login(accounts):
     check_or_create_file(accounts)  # Ensure file exists
@@ -105,3 +99,6 @@ def check_or_create_file(accounts):
     if not os.path.exists(accounts):
         with open(accounts, 'w') as file:
             pass
+    
+def daily_routine():
+    pass
