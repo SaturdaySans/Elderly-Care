@@ -59,4 +59,4 @@ if st.session_state.editing:
     else:
         st.warning("Please enter a valid start and end time.")
 
-st.page_link("pages/streamlit_app.py", label="Mennu")
+st.page_link("streamlit_app.py", label="Menu")
