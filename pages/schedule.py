@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import pandas as pd
 
-st.title("Schedule")
+st.title("---Schedule---")
 st.divider()
 
 file_path = "daily_routine.csv"

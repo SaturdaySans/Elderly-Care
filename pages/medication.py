@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import pandas as pd
 
-st.title("Medication Tracker")
+st.title("---Medication Tracker---")
 
 file_path = "medication.csv"
 
