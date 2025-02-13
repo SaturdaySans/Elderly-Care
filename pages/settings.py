@@ -1,13 +1,15 @@
 import streamlit as st
 import os
 
-# Initialize session state
+# Initialize session state for navigation & login state
 if "logged_in" not in st.session_state:
     st.session_state["logged_in"] = False
 if "username" not in st.session_state:
     st.session_state["username"] = None
+if "page" not in st.session_state:
+    st.session_state["page"] = "settings"  # Default to settings page
 
-ACCOUNTS_FILE = "accounts.txt"  # Define accounts file
+ACCOUNTS_FILE = "accounts.txt"
 
 def account_UI():
     """Display Account settings menu based on login state"""
@@ -15,21 +17,24 @@ def account_UI():
 
     if st.session_state["logged_in"]:
         st.write(f"Logged in as: **{st.session_state['username']}**")
-        st.button("Logout", on_click=logout)
+        if st.button("Logout"):
+            logout()
     else:
-        st.button("Create account", on_click=create_account)
-        st.button("Login", on_click=login)
+        if st.button("Create Account"):
+            st.session_state["page"] = "create_account"
+        if st.button("Login"):
+            st.session_state["page"] = "login"
 
 def login():
     """Login user by checking credentials"""
-    check_or_create_file(ACCOUNTS_FILE)  # Ensure the file exists
+    check_or_create_file(ACCOUNTS_FILE)
     st.write("\n--- Login ---")
-    identifier = st.text_input("Enter username or email: ").strip()
+    identifier = st.text_input("Enter username or email:").strip()
     password = st.text_input("Enter password:", type="password").strip()
 
     if st.button("Submit"):
         with open(ACCOUNTS_FILE, 'r') as file:
-            accounts = file.read().strip().split("#\n")  # Read and split accounts
+            accounts = file.read().strip().split("#\n")
 
         for account in accounts:
             lines = account.strip().split("\n")
@@ -38,16 +43,19 @@ def login():
                 if identifier in [username, email] and password == stored_password:
                     st.session_state["logged_in"] = True
                     st.session_state["username"] = username
-                    st.write(f"✅ Welcome, **{username}**!")
+                    st.session_state["page"] = "settings"  # Redirect back to settings
                     return
 
         st.write("❌ Invalid username/email or password.")
+
+    if st.button("Back"):
+        st.session_state["page"] = "settings"
 
 def logout():
     """Log the user out"""
     st.session_state["logged_in"] = False
     st.session_state["username"] = None
-    st.write("You have been logged out.")
+    st.session_state["page"] = "settings"
 
 def create_account():
     """Create a new account and save to file"""
@@ -85,12 +93,16 @@ def create_account():
         # Save new account
         with open(ACCOUNTS_FILE, 'a') as file:
             if os.path.getsize(ACCOUNTS_FILE) > 0:
-                file.write("#\n")  # Add separator if file is not empty
+                file.write("#\n")
             file.write(f"{username}\n{email}\n{password}\n")
 
         st.write("✅ Account created successfully!")
         st.session_state["logged_in"] = True
         st.session_state["username"] = username
+        st.session_state["page"] = "settings"
+
+    if st.button("Back"):
+        st.session_state["page"] = "settings"
 
 def check_or_create_file(filename):
     """Ensure the accounts file exists"""
@@ -98,5 +110,10 @@ def check_or_create_file(filename):
         with open(filename, 'w') as file:
             pass
 
-# Display the account UI
-account_UI()
+# **Navigation Handling**
+if st.session_state["page"] == "settings":
+    account_UI()
+elif st.session_state["page"] == "login":
+    login()
+elif st.session_state["page"] == "create_account":
+    create_account()
