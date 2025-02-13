@@ -3,7 +3,7 @@ import os
 import pandas as pd
 
 
-from streamlit_app import *
+from streamlit_app import main, main_menu_UI
 
 
 st.write("Settings")
