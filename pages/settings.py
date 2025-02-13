@@ -102,3 +102,5 @@ def check_or_create_file(accounts):
     
 def daily_routine():
     pass
+
+account_UI()
