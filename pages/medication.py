@@ -6,14 +6,15 @@ st.title("Medication")
 
 file_path = "medication.csv"
 
-
-if os.path.exists(file_path) and os.stat(file_path).st_size > 0:
+if os.path.exists(file_path):
     try:
-        medication = pd.read_csv(file_path, names=["Medication","Time","Taken"], header=None, usecols=[0, 1, 2])
+        medication = pd.read_csv(file_path)  # Automatically reads headers
+        if medication.empty:
+            st.warning("The CSV file is empty.")
     except Exception as e:
         st.error(f"Error reading file: {e}")
-        medication = pd.DataFrame(columns=["Medication","Time","Taken"])
+        medication = pd.DataFrame(columns=["Medication", "Time", "Taken"])
 else:
-    medication = pd.DataFrame(columns=["Medication","Time","Taken"])  # Empty DataFrame
+    medication = pd.DataFrame(columns=["Medication", "Time", "Taken"])  # Empty DataFrame
 
 st.write(medication)
