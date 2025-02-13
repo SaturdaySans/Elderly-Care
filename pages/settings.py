@@ -1,5 +1,6 @@
 import streamlit as st
 import os
+import pandas as pd
 
 # Initialize session state for navigation & login state
 if "logged_in" not in st.session_state:
@@ -9,7 +10,25 @@ if "username" not in st.session_state:
 if "page" not in st.session_state:
     st.session_state["page"] = "settings"  # Default to settings page
 
-ACCOUNTS_FILE = "accounts.txt"
+ACCOUNTS_FILE = "accounts.csv"
+
+def check_or_create_file():
+    """Ensure the accounts file exists"""
+    if not os.path.exists(ACCOUNTS_FILE):
+        df = pd.DataFrame(columns=["username", "email", "password"])
+        df.to_csv(ACCOUNTS_FILE, index=False)
+
+def load_accounts():
+    """Load accounts from CSV"""
+    check_or_create_file()
+    return pd.read_csv(ACCOUNTS_FILE)
+
+def save_account(username, email, password):
+    """Save a new account to CSV"""
+    df = load_accounts()
+    new_user = pd.DataFrame([[username, email, password]], columns=["username", "email", "password"])
+    df = pd.concat([df, new_user], ignore_index=True)
+    df.to_csv(ACCOUNTS_FILE, index=False)
 
 def account_UI():
     """Display Account settings menu based on login state"""
@@ -27,90 +46,76 @@ def account_UI():
 
 def login():
     """Login user by checking credentials"""
-    check_or_create_file(ACCOUNTS_FILE)
     st.write("\n--- Login ---")
-    identifier = st.text_input("Enter username or email:").strip()
-    password = st.text_input("Enter password:", type="password").strip()
 
-    if st.button("Submit"):
-        with open(ACCOUNTS_FILE, 'r') as file:
-            accounts = file.read().strip().split("#\n")
+    with st.form("login_form"):
+        identifier = st.text_input("Enter username or email:").strip()
+        password = st.text_input("Enter password:", type="password").strip()
+        submit = st.form_submit_button("Submit")
 
-        for account in accounts:
-            lines = account.strip().split("\n")
-            if len(lines) == 3:
-                username, email, stored_password = lines
-                if identifier in [username, email] and password == stored_password:
-                    st.session_state["logged_in"] = True
-                    st.session_state["username"] = username
-                    st.session_state["page"] = "settings"  # Redirect back to settings
-                    return
+    if submit:
+        df = load_accounts()
+        user = df[(df["username"] == identifier) | (df["email"] == identifier)]
 
-        st.write("❌ Invalid username/email or password.")
+        if not user.empty and user.iloc[0]["password"] == password:
+            st.session_state["logged_in"] = True
+            st.session_state["username"] = user.iloc[0]["username"]
+            st.session_state["page"] = "settings"  # Redirect back to settings
+            st.experimental_rerun()
+        else:
+            st.write("❌ Invalid username/email or password.")
 
     if st.button("Back"):
         st.session_state["page"] = "settings"
+        st.experimental_rerun()
 
 def logout():
     """Log the user out"""
     st.session_state["logged_in"] = False
     st.session_state["username"] = None
     st.session_state["page"] = "settings"
+    st.experimental_rerun()
 
 def create_account():
     """Create a new account and save to file"""
     st.write("\n--- Create New Account ---")
-    username = st.text_input("Enter username:").strip()
-    email = st.text_input("Enter email:").strip()
-    password = st.text_input("Enter password:", type="password").strip()
 
-    if st.button("Register"):
+    with st.form("register_form"):
+        username = st.text_input("Enter username:").strip()
+        email = st.text_input("Enter email:").strip()
+        password = st.text_input("Enter password:", type="password").strip()
+        submit = st.form_submit_button("Register")
+
+    if submit:
+        df = load_accounts()
+
         if not username or not email or not password:
             st.write("❌ All fields are required.")
             return
         if "@" not in email:
             st.write("❌ Invalid email format.")
             return
+        if (df["username"] == username).any():
+            st.write("❌ Username already taken.")
+            return
+        if (df["email"] == email).any():
+            st.write("❌ Email already in use. Please login.")
+            return
 
-        users = []
-        if os.path.exists(ACCOUNTS_FILE):
-            with open(ACCOUNTS_FILE, 'r') as file:
-                accounts = file.read().strip().split("#\n")
-                for acc in accounts:
-                    details = acc.strip().split("\n")
-                    if len(details) == 3:
-                        users.append({'username': details[0], 'email': details[1], 'password': details[2]})
-
-        # Check for duplicates
-        for user in users:
-            if user['username'] == username:
-                st.write("❌ Username already taken.")
-                return
-            if user['email'] == email:
-                st.write("❌ Email already in use. Please login.")
-                return
-
-        # Save new account
-        with open(ACCOUNTS_FILE, 'a') as file:
-            if os.path.getsize(ACCOUNTS_FILE) > 0:
-                file.write("#\n")
-            file.write(f"{username}\n{email}\n{password}\n")
-
+        save_account(username, email, password)
         st.write("✅ Account created successfully!")
         st.session_state["logged_in"] = True
         st.session_state["username"] = username
         st.session_state["page"] = "settings"
+        st.experimental_rerun()
 
     if st.button("Back"):
         st.session_state["page"] = "settings"
-
-def check_or_create_file(filename):
-    """Ensure the accounts file exists"""
-    if not os.path.exists(filename):
-        with open(filename, 'w') as file:
-            pass
+        st.experimental_rerun()
 
 # **Navigation Handling**
+check_or_create_file()  # Ensure file exists
+
 if st.session_state["page"] == "settings":
     account_UI()
 elif st.session_state["page"] == "login":
