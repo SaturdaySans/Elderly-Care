@@ -7,8 +7,7 @@ st.set_page_config(
     page_title="Alzheimer's Disease Awareness",  # Set the title in the browser tab
     page_icon="🧠",  
     layout="wide",  
-
-selected = st.sidebar.selectbox("menu", ["schedule", "settings"])
+    selected = st.sidebar.selectbox("menu", ["schedule", "settings"])
 
 
 #Functions
