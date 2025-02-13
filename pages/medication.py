@@ -22,7 +22,7 @@ else:
 updated_status = []
 
 for index, row in medication.iterrows():
-    checked = st.checkbox(f"{row['Medication']} ({row['Time']})", value=(row['Taken'] == "Yes"))
+    checked = st.checkbox(f"{row['Medication']} ({row['Time']})", value=(row['Taken'] == "Yes"), key=index)
     updated_status.append("Yes" if checked else "No")
 
 # Update the DataFrame with the new values
@@ -30,6 +30,4 @@ if st.button("Update Medication Status"):
     medication["Taken"] = updated_status
     medication.to_csv(file_path, index=False)
     st.success("Medication status updated!")
-    st.experimental_rerun()  # Refresh the app to show updated values
-
-st.write(medication)
+    st.rerun()  # Use the new rerun method
