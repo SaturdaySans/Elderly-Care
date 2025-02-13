@@ -6,9 +6,8 @@ import pandas as pd
 st.set_page_config(
     page_title="Alzheimer's Disease Awareness",  # Set the title in the browser tab
     page_icon="🧠",  
-    layout="wide")  
-
-selected = st.sidebar.selectbox("menu", ["schedule", "settings"])
+    layout="wide",  
+    selected = st.sidebar.selectbox("menu", ["schedule", "settings"]))
 
 
 #Functions
@@ -17,6 +16,7 @@ def main_menu_UI():
     st.divider()
     st.page_link("pages/settings.py", label="Settings")
     st.page_link("pages/schedule.py", label="Schedule")
+    st.page_link("pages/medication.py", label="Medication")
 
 def main():
     main_menu_UI()
