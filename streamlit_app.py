@@ -8,27 +8,12 @@ st.set_page_config(
     page_icon="🧠",  
     layout="wide")
 
-# Function to load and execute a script file
-def load_page(file_path):
-    try:
-        with open(file_path, "r") as file:
-            exec(file.read(), globals())
-    except FileNotFoundError:
-        st.error(f"❌ Error: {file_path} not found.")
-    except Exception as e:
-        st.error(f"❌ Error loading {file_path}: {str(e)}")
-
 def side_bar_UI():
     st.sidebar.header("Alzheimer Help") #Sets sidebar name to "Alzheimer Help"
     st.sidebar.page_link("streamlit_app.py", label="Home", icon="🏠")
-    if st.sidebar.button("💊 Medication"):
-        load_page("app_pages/medication.py")
-
-    if st.sidebar.button("📅 Schedule"):
-        load_page("app_pages/schedule.py")
-
-    if st.sidebar.button("⚙️ Settings"):
-        load_page("app_pages/settings.py")
+    st.sidebar.page_link("pages/medication.py", label="Medication", icon="💊")
+    st.sidebar.page_link("pages/schedule.py", label="Schedule", icon="📅")
+    st.sidebar.page_link("pages/settings.py", label="Settings", icon="⚙️")
 
 #Functions
 def main_menu_UI():
