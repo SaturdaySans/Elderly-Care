@@ -20,6 +20,9 @@ def main_menu_UI():
     st.title("--- Alzheimer help ---")
     st.divider()
     side_bar_UI()
+    st.page_link("pages/settings.py", label="Settings")
+    st.page_link("pages/schedule.py", label="Schedule")
+    st.page_link("pages/medication.py", label="Medication")
 
 def main():
     main_menu_UI()
