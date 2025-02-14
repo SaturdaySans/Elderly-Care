@@ -15,6 +15,8 @@ def side_bar_UI():
     st.sidebar.page_link("pages/schedule.py", label="Schedule", icon="📅")
     st.sidebar.page_link("pages/settings.py", label="Settings", icon="⚙️")
 
+side_bar_UI()
+
 #Functions
 def main_menu_UI():
     st.title("--- Alzheimer help ---")
