@@ -41,4 +41,4 @@ if st.button("Update Medication Status"):
     medication.to_csv(file_path, index=False)
     st.success("Medication status updated!")
     time.sleep(2)
-    st.rerun()  
+
