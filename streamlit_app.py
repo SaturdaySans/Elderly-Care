@@ -10,6 +10,8 @@ st.set_page_config(
 
 st.sidebar.header("Alzheimer Help") #Sets sidebar name to "Alzheimer Help"
 st.sidebar.page_link("streamlit_app.py", label="Home", icon="🏠")
+if st.sidebar.button("🏠 Home"):
+    load_page("medication.py")
 st.sidebar.page_link("medication.py", label="Medication", icon="💊")
 st.sidebar.page_link("schedule.py", label="Schedule", icon="📅")
 st.sidebar.page_link("settings.py", label="Settings", icon="⚙️")
