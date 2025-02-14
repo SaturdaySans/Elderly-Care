@@ -38,5 +38,5 @@ for index, row in medication.iterrows():
 if st.button("Update Medication Status"):
     medication["Taken"] = updated_status
     medication.to_csv(file_path, index=False)
-    st.success("Medication status updated!")
-    st.rerun()  # Use the new rerun method
+    st.write("Medication status updated!")
+    st.rerun()  
