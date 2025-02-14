@@ -8,13 +8,14 @@ st.set_page_config(
     page_icon="🧠",  
     layout="wide")
 
-st.sidebar.header("Alzheimer Help") #Sets sidebar name to "Alzheimer Help"
-st.sidebar.title("Alzheimer Assistant")
+
 
 #Functions
 def main_menu_UI():
     st.title("--- Alzheimer help ---")
     st.divider()
+    st.sidebar.header("Alzheimer Help") #Sets sidebar name to "Alzheimer Help"
+    st.sidebar.title("Alzheimer Assistant")
     st.page_link("pages/settings.py", label="Settings")
     st.page_link("pages/schedule.py", label="Schedule")
     st.page_link("pages/medication.py", label="Medication")
