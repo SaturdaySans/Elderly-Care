@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 import pandas as pd
+import time
 
 st.title("---Medication Tracker---")
 
@@ -39,4 +40,5 @@ if st.button("Update Medication Status"):
     medication["Taken"] = updated_status
     medication.to_csv(file_path, index=False)
     st.success("Medication status updated!")
+    time.sleep(2)
     st.rerun()  
