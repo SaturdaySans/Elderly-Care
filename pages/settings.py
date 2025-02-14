@@ -2,6 +2,15 @@ import streamlit as st
 import os
 import pandas as pd
 
+def side_bar_UI():
+    st.sidebar.header("Alzheimer Help") #Sets sidebar name to "Alzheimer Help"
+    st.sidebar.page_link("streamlit_app.py", label="Home", icon="🏠")
+    st.sidebar.page_link("pages/medication.py", label="Medication", icon="💊")
+    st.sidebar.page_link("pages/schedule.py", label="Schedule", icon="📅")
+    st.sidebar.page_link("pages/settings.py", label="Settings", icon="⚙️")
+
+side_bar_UI()
+
 # File to store account data
 ACCOUNTS_FILE = "accounts.csv"
 

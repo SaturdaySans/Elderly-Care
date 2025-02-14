@@ -5,6 +5,15 @@ import pandas as pd
 st.title("---Schedule---")
 st.divider()
 
+def side_bar_UI():
+    st.sidebar.header("Alzheimer Help") #Sets sidebar name to "Alzheimer Help"
+    st.sidebar.page_link("streamlit_app.py", label="Home", icon="🏠")
+    st.sidebar.page_link("pages/medication.py", label="Medication", icon="💊")
+    st.sidebar.page_link("pages/schedule.py", label="Schedule", icon="📅")
+    st.sidebar.page_link("pages/settings.py", label="Settings", icon="⚙️")
+
+side_bar_UI()
+
 file_path = "daily_routine.csv"
 
 # Check if file exists

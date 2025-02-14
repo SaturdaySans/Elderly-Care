@@ -6,6 +6,15 @@ st.title("---Medication Tracker---")
 
 file_path = "medication.csv"
 
+def side_bar_UI():
+    st.sidebar.header("Alzheimer Help") #Sets sidebar name to "Alzheimer Help"
+    st.sidebar.page_link("streamlit_app.py", label="Home", icon="🏠")
+    st.sidebar.page_link("pages/medication.py", label="Medication", icon="💊")
+    st.sidebar.page_link("pages/schedule.py", label="Schedule", icon="📅")
+    st.sidebar.page_link("pages/settings.py", label="Settings", icon="⚙️")
+
+side_bar_UI()
+
 # Load CSV if it exists, otherwise create an empty DataFrame
 if os.path.exists(file_path):
     try:
