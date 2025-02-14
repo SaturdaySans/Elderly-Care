@@ -8,6 +8,7 @@ st.set_page_config(
     page_icon="🧠",  
     layout="wide")
 
+st.sidebar.header("Alzheimer Help") #Sets sidebar name to "Alzheimer Help"
 
 #Functions
 def main_menu_UI():
