@@ -38,7 +38,7 @@ def load_accounts():
 
 def account_UI():
     """Display Account Settings UI"""
-    st.write("\n -- Account Settings --")
+    st.title("\n -- Account Settings --")
 
     if st.session_state["logged_in"]:
         st.write(f"Logged in as: **{st.session_state['username']}**")
