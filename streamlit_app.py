@@ -35,14 +35,14 @@ def main_menu_UI():
     with col3:
         st.page_link("pages/schedule.py", label="Schedule", icon="📅")
     with col4:
-        st.image("resources/banner.png", width=200)
+        st.image("resources/calendar.png", width=200)
 
     st.write("")  
 
     #Row 3
     col5, col6 = st.columns([1, 2])
     with col5:
-        st.image("resources/banner.png", width=200)
+        st.image("resources/medicine.png", width=200)
     with col6:
         st.page_link("pages/medication.py", label="Medication", icon="💊")
 
