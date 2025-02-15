@@ -28,7 +28,7 @@ def main_menu_UI():
     with col2:
         st.page_link("pages/settings.py", label="Settings", icon="⚙️")
     
-    st.write("")  
+    st.divider()
 
     # Row 2
     col3, col4 = st.columns([2, 1])
@@ -37,7 +37,7 @@ def main_menu_UI():
     with col4:
         st.image("resources/banner.png", width=200)
 
-    st.write("")  
+    st.divider() 
 
     #Row 3
     col5, col6 = st.columns([1, 2])
