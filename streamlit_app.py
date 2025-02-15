@@ -17,19 +17,7 @@ def side_bar_UI():
 
 #Functions
 def main_menu_UI():
-    st.markdown(
-        """
-        <style>
-        .banner-image {
-            width: 100%;
-            height: 200px; 
-            object-fit: cover; 
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-    st.markdown('<img src="resources/banner.jpg" class="banner-image">', unsafe_allow_html=True)
+    st.image("resources/banner.py",use_container_width=True)
     st.title("--- Alzheimer help ---")
     st.divider()
     side_bar_UI()
