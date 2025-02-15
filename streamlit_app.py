@@ -18,7 +18,7 @@ def side_bar_UI():
 #Functions
 def main_menu_UI():
     current_dir = os.path.dirname(os.path.abspath(__file__))
-    banner_path = os.path.join(current_dir, "bannerimage.png")
+    banner_path = os.path.join(current_dir, "bannerimage.jpg")
     st.image(banner_path, use_container_width=True)
     st.title("--- Alzheimer help ---")
     st.divider()
