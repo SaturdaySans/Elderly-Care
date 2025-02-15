@@ -21,25 +21,25 @@ def main_menu_UI():
     st.title("--- Alzheimer help ---")
     st.divider()
     side_bar_UI()
-    # --- Row 1: Image then Text (Page Link) ---
+    # Row 1
     col1, col2 = st.columns([1, 2])  # Adjust width ratios as needed
     with col1:
         st.image("resources/banner.png", width=200)
     with col2:
         st.page_link("pages/settings.py", label="Settings", icon="⚙️")
     
-    st.write("")  # Optional spacing between rows
+    st.write("")  
 
-    # --- Row 2: Text (Page Link) then Image ---
+    # Row 2
     col3, col4 = st.columns([2, 1])
     with col3:
         st.page_link("pages/schedule.py", label="Schedule", icon="📅")
     with col4:
         st.image("resources/banner.png", width=200)
 
-    st.write("")  # Optional spacing between rows
+    st.write("")  
 
-    # --- Row 3: Image then Text (Page Link) ---
+    #Row 3
     col5, col6 = st.columns([1, 2])
     with col5:
         st.image("resources/banner.png", width=200)
