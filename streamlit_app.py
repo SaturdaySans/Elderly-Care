@@ -25,15 +25,15 @@ def main_menu_UI():
 
     with col1:
         st.image("resources/banner.png", width=100)
-        st.page_link("settings.py", label="Settings", icon="⚙️")
+        st.page_link("pages/settings.py", label="Settings", icon="⚙️")
 
     with col2:
         st.image("resources/banner.png", width=100)
-        st.page_link("schedule.py", label="Schedule", icon="📅")
+        st.page_link("pages/schedule.py", label="Schedule", icon="📅")
 
     with col3:
         st.image("resources/banner.png", width=100)
-        st.page_link("medication.py", label="Medication", icon="💊")
+        st.page_link("pages/medication.py", label="Medication", icon="💊")
 
 def main():
     main_menu_UI()
