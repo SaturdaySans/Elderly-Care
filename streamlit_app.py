@@ -17,7 +17,7 @@ def side_bar_UI():
 
 #Functions
 def main_menu_UI():
-    t.markdown(
+    st.markdown(
         """
         <style>
         .banner-image {
