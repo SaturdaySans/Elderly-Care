@@ -17,29 +17,7 @@ def side_bar_UI():
 
 #Functions
 def main_menu_UI():
-    st.markdown(
-        """
-        <div style="position: relative; text-align: center;">
-            <!-- The Banner Image -->
-            <img src="resources/banner.png" alt="Banner" style="width: 100%; height: auto;">
-
-            <!-- The Text Overlay -->
-            <div style="
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                color: white;
-                font-size: 2em;
-                font-weight: bold;
-                text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-            ">
-                Alzheimer help
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    st.image("resources/banner.png", use_container_width=True)
     st.title("--- Alzheimer help ---")
     st.divider()
     side_bar_UI()
