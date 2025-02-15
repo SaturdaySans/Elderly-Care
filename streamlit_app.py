@@ -17,8 +17,7 @@ def side_bar_UI():
 
 #Functions
 def main_menu_UI():
-    banner_url = "https://via.placeholder.com/1200x300.png?text=Alzheimer%27s+Disease+Awareness"
-    st.image(banner_url, use_container_width=True)
+    st.image("banner.png", use_container_width=True)
     st.title("--- Alzheimer help ---")
     st.divider()
     side_bar_UI()
