@@ -17,7 +17,7 @@ def side_bar_UI():
 
 #Functions
 def main_menu_UI():
-    st.image("banner.png", use_container_width=True)
+    st.image("bannerimage.png", use_container_width=True)
     st.title("--- Alzheimer help ---")
     st.divider()
     side_bar_UI()
