@@ -24,7 +24,7 @@ def main_menu_UI():
     # --- Row 1: Image then Text (Page Link) ---
     col1, col2 = st.columns([1, 2])  # Adjust width ratios as needed
     with col1:
-        st.image("resources/banner.png", width=100)
+        st.image("resources/banner.png", width=200)
     with col2:
         st.page_link("pages/settings.py", label="Settings", icon="⚙️")
     
@@ -35,14 +35,14 @@ def main_menu_UI():
     with col3:
         st.page_link("pages/schedule.py", label="Schedule", icon="📅")
     with col4:
-        st.image("resources/banner.png", width=100)
+        st.image("resources/banner.png", width=200)
 
     st.write("")  # Optional spacing between rows
 
     # --- Row 3: Image then Text (Page Link) ---
     col5, col6 = st.columns([1, 2])
     with col5:
-        st.image("resources/banner.png", width=100)
+        st.image("resources/banner.png", width=200)
     with col6:
         st.page_link("pages/medication.py", label="Medication", icon="💊")
 
