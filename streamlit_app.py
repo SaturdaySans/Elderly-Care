@@ -24,11 +24,11 @@ def main_menu_UI():
     # Row 1
     col1, col2 = st.columns([1, 2])  # Adjust width ratios as needed
     with col1:
-        st.image("resources/banner.png", width=200)
+        st.image("resources/settings.png", width=200)
     with col2:
         st.page_link("pages/settings.py", label="Settings", icon="⚙️")
     
-    st.divider()
+    st.write("")  
 
     # Row 2
     col3, col4 = st.columns([2, 1])
@@ -37,7 +37,7 @@ def main_menu_UI():
     with col4:
         st.image("resources/banner.png", width=200)
 
-    st.divider() 
+    st.write("")  
 
     #Row 3
     col5, col6 = st.columns([1, 2])
