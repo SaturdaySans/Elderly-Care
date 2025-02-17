@@ -24,7 +24,7 @@ def main_menu_UI():
     st.divider()
     side_bar_UI()
     # Row 1
-    col1, col2 = st.columns([1, 2])  # Adjust width ratios as needed
+    col1, col2 = st.columns([1, 2]) 
     with col1:
         st.image("resources/settings.png", width=200)
     with col2:
