@@ -6,20 +6,8 @@ import pandas as pd
 st.set_page_config(
     page_title="Alzheimer's Disease Awareness",  # Set the title in the browser tab
     page_icon="🧠",  
-    layout="wide",
-    initial_sidebar_state="collapsed")
+    layout="wide")
 
-
-st.markdown(
-    """
-<style>
-    [data-testid="collapsedControl"] {
-        display: none
-    }
-</style>
-""",
-    unsafe_allow_html=True,
-)
 
 def side_bar_UI():
     st.sidebar.header("Alzheimer Help")  # Sets sidebar name to "Alzheimer Help"
