@@ -38,7 +38,7 @@ def main_menu_UI():
     # Row 2
     col3, col4 = st.columns([2, 1])
     with col3:
-        st.page_link("pages/schedule.py", label="Schedule", icon="📅")
+        st.page_link("pages/routine.py", label="Routine", icon="📅")
     with col4:
         st.image("resources/calendar.png", width=200)
 

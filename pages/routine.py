@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import pandas as pd
 
-st.title("---Schedule---")
+st.title("---Routine---")
 st.divider()
 
 def side_bar_UI():
@@ -38,7 +38,7 @@ if st.button("Edit"):
     st.session_state.editing = True  # Enable editing mode
 
 if st.session_state.editing:
-    schedule_name = st.text_input("Event Name:", st.session_state.get("schedule_name", ""))
+    routine_name = st.text_input("Event Name:", st.session_state.get("routine_name", ""))
     start_time = st.number_input("Start Time:", min_value=0, max_value=2359, step=1, value=st.session_state.get("start_time", 0))
     end_time = st.number_input("End Time:", min_value=0, max_value=2359, step=1, value=st.session_state.get("end_time", 0))
 
@@ -47,7 +47,7 @@ if st.session_state.editing:
         duration = end_time - start_time
 
         if st.button("Done!"):
-            new_entry = pd.DataFrame({"Events": [schedule_name], "Start": [start_time], "End": [end_time], "Duration": [duration]})
+            new_entry = pd.DataFrame({"Events": [routine_name], "Start": [start_time], "End": [end_time], "Duration": [duration]})
             
             # Check if the file exists before writing
             write_header = not os.path.exists(file_path) or os.stat(file_path).st_size == 0
@@ -60,7 +60,7 @@ if st.session_state.editing:
 
             # Reset editing mode
             st.session_state.editing = False
-            st.session_state.schedule_name = ""
+            st.session_state.routine_name = ""
             st.session_state.start_time = 0
             st.session_state.end_time = 0
 
