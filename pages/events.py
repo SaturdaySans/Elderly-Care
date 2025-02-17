@@ -1,5 +1,6 @@
 import streamlit as st
 from streamlit_calendar import calendar
+import pandas as pd
 
 def side_bar_UI():
     st.sidebar.header("Alzheimer Help")  # Sets sidebar name to "Alzheimer Help"
@@ -11,13 +12,24 @@ def side_bar_UI():
 
 side_bar_UI()
 
-calendar_events = [
-    {"title": "Singing", "start": "2025-02-18T08:30:00+08:00", "end": "2025-002-18T10:30:00+08:00", "resourceId": "a"},
-    {"title": "Event 2", "start": "2023-07-31T07:30:00+08:00", "end": "2023-07-31T10:30:00+08:00", "resourceId": "b"},
-    {"title": "Event 3", "start": "2023-07-31T10:40:00+08:00", "end": "2023-07-31T12:30:00+08:00", "resourceId": "a"},
-]
+# Read the event data from the CSV file
+file_path = "events.csv"
 
+# Read the CSV into a pandas DataFrame
+df = pd.read_csv(file_path)
 
+# Convert the DataFrame into the format expected by the calendar component
+calendar_events = []
+for index, row in df.iterrows():
+    event = {
+        "title": row["title"],
+        "start": row["start"],
+        "end": row["end"],
+        "resourceId": row["resourceId"]
+    }
+    calendar_events.append(event)
+
+# Display the calendar
 calendar_display = calendar(
     events=calendar_events,
     key='calendar',
