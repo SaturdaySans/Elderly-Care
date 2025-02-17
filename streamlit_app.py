@@ -6,8 +6,9 @@ import pandas as pd
 st.set_page_config(
     page_title="Alzheimer's Disease Awareness",  # Set the title in the browser tab
     page_icon="🧠",  
-    layout="wide")
-    initial_sidebar_state="collapsed"
+    layout="wide",
+    initial_sidebar_state="collapsed")
+
 
 st.markdown(
     """
