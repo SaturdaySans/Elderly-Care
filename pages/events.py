@@ -1,6 +1,15 @@
 import streamlit as st
 from streamlit_calendar import calendar
 
+def side_bar_UI():
+    st.sidebar.header("Alzheimer Help") #Sets sidebar name to "Alzheimer Help"
+    st.sidebar.page_link("streamlit_app.py", label="Home", icon="🏠")
+    st.sidebar.page_link("pages/medication.py", label="Medication", icon="💊")
+    st.sidebar.page_link("pages/schedule.py", label="Schedule", icon="📅")
+    st.sidebar.page_link("pages/settings.py", label="Settings", icon="⚙️")
+
+side_bar_UI()
+
 calendar_options = {
     "editable": True,
     "selectable": True,
@@ -61,6 +70,6 @@ calendar = calendar(
     events=calendar_events,
     options=calendar_options,
     custom_css=custom_css,
-    key='calendar', # Assign a widget key to prevent state loss
+    key='calendar', 
     )
 st.write(calendar)
