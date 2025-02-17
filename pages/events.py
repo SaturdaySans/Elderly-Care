@@ -33,11 +33,7 @@ calendar_options = {
     ],
 }
 
-calendar_events = [
-    {"title": "Event 1", "start": "2023-07-31T08:30:00+08:00", "end": "2023-07-31T10:30:00+08:00", "resourceId": "a"},
-    {"title": "Event 2", "start": "2023-07-31T07:30:00+08:00", "end": "2023-07-31T10:30:00+08:00", "resourceId": "b"},
-    {"title": "Event 3", "start": "2023-07-31T10:40:00+08:00", "end": "2023-07-31T12:30:00+08:00", "resourceId": "a"},
-]
+
 
 # Rename the calendar variable to avoid conflict
 calendar_display = calendar(
