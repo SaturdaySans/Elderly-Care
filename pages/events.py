@@ -11,7 +11,7 @@ def side_bar_UI():
 
 side_bar_UI()
 
-
+st.write("test")
 calendar_events = [
     {"title": "Singing", "start": "2025-02-18T08:30:00+08:00", "end": "2025-002-18T10:30:00+08:00", "resourceId": "a"},
     {"title": "Event 2", "start": "2023-07-31T07:30:00+08:00", "end": "2023-07-31T10:30:00+08:00", "resourceId": "b"},
