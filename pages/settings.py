@@ -92,7 +92,7 @@ def create_account():
     username = st.text_input("Enter username:").strip()
     email = st.text_input("Enter email:").strip()
     password = st.text_input("Enter password:", type="password").strip()
-    UID = generate_UID(username)
+    generate_UID(username)
 
     if st.button("Register"):
         if not username or not email or not password:
