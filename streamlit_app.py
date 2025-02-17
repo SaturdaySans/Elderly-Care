@@ -9,11 +9,13 @@ st.set_page_config(
     layout="wide")
 
 def side_bar_UI():
-    st.sidebar.header("Alzheimer Help") #Sets sidebar name to "Alzheimer Help"
+    st.sidebar.header("Alzheimer Help")  # Sets sidebar name to "Alzheimer Help"
     st.sidebar.page_link("streamlit_app.py", label="Home", icon="🏠")
     st.sidebar.page_link("pages/medication.py", label="Medication", icon="💊")
-    st.sidebar.page_link("pages/schedule.py", label="Schedule", icon="📅")
+    st.sidebar.page_link("pages/schedule.py", label="Schedule", icon="🗓️")  
+    st.sidebar.page_link("pages/events.py", label="Events", icon="📆")  
     st.sidebar.page_link("pages/settings.py", label="Settings", icon="⚙️")
+
 
 #Functions
 def main_menu_UI():
