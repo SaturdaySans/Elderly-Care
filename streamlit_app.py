@@ -7,6 +7,18 @@ st.set_page_config(
     page_title="Alzheimer's Disease Awareness",  # Set the title in the browser tab
     page_icon="🧠",  
     layout="wide")
+    initial_sidebar_state="collapsed"
+
+st.markdown(
+    """
+<style>
+    [data-testid="collapsedControl"] {
+        display: none
+    }
+</style>
+""",
+    unsafe_allow_html=True,
+)
 
 def side_bar_UI():
     st.sidebar.header("Alzheimer Help")  # Sets sidebar name to "Alzheimer Help"
@@ -15,6 +27,7 @@ def side_bar_UI():
     st.sidebar.page_link("pages/schedule.py", label="Schedule", icon="🗓️")  
     st.sidebar.page_link("pages/events.py", label="Events", icon="📆")  
     st.sidebar.page_link("pages/settings.py", label="Settings", icon="⚙️")
+
 
 
 #Functions
