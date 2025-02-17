@@ -12,7 +12,7 @@ def side_bar_UI():
 side_bar_UI()
 
 calendar_options = {
-    "editable": True,
+    "editable": False,
     "selectable": True,
     "headerToolbar": {
         "left": "today prev,next",
