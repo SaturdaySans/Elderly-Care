@@ -18,10 +18,9 @@ calendar_events = [
 ]
 
 
-# Rename the calendar variable to avoid conflict
 calendar_display = calendar(
     events=calendar_events,
+    key='calendar',
 )
 
-# Render the calendar in the Streamlit app
 st.write(calendar_display)
