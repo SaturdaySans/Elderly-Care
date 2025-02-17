@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 import pandas as pd
+import random
 
 def side_bar_UI():
     st.sidebar.header("Alzheimer Help") #Sets sidebar name to "Alzheimer Help"
@@ -19,13 +20,16 @@ if "logged_in" not in st.session_state:
     st.session_state["logged_in"] = False
 if "username" not in st.session_state:
     st.session_state["username"] = None
+if "UID" not in st.session_state:
+    st.session_state["UID"] = None
+
 if "page" not in st.session_state:
     st.session_state["page"] = "settings"  # Default to settings page
 
 def check_or_create_file():
     """Ensure the accounts CSV file exists with headers"""
     if not os.path.exists(ACCOUNTS_FILE) or os.stat(ACCOUNTS_FILE).st_size == 0:
-        df = pd.DataFrame(columns=["username", "email", "password"])
+        df = pd.DataFrame(columns=["username", "email", "password", "UID"])
         df.to_csv(ACCOUNTS_FILE, index=False)
 
 def load_accounts():
@@ -42,6 +46,7 @@ def account_UI():
 
     if st.session_state["logged_in"]:
         st.write(f"Logged in as: **{st.session_state['username']}**")
+        st.write(f"UID: **{st.session_state['UID']}**")
         if st.button("Logout"):
             logout()
     else:
@@ -76,6 +81,7 @@ def logout():
     """Logout User"""
     st.session_state["logged_in"] = False
     st.session_state["username"] = None
+    st.session_state["UID"] = None
     st.session_state["page"] = "settings"
     st.rerun()
 
@@ -85,6 +91,7 @@ def create_account():
     username = st.text_input("Enter username:").strip()
     email = st.text_input("Enter email:").strip()
     password = st.text_input("Enter password:", type="password").strip()
+    UID = generate_UID(username)
 
     if st.button("Register"):
         if not username or not email or not password:
@@ -104,7 +111,7 @@ def create_account():
             return
 
         # Append new user
-        new_user = pd.DataFrame([[username, email, password]], columns=["username", "email", "password"])
+        new_user = pd.DataFrame([[username, email, password]], columns=["username", "email", "password", "UID"])
         new_user.to_csv(ACCOUNTS_FILE, mode='a', header=False, index=False)
 
         st.write("✅ Account created successfully!")
@@ -124,3 +131,11 @@ elif st.session_state["page"] == "login":
     login()
 elif st.session_state["page"] == "create_account":
     create_account()
+
+def generate_UID(_username):
+    #Take first 4 characters of username
+    first_part = _username[:4]
+    # Generate 4 random numbers
+    random_numbers = ''.join([str(random.randint(0, 9)) for _ in range(4)])
+    result = first_part + random_numbers + "0"
+    return result
