@@ -11,27 +11,7 @@ def side_bar_UI():
 
 side_bar_UI()
 
-calendar_options = {
-    "editable": False,
-    "selectable": True,
-    "headerToolbar": {
-        "left": "today prev,next",
-        "center": "title",
-        "right": "resourceTimelineDay,resourceTimelineWeek,resourceTimelineMonth",
-    },
-    "slotMinTime": "06:00:00",
-    "slotMaxTime": "18:00:00",
-    "initialView": "resourceTimelineDay",
-    "resourceGroupField": "building",
-    "resources": [
-        {"id": "a", "building": "Building A", "title": "Building A"},
-        {"id": "b", "building": "Building A", "title": "Building B"},
-        {"id": "c", "building": "Building B", "title": "Building C"},
-        {"id": "d", "building": "Building B", "title": "Building D"},
-        {"id": "e", "building": "Building C", "title": "Building E"},
-        {"id": "f", "building": "Building C", "title": "Building F"},
-    ],
-}
+
 calendar_events = [
     {"title": "Singing", "start": "2025-02-18T08:30:00+08:00", "end": "2025-002-18T10:30:00+08:00", "resourceId": "a"},
     {"title": "Event 2", "start": "2023-07-31T07:30:00+08:00", "end": "2023-07-31T10:30:00+08:00", "resourceId": "b"},
