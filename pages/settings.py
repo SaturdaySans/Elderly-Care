@@ -86,6 +86,14 @@ def logout():
     st.session_state["page"] = "settings"
     st.rerun()
 
+def generate_UID(_username):
+    #Take first 4 characters of username
+    first_part = _username[:4]
+    # Generate 4 random numbers
+    random_numbers = ''.join([str(random.randint(0, 9)) for _ in range(4)])
+    result = first_part + random_numbers + "0"
+    return result
+
 def create_account():
     """Create a new account and save to CSV"""
     st.write("\n--- Create New Account ---")
@@ -133,10 +141,3 @@ elif st.session_state["page"] == "login":
 elif st.session_state["page"] == "create_account":
     create_account()
 
-def generate_UID(_username):
-    #Take first 4 characters of username
-    first_part = _username[:4]
-    # Generate 4 random numbers
-    random_numbers = ''.join([str(random.randint(0, 9)) for _ in range(4)])
-    result = first_part + random_numbers + "0"
-    return result
