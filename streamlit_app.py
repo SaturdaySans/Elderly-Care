@@ -9,6 +9,13 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="auto")
 
+pg = st.navigation([
+    st.Page("pages/menu.py"),
+    st.Page("pages/medication.py"),
+    st.Page("pages/routine.py"),
+    st.Page("pages/events.py"),
+    st.Page("pages/settings.py"),
+])
 
 def side_bar_UI():
     st.sidebar.header("Alzheimer Help")  # Sets sidebar name to "Alzheimer Help"
