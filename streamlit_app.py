@@ -21,7 +21,6 @@ pg = st.navigation(nav)
 add_page_title(pg)
 
 # Sidebar title 
-st.sidebar.header()  
 
 # Functions
 def main_menu_UI():
