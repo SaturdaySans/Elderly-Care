@@ -1,7 +1,15 @@
 import streamlit as st
 from streamlit_calendar import calendar
 import pandas as pd
+from st_pages import add_page_title, get_nav_from_toml
+# Load pages from .toml
+nav = get_nav_from_toml(".streamlit/pages.toml")
 
+# Display navigation
+pg = st.navigation(nav)
+
+# Add a title
+add_page_title(pg)
 # Read the event data from the CSV file
 file_path = "events.csv"
 
