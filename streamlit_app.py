@@ -2,7 +2,8 @@ import streamlit as st
 import os
 import pandas as pd
 
-#Page Name
+#Admin Page (For us)
+
 st.set_page_config(
     page_title="Alzheimer's Disease Awareness",  # Set the title in the browser tab
     page_icon="🧠",  
@@ -16,10 +17,6 @@ pg = st.navigation([
     st.Page("pages/events.py"),
     st.Page("pages/settings.py"),
 ])
-
-
-
-
 
 #Functions
 def main_menu_UI():
