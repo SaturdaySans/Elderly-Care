@@ -9,22 +9,14 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="auto")
 
-"""pg=st.navigation([
-    st.Page("streamlit_app.py", title="Main Menu", icon="🏠"),
-    st.Page("pages/medication.py", title="Medication", icon="💊"),
-    st.Page("pages/events.py", title="Events", icon="📆"),
-    st.Page("pages/routine.py", title="Routine", icon="🗓️"),
-    st.Page("pages/settings.py", title="Settings", icon="⚙️"),
-])"""
 
-
-#def side_bar_UI():
-    #st.sidebar.header("Alzheimer Help")  # Sets sidebar name to "Alzheimer Help"
-    #st.sidebar.page_link("streamlit_app.py", label="Home", icon="🏠")
-    #st.sidebar.page_link("pages/medication.py", label="Medication", icon="💊")
-    #st.sidebar.page_link("pages/routine.py", label="Routine", icon="🗓️")  
-    #st.sidebar.page_link("pages/events.py", label="Events", icon="📆")  
-    #st.sidebar.page_link("pages/settings.py", label="Settings", icon="⚙️")
+def side_bar_UI():
+    st.sidebar.header("Alzheimer Help")  # Sets sidebar name to "Alzheimer Help"
+    st.sidebar.page_link("streamlit_app.py", label="Home", icon="🏠")
+    st.sidebar.page_link("pages/medication.py", label="Medication", icon="💊")
+    st.sidebar.page_link("pages/routine.py", label="Routine", icon="🗓️")  
+    st.sidebar.page_link("pages/events.py", label="Events", icon="📆")  
+    st.sidebar.page_link("pages/settings.py", label="Settings", icon="⚙️")
 
 
 
@@ -33,6 +25,7 @@ def main_menu_UI():
     #st.image("resources/banner.png", use_container_width=True)
     st.title("--- Alzheimer help ---")
     st.divider()
+    side_bar_UI
     st.page_link("pages/settings.py", label="Settings", icon="⚙️")
     st.page_link("pages/routine.py", label="Routine", icon="🗓️")
     st.page_link("pages/events.py", label="Events", icon="📆")  
