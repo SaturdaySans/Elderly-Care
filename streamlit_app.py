@@ -22,7 +22,7 @@ add_page_title(pg)
 
 # Functions
 def main_menu_UI():
-    st.image("resources/banner.png", use_container_width=True)
+    #st.image("resources/banner.png", use_container_width=True)
     st.divider()
     st.page_link("pages/settings.py", label="Settings", icon="⚙️")
     st.page_link("pages/routine.py", label="Routine", icon="🗓️")
