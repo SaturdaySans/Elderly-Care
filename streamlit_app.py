@@ -13,7 +13,7 @@ st.logo("resources/calendar.png")
 
 pg = st.navigation(nav)
 
-
+add_page_title(pg)
 
 pg.run()
 
