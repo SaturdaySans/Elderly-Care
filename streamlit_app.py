@@ -33,6 +33,7 @@ def main_menu_UI():
     st.page_link("pages/medication.py", label="Medication", icon="💊")
 
 def main():
+    main_menu_UI
     pg.run()  # Run the navigation system
 
 #Call main
