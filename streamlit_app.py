@@ -3,16 +3,6 @@ import os
 import pandas as pd
 from st_pages import add_page_title, get_nav_from_toml
 
-
-#Page Name
-st.set_page_config(
-    page_title="Alzheimer's Disease Awareness",  # Set the title in the browser tab
-    page_icon="🧠",  
-    layout="wide",
-    initial_sidebar_state="auto")
-
-
-
 # Load pages from .toml
 nav = get_nav_from_toml(".streamlit/pages.toml")
 
@@ -23,6 +13,17 @@ pg = st.navigation(nav)
 add_page_title(pg)
 
 pg.run()
+
+#Page Name
+st.set_page_config(
+    page_title="Alzheimer's Disease Awareness",  # Set the title in the browser tab
+    page_icon="🧠",  
+    layout="wide",
+    initial_sidebar_state="auto")
+
+
+
+
 
 def side_bar_UI():
     st.sidebar.header("Alzheimer Help")  # Sets sidebar name to "Alzheimer Help"
