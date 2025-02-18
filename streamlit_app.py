@@ -16,7 +16,7 @@ nav = get_nav_from_toml(".streamlit/pages.toml")
 
 
 # Add a title
-add_page_title(pg)
+add_page_title()
 
 
 
