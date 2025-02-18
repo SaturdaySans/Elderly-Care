@@ -10,7 +10,6 @@ st.set_page_config(
     initial_sidebar_state="auto")
 
 pg=st.navigation([
-    st.Page("streamlit_app.py", title="Main Menu", icon="🏠"),
     st.Page("pages/medication.py", title="Medication", icon="💊"),
     st.Page("pages/events.py", title="Events", icon="📆"),
     st.Page("pages/routine.py", title="Routine", icon="🗓️"),
