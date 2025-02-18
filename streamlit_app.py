@@ -24,10 +24,9 @@ def side_bar_UI():
 
 #Functions
 def main_menu_UI():
-    st.image("resources/banner.png", use_container_width=True)
+    #st.image("resources/banner.png", use_container_width=True)
     st.title("--- Alzheimer help ---")
     st.divider()
-    side_bar_UI()
     st.page_link("pages/settings.py", label="Settings", icon="⚙️")
     st.page_link("pages/routine.py", label="Routine", icon="🗓️")
     st.page_link("pages/events.py", label="Events", icon="📆")  
