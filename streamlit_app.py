@@ -1,21 +1,44 @@
 import streamlit as st
 import os
 import pandas as pd
-from st_pages import add_page_title, get_nav_from_toml
 
-st.set_page_config(layout="wide")
+#Page Name
+st.set_page_config(
+    page_title="Alzheimer's Disease Awareness",  # Set the title in the browser tab
+    page_icon="🧠",  
+    layout="wide",
+    initial_sidebar_state="auto")
 
-nav = get_nav_from_toml(
-    ".streamlit/pages_sections.toml" 
-)
 
-st.logo("resources/calendar.png")
 
-pg = st.navigation(nav)
 
-add_page_title(pg)
+def side_bar_UI():
+    st.sidebar.header("Alzheimer Help")  # Sets sidebar name to "Alzheimer Help"
+    st.sidebar.page_link("streamlit_app.py", label="Home", icon="🏠")
+    st.sidebar.page_link("pages/medication.py", label="Medication", icon="💊")
+    st.sidebar.page_link("pages/routine.py", label="Routine", icon="🗓️")  
+    st.sidebar.page_link("pages/events.py", label="Events", icon="📆")  
+    st.sidebar.page_link("pages/settings.py", label="Settings", icon="⚙️")
 
-pg.run()
+
+
+#Functions
+def main_menu_UI():
+    st.image("resources/banner.png", use_container_width=True)
+    st.title("--- Alzheimer help ---")
+    st.divider()
+    side_bar_UI()
+    st.page_link("pages/settings.py", label="Settings", icon="⚙️")
+    st.page_link("pages/routine.py", label="Routine", icon="🗓️")
+    st.page_link("pages/events.py", label="Events", icon="📆")  
+    st.page_link("pages/medication.py", label="Medication", icon="💊")
+
+def main():
+    main_menu_UI()
+
+
+#Call main
+main()
 
 
 
