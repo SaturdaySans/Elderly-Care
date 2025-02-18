@@ -15,8 +15,6 @@ nav = get_nav_from_toml(".streamlit/pages_sections.toml")
 
 pg = st.navigation(nav)
 
-add_page_title(pg)
-
 st.logo("resources/calendar.png") # Sets logo of the app
 
 #Functions (Not Used)
