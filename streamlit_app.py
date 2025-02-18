@@ -35,8 +35,8 @@ def home_page():
     main_menu_UI
 
 def main():
-    if pg.current_page == "home":  # Replace "home" with the actual name of your home page
-        home_page()
+    if pg.current_page == "streamlit_app.py": 
+        home_page() 
     else:
         pass
 
