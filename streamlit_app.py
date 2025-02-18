@@ -4,9 +4,7 @@ import pandas as pd
 from st_pages import add_page_title, get_nav_from_toml
 
 # 🛠️ Fix: Move `st.set_page_config()` to the top before any other `st` calls
-st.set_page_config(
-    page_title="Alzheimer's Disease Awareness",  # Set the title in the browser tab
-    page_icon="🧠",  
+st.set_page_config( 
     layout="wide",
     initial_sidebar_state="auto"
 )
