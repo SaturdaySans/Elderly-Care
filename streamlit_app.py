@@ -10,15 +10,16 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="auto")
 
+#st.Page(page, *, title=None, icon=None, url_path=None, default=False) [Format]
 pg = st.navigation([
-    st.Page("pages/menu.py",default=True),
+    st.Page("pages/menu.py", title="Main Menu", icon="🏠", url_path="Main_Menu", default=True),
     st.Page("pages/medication.py"),
     st.Page("pages/routine.py"),
     st.Page("pages/events.py"),
     st.Page("pages/settings.py"),
 ])
 
-#Functions
+#Functions (Not Used)
 def main_menu_UI():
     #st.image("resources/banner.png", use_container_width=True)
     st.title("--- Alzheimer help ---")
