@@ -20,8 +20,8 @@ pg = st.navigation(nav)
 # Add a title
 add_page_title(pg)
 
-# Sidebar title (this is where you add a title to the sidebar)
-st.sidebar.header("Alzheimer's App Menu")  # You can use st.sidebar.title() or st.sidebar.header() for the sidebar title
+# Sidebar title 
+st.sidebar.header()  
 
 # Functions
 def main_menu_UI():
