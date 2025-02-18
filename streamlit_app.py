@@ -23,22 +23,9 @@ pg = st.navigation(nav)
 
 add_page_title(pg)
 
+pg.run()
 
 
-# Functions
-def main_menu_UI():
-    # st.image("resources/banner.png", use_container_width=True)
-    st.divider()
-    st.page_link("pages/settings.py", label="Settings", icon="⚙️")
-    st.page_link("pages/routine.py", label="Routine", icon="🗓️")
-    st.page_link("pages/events.py", label="Events", icon="📆")  
-    st.page_link("pages/medication.py", label="Medication", icon="💊")
-
-def main():
-    main_menu_UI()
-
-# Call the main function after all Streamlit components are set up
-main()
 
 
 
