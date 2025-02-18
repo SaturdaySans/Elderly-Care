@@ -12,7 +12,6 @@ st.set_page_config(
 
 #st.Page(page, *, title=None, icon=None, url_path=None, default=False) [Format]
 pg = st.navigation([
-    st.sidebar.header("Alzheimer Help"),
     st.Page("pages/menu.py", title="Main Menu", icon="🏠", default=True),
     st.Page("pages/medication.py", title="Medication", icon="💊"),
     st.Page("pages/routine.py", title="Routine", icon="🗓️"),
