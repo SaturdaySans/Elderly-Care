@@ -8,7 +8,8 @@ st.set_page_config(
     page_title="Alzheimer's Disease Awareness",  # Set the title in the browser tab
     page_icon="🧠",  
     layout="wide",
-    initial_sidebar_state="auto")
+    initial_sidebar_state="auto"
+)
 
 # Load pages from .toml
 nav = get_nav_from_toml(".streamlit/pages.toml")
@@ -19,13 +20,6 @@ pg = st.navigation(nav)
 # Add a title
 add_page_title(pg)
 
-pg.run()
-
-
-
-
-
-
 
 def side_bar_UI():
     st.sidebar.header("Alzheimer Help")  # Sets sidebar name to "Alzheimer Help"
@@ -34,7 +28,6 @@ def side_bar_UI():
     st.sidebar.page_link("pages/routine.py", label="Routine", icon="🗓️")  
     st.sidebar.page_link("pages/events.py", label="Events", icon="📆")  
     st.sidebar.page_link("pages/settings.py", label="Settings", icon="⚙️")
-
 
 
 #Functions
@@ -48,15 +41,16 @@ def main_menu_UI():
     st.page_link("pages/events.py", label="Events", icon="📆")  
     st.page_link("pages/medication.py", label="Medication", icon="💊")
 
+
 def main():
-    main_menu_UI()
+    if pg.current_page is None:
+        main_menu_UI()
+    else:
+        pg.run()
 
 
 #Call main
 main()
-
-
-
 
 
 #Todo: 
