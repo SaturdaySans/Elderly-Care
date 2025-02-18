@@ -1,7 +1,8 @@
 import streamlit as st
 import os
 import pandas as pd
-from st_pages import Page, show_pages, add_page_title
+from st_pages import show_pages, add_page_title, Page
+
 
 #Page Name
 st.set_page_config(
