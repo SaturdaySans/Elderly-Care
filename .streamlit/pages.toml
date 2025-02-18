@@ -9,7 +9,7 @@ name = "Medication"
 icon = "💊"
 
 [[pages]]
-path = "pages/schedule.py"
+path = "pages/routine.py"
 name = "Schedule"
 icon = "🗓️"
 
