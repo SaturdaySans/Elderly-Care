@@ -1,6 +1,6 @@
 [[pages]]
 path = "streamlit_app.py"
-name = "Home"
+name = "Main Menu"
 icon = "🏠"
 
 [[pages]]
@@ -10,7 +10,7 @@ icon = "💊"
 
 [[pages]]
 path = "pages/routine.py"
-name = "Schedule"
+name = "Routine"
 icon = "🗓️"
 
 [[pages]]
