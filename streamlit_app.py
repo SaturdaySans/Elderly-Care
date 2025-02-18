@@ -11,16 +11,19 @@ st.set_page_config(
     initial_sidebar_state="auto"
 )
 
-# Load pages from .toml
-nav = get_nav_from_toml(".streamlit/pages.toml")
+sections = st.sidebar.toggle("Sections", value=True, key="use_sections")
 
-# Display navigation
+nav = get_nav_from_toml(
+    ".streamlit/pages_sections.toml" if sections else ".streamlit/pages.toml"
+)
+
+st.logo("logo.png")
+
 pg = st.navigation(nav)
 
-# Add a title
 add_page_title(pg)
 
-# Sidebar title 
+pg.run()
 
 # Functions
 def main_menu_UI():
