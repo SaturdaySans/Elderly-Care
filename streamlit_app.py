@@ -32,7 +32,7 @@ def main_menu_UI():
 
 def main():
     main_menu_UI()
-    pg.run()  # Run the navigation system
+      # Run the navigation system
 
 # Call the main function after all Streamlit components are set up
 main()
