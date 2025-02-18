@@ -20,7 +20,7 @@ add_page_title()
 show_pages(
     [
         Page("streamlit_app.py", "Home", "🏠"),
-        Page("pages/events.py", "Page 2", ":books:"),
+        Page("pages/events.py", "Page 2", ":book:"),
     ]
 )
 
