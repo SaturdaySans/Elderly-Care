@@ -20,9 +20,12 @@ pg = st.navigation(nav)
 # Add a title
 add_page_title(pg)
 
+# Sidebar title (this is where you add a title to the sidebar)
+st.sidebar.header("Alzheimer's App Menu")  # You can use st.sidebar.title() or st.sidebar.header() for the sidebar title
+
 # Functions
 def main_menu_UI():
-    #st.image("resources/banner.png", use_container_width=True)
+    # st.image("resources/banner.png", use_container_width=True)
     st.divider()
     st.page_link("pages/settings.py", label="Settings", icon="⚙️")
     st.page_link("pages/routine.py", label="Routine", icon="🗓️")
@@ -32,9 +35,9 @@ def main_menu_UI():
 def main():
     main_menu_UI()
 
-pg.run()
 # Call the main function after all Streamlit components are set up
 main()
+
 
 
 #Todo: 
