@@ -14,8 +14,6 @@ st.set_page_config(
 # Load pages from .toml
 nav = get_nav_from_toml(".streamlit/pages.toml")
 
-# Display navigation
-pg = st.navigation(nav)
 
 # Add a title
 add_page_title(pg)
@@ -34,7 +32,6 @@ def main_menu_UI():
 
 def main():
     main_menu_UI()
-    pg.run()  # Run the navigation system
 
 #Call main
 main()
