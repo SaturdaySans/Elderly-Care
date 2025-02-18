@@ -5,8 +5,7 @@ from st_pages import add_page_title, get_nav_from_toml
 
 # 🛠️ Fix: Move `st.set_page_config()` to the top before any other `st` calls
 st.set_page_config( 
-    layout="wide",
-    initial_sidebar_state="auto"
+    layout="wide"
 )
 
 sections = st.sidebar.toggle("Sections", value=True, key="use_sections")
