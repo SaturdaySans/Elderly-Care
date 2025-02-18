@@ -1,7 +1,7 @@
 import streamlit as st
 import os
 import pandas as pd
-from st_pages import show_pages, add_page_title, Page
+from st_pages import add_page_title, get_nav_from_toml
 
 
 #Page Name
