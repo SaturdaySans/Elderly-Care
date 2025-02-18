@@ -16,7 +16,6 @@ pg=st.navigation([
     st.Page("pages/routine.py", title="Routine", icon="🗓️"),
     st.Page("pages/settings.py", title="Settings", icon="⚙️"),
 ])
-pg.run()
 
 
 #def side_bar_UI():
@@ -41,6 +40,7 @@ def main_menu_UI():
 
 def main():
     main_menu_UI()
+    pg.run()
 
 
 #Call main
