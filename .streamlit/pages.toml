@@ -1,0 +1,24 @@
+[[pages]]
+path = "streamlit_app.py"
+name = "Home"
+icon = "🏠"
+
+[[pages]]
+path = "pages/medication.py"
+name = "Medication"
+icon = "💊"
+
+[[pages]]
+path = "pages/schedule.py"
+name = "Schedule"
+icon = "🗓️"
+
+[[pages]]
+path = "pages/events.py"
+name = "Events"
+icon = "📆"
+
+[[pages]]
+path = "pages/settings.py"
+name = "Settings"
+icon = "⚙️"

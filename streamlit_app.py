@@ -13,17 +13,16 @@ st.set_page_config(
 
 
 
-# Optional -- adds the title and icon to the current page
-add_page_title()
+# Load pages from .toml
+nav = get_nav_from_toml(".streamlit/pages.toml")
 
-# Specify what pages should be shown in the sidebar, and what their titles 
-# and icons should be
-show_pages(
-    [
-        Page("streamlit_app.py", "Home", "🏠"),
-        Page("pages/events.py", "Page 2", ":book:"),
-    ]
-)
+# Display navigation
+pg = st.navigation(nav)
+
+# Add a title
+add_page_title(pg)
+
+pg.run()
 
 def side_bar_UI():
     st.sidebar.header("Alzheimer Help")  # Sets sidebar name to "Alzheimer Help"
