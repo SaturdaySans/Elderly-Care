@@ -26,7 +26,11 @@ def main_menu_UI():
     st.title("--- Alzheimer help ---")
     st.divider()
     side_bar_UI()
-    # Row 1
+    st.page_link("pages/settings.py", label="Settings", icon="⚙️")
+    st.page_link("pages/routine.py", label="Routine", icon="🗓️")
+    st.page_link("pages/events.py", label="Events", icon="📆")  
+    st.page_link("pages/medication.py", label="Medication", icon="💊")
+    """# Row 1
     col1, col2 = st.columns([1, 2]) 
     with col1:
         st.image("resources/settings.png", width=200)
@@ -49,7 +53,7 @@ def main_menu_UI():
     with col5:
         st.image("resources/medicine.png", width=200)
     with col6:
-        st.page_link("pages/medication.py", label="Medication", icon="💊")
+        st.page_link("pages/medication.py", label="Medication", icon="💊")"""
 
 def main():
     main_menu_UI()
