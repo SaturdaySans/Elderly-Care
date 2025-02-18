@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 import pandas as pd
+from st_pages import add_page_title, get_nav_from_toml
 
 #Admin Page (For us)
 
@@ -10,14 +11,11 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="auto")
 
-#st.Page(page, *, title=None, icon=None, url_path=None, default=False) [Format]
-pg = st.navigation([
-    st.Page("pages/menu.py", title="Main Menu", icon="🏠", default=True),
-    st.Page("pages/medication.py", title="Medication", icon="💊"),
-    st.Page("pages/routine.py", title="Routine", icon="🗓️"),
-    st.Page("pages/events.py", title="Events", icon="📆"),
-    st.Page("pages/settings.py", title="Settings", icon="⚙️"),
-])
+nav = get_nav_from_toml(".streamlit/pages_sections.toml")
+
+pg = st.navigation(nav)
+
+add_page_title(pg)
 
 st.logo("resources/calendar.png") # Sets logo of the app
 

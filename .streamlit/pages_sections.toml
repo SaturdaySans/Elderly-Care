@@ -1,5 +1,5 @@
 [[pages]]
-path = "streamlit_app.py"
+path = "pages/menu.py"
 name = "Main Menu"
 icon = "🏠"
 
