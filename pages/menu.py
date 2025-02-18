@@ -3,7 +3,7 @@ import os
 import pandas as pd
 
 
-st.title("--- Alzheimer help ---")
+st.title("--- Elderly Care ---")
 st.divider()
 st.page_link("pages/settings.py", label="Settings", icon="⚙️")
 st.page_link("pages/routine.py", label="Routine", icon="🗓️")
