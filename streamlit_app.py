@@ -31,11 +31,11 @@ def main_menu_UI():
     st.page_link("pages/events.py", label="Events", icon="📆")  
     st.page_link("pages/medication.py", label="Medication", icon="💊")
 
-#def main():
-    #main_menu_UI()
+def main():
+    main_menu_UI()
 
 # Call the main function after all Streamlit components are set up
-#main()
+main()
 
 
 
