@@ -20,9 +20,7 @@ pg = st.navigation(nav)
 # Add a title
 add_page_title(pg)
 
-
-
-#Functions
+# Functions
 def main_menu_UI():
     st.image("resources/banner.png", use_container_width=True)
     st.title("--- Alzheimer help ---")
@@ -36,8 +34,9 @@ def main():
     main_menu_UI()
     pg.run()  # Run the navigation system
 
-#Call main
+# Call the main function after all Streamlit components are set up
 main()
+
 
 #Todo: 
 #Rewrite validation for daily routine, HHMM format, etc.
