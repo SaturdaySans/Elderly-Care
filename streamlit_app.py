@@ -40,7 +40,6 @@ def main_menu_UI():
 
 def main():
     main_menu_UI()
-    pg.run()
 
 
 #Call main
