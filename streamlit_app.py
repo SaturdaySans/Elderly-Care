@@ -10,7 +10,7 @@ st.set_page_config(
     initial_sidebar_state="auto")
 
 pg = st.navigation([
-    st.Page("pages/Menu.py",default=True),
+    st.Page("pages/menu.py",default=True),
     st.Page("pages/medication.py"),
     st.Page("pages/routine.py"),
     st.Page("pages/events.py"),
