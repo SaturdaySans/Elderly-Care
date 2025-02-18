@@ -31,8 +31,14 @@ def main_menu_UI():
     st.page_link("pages/events.py", label="Events", icon="📆")  
     st.page_link("pages/medication.py", label="Medication", icon="💊")
 
+def home_page():
+    main_menu_UI
+
 def main():
-    main_menu_UI()
+    if pg.current_page == "home":  # Replace "home" with the actual name of your home page
+        home_page()
+    else:
+        pass
 
 # Call the main function after all Streamlit components are set up
 main()
