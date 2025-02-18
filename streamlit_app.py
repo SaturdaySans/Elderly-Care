@@ -19,6 +19,8 @@ pg = st.navigation([
     st.Page("pages/settings.py", title="Settings", icon="⚙️"),
 ])
 
+st.logo("resources/calendar.png") # Sets logo of the app
+
 #Functions (Not Used)
 def main_menu_UI():
     #st.image("resources/banner.png", use_container_width=True)
