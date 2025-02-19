@@ -1,6 +1,6 @@
 [[pages]]
 path = "pages/menu.py"
-name = "Main Menu"
+name = "Home"
 icon = "🏠"
 
 [[pages]]
