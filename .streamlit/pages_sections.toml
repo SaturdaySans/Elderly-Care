@@ -1,4 +1,8 @@
 [[pages]]
+name = "Main Menu"
+is_section = true
+
+[[pages]]
 path = "pages/menu.py"
 name = "Home"
 icon = "🏠"
