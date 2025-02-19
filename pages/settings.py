@@ -81,17 +81,23 @@ def generate_UID(_username, admin_UID=None):
     """Generate UID for admin and sub-accounts."""
     first_part = _username[:4]
     
-    if admin_UID:  # If admin is creating a sub-account
-        base_UID = admin_UID[:-1]  # Remove last digit (0)
-        existing_uids = load_accounts()["UID"].tolist()
-        suffix = 1  # Start with "1"
-        while base_UID + str(suffix) in existing_uids:
-            suffix += 1
-        return base_UID + str(suffix)
+    df = load_accounts()
+    existing_uids = df["UID"].tolist()
     
-    # Generate UID for new admin account
-    random_numbers = ''.join([str(random.randint(0, 9)) for _ in range(4)])
-    return first_part + random_numbers + "0"
+    if admin_UID:  # If admin is creating a sub-account
+        base_UID = admin_UID[:-3]
+        suffix = 1
+        while base_UID + "1" + f"{suffix:02d}" in existing_uids:
+            suffix += 1
+        return base_UID + "1" + f"{suffix:02d}"
+    
+    # Generate UID for new admin or user account
+    is_admin = st.session_state.get("UID", "").endswith("0")
+    user_type = "0" if is_admin else "1"
+    suffix = 1
+    while first_part + user_type + f"{suffix:02d}" in existing_uids:
+        suffix += 1
+    return first_part + user_type + f"{suffix:02d}"
 
 
 def create_account():
