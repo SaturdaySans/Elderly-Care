@@ -6,7 +6,7 @@ from st_pages import add_page_title, get_nav_from_toml
 #Admin Page (For us)
 
 st.set_page_config(
-    page_title="Alzheimer's Disease Awareness",  # Set the title in the browser tab
+    page_title="Elderly Care",  # Set the title in the browser tab
     page_icon="🧠",  
     layout="wide",
     initial_sidebar_state="auto")
