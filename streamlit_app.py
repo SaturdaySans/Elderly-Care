@@ -17,6 +17,21 @@ pg = st.navigation(nav)
 
 st.logo("resources/calendar.png") # Sets logo of the app
 
+if "role" not in st.session_state:
+    st.session_state.role = None
+ROLES = [None, "User", "Admin"]
+if st.session_state["UID"][-1] == 0:
+    st.session_state.role = "Admin"
+    st.rerun()
+role = st.session_state.role
+admin_pages = st.Page("pages/admin.py", title="Admin", icon=":material/security:", default=(role == "Admin"))
+page_dict = {}
+if st.session_state.role == "Admin":
+    page_dict["Admin"] = admin_pages
+if len(page_dict) > 0:
+    pg = st.navigation({"Admin": admin_pages} | page_dict)
+
+
 #Functions (Not Used)
 def main_menu_UI():
     #st.image("resources/banner.png", use_container_width=True)
