@@ -5,7 +5,6 @@ from st_pages import add_page_title, get_nav_from_toml
 from utils import setup_navigation  # Import the global function
 
 pg = setup_navigation()  # Call the function to setup navigation
-pg.run()
 
 st.title("--- Elderly Care ---")
 st.divider()
