@@ -14,6 +14,8 @@ if "username" not in st.session_state:
     st.session_state["username"] = None
 if "UID" not in st.session_state:
     st.session_state["UID"] = None
+if "role" not in st.session_state:
+    st.session_state["role"] = None
 
 if "page" not in st.session_state:
     st.session_state["page"] = "settings"  # Default to settings page
@@ -41,6 +43,8 @@ def account_UI():
         st.write(f"UID: **{st.session_state['UID']}**")
         if st.button("Logout"):
             logout()
+        if st.session_state["role"] == "Admin":
+            st.page_link("pages/admin.py", label="Go to Admin Page", icon="⚙️")
     else:
         if st.button("Create Account"):
             st.session_state["page"] = "create_account"
@@ -61,6 +65,13 @@ def login():
             st.session_state["logged_in"] = True
             st.session_state["username"] = user.iloc[0]["username"]
             st.session_state["UID"] = user.iloc[0]["UID"]  # Set UID after login
+
+            # Check if the UID ends with "0" for Admin role
+            if str(st.session_state["UID"])[-1] == "0":
+                st.session_state["role"] = "Admin"
+            else:
+                st.session_state["role"] = "User"
+
             st.session_state["page"] = "settings"
             st.rerun()
         else:
@@ -100,15 +111,6 @@ def create_account():
     email = st.text_input("Enter email:").strip()
     password = st.text_input("Enter password:", type="password").strip()
 
-    admin_UID = st.session_state.get("UID", None)
-    is_admin = admin_UID and str(admin_UID).endswith("0")
-
-    if is_admin:
-        st.write("🔹 You are an admin. You can create sub-accounts.")
-        if st.button("Generate Sub-Account"):
-            sub_UID = generate_UID(username, admin_UID)
-            st.write(f"✅ Sub-Account UID: **{sub_UID}**")
-
     if st.button("Register"):
         if not username or not email or not password:
             st.write("❌ All fields are required.")
@@ -126,8 +128,8 @@ def create_account():
             st.write("❌ Email already in use. Please login.")
             return
 
-        # Generate UID based on admin or regular user
-        UID = generate_UID(username, admin_UID) if is_admin else generate_UID(username)
+        # Generate UID for regular user
+        UID = generate_UID(username)
 
         # Append new user
         new_user = pd.DataFrame([[username, email, password, UID]], columns=["username", "email", "password", "UID"])
@@ -137,14 +139,15 @@ def create_account():
         st.session_state["logged_in"] = True
         st.session_state["username"] = username
         st.session_state["UID"] = UID
-        st.session_state["page"] = "settings"
-        st.rerun()
-        if str(st.session_state["UID"])[-1] == "0":
-            st.session_state["role"] = "Admin"  # For example, assign role as "Admin"
+
+        # Check for Admin role based on UID
+        if str(UID)[-1] == "0":
+            st.session_state["role"] = "Admin"
         else:
-            # Handle the case where the last character is not "0"
             st.session_state["role"] = "User"
 
+        st.session_state["page"] = "settings"
+        st.rerun()
 
 
 # **Navigation Handling**
@@ -154,5 +157,3 @@ elif st.session_state["page"] == "login":
     login()
 elif st.session_state["page"] == "create_account":
     create_account()
-if st.session_state["role"] == "Admin":
-    st.page_link("pages/admin.py", label="Go to Admin Page", icon="⚙️")
