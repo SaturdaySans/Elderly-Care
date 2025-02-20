@@ -12,15 +12,3 @@ st.page_link("pages/routine.py", label="Routine", icon="🗓️")
 st.page_link("pages/events.py", label="Events", icon="📆")  
 st.page_link("pages/medication.py", label="Medication", icon="💊")
 
-# Display current role and UID for debugging purposes
-st.write("Role:", st.session_state.get("role", "Not Set"))
-st.write("UID:", st.session_state.get("UID", "Not Set"))
-
-# Ensure the role is initialized correctly
-if "role" not in st.session_state:
-    st.session_state.role = None
-    st.session_state.UID = [1]  # Default UID for non-admins, adjust as needed
-
-# If the role is admin, refresh the navigation
-if st.session_state.role == "Admin":  # Example of checking role
-    update_navigation()  # Call to refresh navigation and rerun the app
