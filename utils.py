@@ -22,25 +22,13 @@ def setup_navigation():
 
     role = st.session_state.role
 
-    # Define Admin page
-    admin_pages = st.Page("pages/admin.py", title="Admin", icon=":material/security:")
+    # Define Admin page correctly as a dictionary
+    admin_pages = {"Admin": st.Page("pages/admin.py", title="Admin", icon=":material/security:")}
 
     # Merge Admin page into navigation if user is Admin
     if role == "Admin":
-        pg = st.navigation({**nav, "Admin": admin_pages})
+        pg = st.navigation({**nav, **admin_pages})  # Merged dictionary with admin page
     else:
         pg = st.navigation(nav)
 
     return pg  # Return the navigation object
-
-def update_navigation():
-    """Function to update the navigation and trigger a rerun."""
-    # Ensure the role is set before refreshing navigation
-    if "role" not in st.session_state:
-        setup_navigation()  # This will set the role based on UID
-
-    # Call setup_navigation to refresh the navigation
-    pg = setup_navigation()
-
-    # Trigger rerun only once after navigation is updated
-    st.experimental_rerun()
