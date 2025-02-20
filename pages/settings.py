@@ -2,6 +2,7 @@ import streamlit as st
 import os
 import pandas as pd
 import random
+from st_pages import get_nav_from_toml, hide_pages
 
 
 # File to store account data
@@ -44,7 +45,10 @@ def account_UI():
         if st.button("Logout"):
             logout()
         if st.session_state["role"] == "Admin":
+            hide_pages([])
             st.page_link("pages/admin.py", label="Go to Admin Page", icon="⚙️")
+        else:
+            hide_pages(["Admin"])
     else:
         if st.button("Create Account"):
             st.session_state["page"] = "create_account"
