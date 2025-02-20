@@ -24,11 +24,11 @@ name = "Events"
 icon = "📆"
 
 [[pages]]
-path = "pages/settings.py"
-name = "Settings"
-icon = "⚙️"
-
-[[pages]]
 name = "Admin"
 icon = "🎈️"
 is_section = true
+
+[[pages]]
+path = "pages/settings.py"
+name = "Settings"
+icon = "⚙️"
