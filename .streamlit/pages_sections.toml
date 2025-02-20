@@ -32,3 +32,8 @@ is_section = true
 path = "pages/settings.py"
 name = "Settings"
 icon = "⚙️"
+
+[[pages]]
+path = "pages/admin.py"
+name = "Admin"
+icon = "⚙️"
