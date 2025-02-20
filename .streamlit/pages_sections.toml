@@ -24,6 +24,16 @@ name = "Events"
 icon = "📆"
 
 [[pages]]
+name = "Others"
+icon = "🎈️"
+is_section = true
+
+[[pages]]
 path = "pages/settings.py"
 name = "Settings"
+icon = "⚙️"
+
+[[pages]]
+path = "pages/admin.py"
+name = "Admin"
 icon = "⚙️"

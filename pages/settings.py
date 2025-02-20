@@ -2,6 +2,7 @@ import streamlit as st
 import os
 import pandas as pd
 import random
+from st_pages import get_nav_from_toml, hide_pages
 
 
 # File to store account data
@@ -14,6 +15,8 @@ if "username" not in st.session_state:
     st.session_state["username"] = None
 if "UID" not in st.session_state:
     st.session_state["UID"] = None
+if "role" not in st.session_state:
+    st.session_state["role"] = None
 
 if "page" not in st.session_state:
     st.session_state["page"] = "settings"  # Default to settings page
@@ -28,9 +31,9 @@ def load_accounts():
     """Load accounts from CSV safely"""
     check_or_create_file()
     try:
-        return pd.read_csv(ACCOUNTS_FILE)
+        return pd.read_csv(ACCOUNTS_FILE, dtype=str)  # Ensure UID is treated as a string
     except pd.errors.EmptyDataError:
-        return pd.DataFrame(columns=["username", "email", "password"])
+        return pd.DataFrame(columns=["username", "email", "password", "UID"])
 
 def account_UI():
     """Display Account Settings UI"""
@@ -41,6 +44,10 @@ def account_UI():
         st.write(f"UID: **{st.session_state['UID']}**")
         if st.button("Logout"):
             logout()
+        if st.session_state["role"] == "Admin":
+            hide_pages([])
+        else:
+            hide_pages(["Admin"])
     else:
         if st.button("Create Account"):
             st.session_state["page"] = "create_account"
@@ -60,6 +67,14 @@ def login():
         if not user.empty and user.iloc[0]["password"] == password:
             st.session_state["logged_in"] = True
             st.session_state["username"] = user.iloc[0]["username"]
+            st.session_state["UID"] = user.iloc[0]["UID"]  # Set UID after login
+
+            # Check if the UID ends with "0" for Admin role
+            if str(st.session_state["UID"])[-1] == "0":
+                st.session_state["role"] = "Admin"
+            else:
+                st.session_state["role"] = "User"
+
             st.session_state["page"] = "settings"
             st.rerun()
         else:
@@ -71,9 +86,7 @@ def login():
 
 def logout():
     """Logout User"""
-    st.session_state["logged_in"] = False
-    st.session_state["username"] = None
-    st.session_state["UID"] = None
+    st.session_state.clear()
     st.session_state["page"] = "settings"
     st.rerun()
 
@@ -85,11 +98,12 @@ def generate_UID(_username, admin_UID=None):
     existing_uids = df["UID"].tolist()
     
     if admin_UID:  # If admin is creating a sub-account
-        base_UID = admin_UID[:-3]
-        suffix = 1
-        while base_UID + "1" + f"{suffix:02d}" in existing_uids:
+        base_UID = admin_UID[:-1]  # Remove last digit (0)
+        existing_uids = load_accounts()["UID"].tolist()
+        suffix = 1  # Start with "1"
+        while base_UID + str(suffix) in existing_uids:
             suffix += 1
-        return base_UID + "1" + f"{suffix:02d}"
+        return base_UID + str(suffix)
     
     # Generate UID for new admin or user account
     is_admin = st.session_state.get("UID", "").endswith("0")
@@ -99,22 +113,12 @@ def generate_UID(_username, admin_UID=None):
         suffix += 1
     return first_part + user_type + f"{suffix:02d}"
 
-
 def create_account():
     """Create a new account and save to CSV"""
     st.write("\n--- Create New Account ---")
     username = st.text_input("Enter username:").strip()
     email = st.text_input("Enter email:").strip()
     password = st.text_input("Enter password:", type="password").strip()
-
-    admin_UID = st.session_state.get("UID", None)
-    is_admin = admin_UID and admin_UID.endswith("0")
-
-    if is_admin:
-        st.write("🔹 You are an admin. You can create sub-accounts.")
-        if st.button("Generate Sub-Account"):
-            sub_UID = generate_UID(username, admin_UID)
-            st.write(f"✅ Sub-Account UID: **{sub_UID}**")
 
     if st.button("Register"):
         if not username or not email or not password:
@@ -133,8 +137,8 @@ def create_account():
             st.write("❌ Email already in use. Please login.")
             return
 
-        # Generate UID based on admin or regular user
-        UID = generate_UID(username, admin_UID) if is_admin else generate_UID(username)
+        # Generate UID for regular user
+        UID = generate_UID(username)
 
         # Append new user
         new_user = pd.DataFrame([[username, email, password, UID]], columns=["username", "email", "password", "UID"])
@@ -144,6 +148,13 @@ def create_account():
         st.session_state["logged_in"] = True
         st.session_state["username"] = username
         st.session_state["UID"] = UID
+
+        # Check for Admin role based on UID
+        if str(UID)[-1] == "0":
+            st.session_state["role"] = "Admin"
+        else:
+            st.session_state["role"] = "User"
+
         st.session_state["page"] = "settings"
         st.rerun()
 
@@ -155,4 +166,3 @@ elif st.session_state["page"] == "login":
     login()
 elif st.session_state["page"] == "create_account":
     create_account()
-
