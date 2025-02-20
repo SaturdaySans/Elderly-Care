@@ -2,7 +2,7 @@ import streamlit as st
 from st_pages import get_nav_from_toml, hide_pages
 
 def setup_navigation():
-    """Global function to setup navigation with role-based access."""
+    """Global function to setup navigation."""
     # Load navigation pages from the TOML file
     nav = get_nav_from_toml(".streamlit/pages_sections.toml")
 
@@ -15,12 +15,9 @@ def setup_navigation():
 
     if "UID" not in st.session_state:
         st.session_state["UID"] = [1]  # Default non-admin UID
+    hide_pages(["Admin"])
 
-    # Check the user's role, if they are not an admin, hide admin pages
-    if st.session_state["role"] != "Admin":
-        hide_pages(["Admin"])  # Hide admin pages for non-admin users
-
-    # Display navigation
+    # Display standard navigation (no admin-specific logic)
     pg = st.navigation(nav)
 
     return pg  # Return the navigation object
