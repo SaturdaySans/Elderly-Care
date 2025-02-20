@@ -22,11 +22,13 @@ if "role" not in st.session_state:
 
 ROLES = [None, "User", "Admin"]
 
-# Check UID existence before accessing it
-if "UID" in st.session_state and isinstance(st.session_state["UID"], list) and st.session_state["UID"]:
-    if st.session_state["UID"][-1] == 0:
-        st.session_state.role = "Admin"
-        st.rerun()
+if "UID" not in st.session_state:
+    st.session_state["UID"] = [] 
+
+
+if st.session_state["UID"] and st.session_state["UID"][-1] == 0:
+    st.session_state.role = "Admin"
+    st.rerun()
 
 role = st.session_state.role
 
