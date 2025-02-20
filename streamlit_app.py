@@ -3,69 +3,41 @@ import os
 import pandas as pd
 from st_pages import add_page_title, get_nav_from_toml
 
-#Admin Page (For us)
-
 st.set_page_config(
-    page_title="Elderly Care",  # Set the title in the browser tab
-    page_icon="🧠",  
+    page_title="Elderly Care",
+    page_icon="🧠",
     layout="wide",
-    initial_sidebar_state="auto")
+    initial_sidebar_state="auto"
+)
 
+# Load navigation pages
 nav = get_nav_from_toml(".streamlit/pages_sections.toml")
 
-pg = st.navigation(nav)
+# Display app logo
+st.logo("resources/calendar.png", width=100)
 
-st.logo("resources/calendar.png") # Sets logo of the app
-
+# Ensure session state role exists
 if "role" not in st.session_state:
     st.session_state.role = None
+
 ROLES = [None, "User", "Admin"]
-if st.session_state["UID"][-1] == 0:
-    st.session_state.role = "Admin"
-    st.rerun()
+
+# Check UID existence before accessing it
+if "UID" in st.session_state and isinstance(st.session_state["UID"], list) and st.session_state["UID"]:
+    if st.session_state["UID"][-1] == 0:
+        st.session_state.role = "Admin"
+        st.rerun()
+
 role = st.session_state.role
-admin_pages = st.Page("pages/admin.py", title="Admin", icon=":material/security:", default=(role == "Admin"))
-page_dict = {}
-if st.session_state.role == "Admin":
-    page_dict["Admin"] = admin_pages
-if len(page_dict) > 0:
-    pg = st.navigation({"Admin": admin_pages} | page_dict)
 
+# Define Admin page
+admin_pages = st.Page("pages/admin.py", title="Admin", icon=":material/security:")
 
-#Functions (Not Used)
-def main_menu_UI():
-    #st.image("resources/banner.png", use_container_width=True)
-    st.title("--- Alzheimer help ---")
-    st.divider()
-    st.page_link("pages/settings.py", label="Settings", icon="⚙️")
-    st.page_link("pages/routine.py", label="Routine", icon="🗓️")
-    st.page_link("pages/events.py", label="Events", icon="📆")  
-    st.page_link("pages/medication.py", label="Medication", icon="💊")
+# Merge Admin page into navigation if user is Admin
+if role == "Admin":
+    pg = st.navigation({**nav, "Admin": admin_pages})
+else:
+    pg = st.navigation(nav)
 
-def main():
-    pg.run()
-
-
-#Call main
-main()
-
-
-
-
-
-#Todo: 
-#Rewrite validation for daily routine, HHMM format, etc.
-#Refine input validation for account creation, email validation, etc.
-#Set up streamlit UI
-#GPS tracking 
-#Daily routine
-#Reminders
-#Move main menu UI in main() to user_interface()
-#Admin account that can delete accounts?
-#Allow user to go back to main menu in the sub-menus.
-#Add file close() everywhere it is missing.
-#Optimise the code, make it neater.
-#Add a way to go back to the main menu in all sub-menus.
-#Fix delete event
-#Add edit event function
-#Add view events function
+# Run the navigation system
+pg.run()
