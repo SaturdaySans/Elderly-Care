@@ -12,6 +12,6 @@ st.page_link("pages/routine.py", label="Routine", icon="🗓️")
 st.page_link("pages/events.py", label="Events", icon="📆")  
 st.page_link("pages/medication.py", label="Medication", icon="💊")
 
-st.write(st.session_state.role)
+st.write(st.session_state.role,st.session_state.UID)
 if st.session_state.role == "Admin":  # Example of checking role
     update_navigation()  # Call to refresh navigation and rerun the app
