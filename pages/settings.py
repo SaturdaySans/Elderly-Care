@@ -2,6 +2,7 @@ import streamlit as st
 import os
 import pandas as pd
 import random
+from utils import setup_navigation  # Import the global function
 
 
 # File to store account data
@@ -148,3 +149,6 @@ elif st.session_state["page"] == "login":
     login()
 elif st.session_state["page"] == "create_account":
     create_account()
+
+pg = setup_navigation()  # Call the function to setup navigation
+pg.run()
