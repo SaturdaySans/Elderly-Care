@@ -27,3 +27,8 @@ icon = "📆"
 path = "pages/settings.py"
 name = "Settings"
 icon = "⚙️"
+
+[[pages]]
+name = "Admin"
+icon = "🎈️"
+is_section = true
