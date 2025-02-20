@@ -46,7 +46,6 @@ def account_UI():
             logout()
         if st.session_state["role"] == "Admin":
             hide_pages([])
-            st.page_link("pages/admin.py", label="Go to Admin Page", icon="⚙️")
         else:
             hide_pages(["Admin"])
     else:
