@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import pandas as pd
 import random
-from utils import setup_navigation  # Import the global function
+from utils import update_navigation  # Import the global function
 
 
 # File to store account data
