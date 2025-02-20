@@ -28,9 +28,9 @@ def load_accounts():
     """Load accounts from CSV safely"""
     check_or_create_file()
     try:
-        return pd.read_csv(ACCOUNTS_FILE)
+        return pd.read_csv(ACCOUNTS_FILE, dtype=str)  # Ensure UID is treated as a string
     except pd.errors.EmptyDataError:
-        return pd.DataFrame(columns=["username", "email", "password"])
+        return pd.DataFrame(columns=["username", "email", "password", "UID"])
 
 def account_UI():
     """Display Account Settings UI"""
@@ -60,6 +60,7 @@ def login():
         if not user.empty and user.iloc[0]["password"] == password:
             st.session_state["logged_in"] = True
             st.session_state["username"] = user.iloc[0]["username"]
+            st.session_state["UID"] = user.iloc[0]["UID"]  # Set UID after login
             st.session_state["page"] = "settings"
             st.rerun()
         else:
@@ -71,9 +72,7 @@ def login():
 
 def logout():
     """Logout User"""
-    st.session_state["logged_in"] = False
-    st.session_state["username"] = None
-    st.session_state["UID"] = None
+    st.session_state.clear()
     st.session_state["page"] = "settings"
     st.rerun()
 
@@ -84,15 +83,15 @@ def generate_UID(_username, admin_UID=None):
     if admin_UID:  # If admin is creating a sub-account
         base_UID = admin_UID[:-1]  # Remove last digit (0)
         existing_uids = load_accounts()["UID"].tolist()
+        existing_uids = [str(uid) for uid in existing_uids]  # Ensure they are strings
         suffix = 1  # Start with "1"
-        while base_UID + str(suffix) in existing_uids:
+        while str(base_UID) + str(suffix) in existing_uids:
             suffix += 1
-        return base_UID + str(suffix)
+        return str(base_UID) + str(suffix)
     
     # Generate UID for new admin account
     random_numbers = ''.join([str(random.randint(0, 9)) for _ in range(4)])
     return first_part + random_numbers + "0"
-
 
 def create_account():
     """Create a new account and save to CSV"""
@@ -102,7 +101,7 @@ def create_account():
     password = st.text_input("Enter password:", type="password").strip()
 
     admin_UID = st.session_state.get("UID", None)
-    is_admin = admin_UID and admin_UID.endswith("0")
+    is_admin = admin_UID and str(admin_UID).endswith("0")
 
     if is_admin:
         st.write("🔹 You are an admin. You can create sub-accounts.")
@@ -149,4 +148,3 @@ elif st.session_state["page"] == "login":
     login()
 elif st.session_state["page"] == "create_account":
     create_account()
-
