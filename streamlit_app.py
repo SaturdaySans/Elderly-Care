@@ -23,7 +23,7 @@ if "role" not in st.session_state:
 ROLES = [None, "User", "Admin"]
 
 if "UID" not in st.session_state:
-    st.session_state["UID"] = None
+    st.session_state["UID"] = [1]
 
 
 if st.session_state["UID"] and st.session_state["UID"][-1] == 0:
