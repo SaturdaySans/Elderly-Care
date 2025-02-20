@@ -13,4 +13,4 @@ st.set_page_config(
 )
 
 pg = setup_navigation()  # Call the function to setup navigation
-
+pg.run()
