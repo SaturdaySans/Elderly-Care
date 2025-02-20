@@ -19,7 +19,7 @@ def setup_navigation():
     # Check if user is admin (last digit of UID is 0)
     if st.session_state["UID"] and str(st.session_state["UID"][-1])[-1] == "0":
         st.session_state.role = "Admin"
-        st.experimental_rerun()  # Rerun the app to refresh the role if it's admin
+        st.rerun()  # Use st.rerun() instead of st.experimental_rerun()
 
     role = st.session_state.role
 
@@ -40,4 +40,4 @@ def update_navigation():
     pg = setup_navigation()
     
     # Rerun the app after navigation is updated
-    st.experimental_rerun()
+    st.rerun()  # Use st.rerun() here as well
