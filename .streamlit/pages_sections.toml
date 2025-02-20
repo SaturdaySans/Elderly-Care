@@ -24,7 +24,7 @@ name = "Events"
 icon = "📆"
 
 [[pages]]
-name = "Admin"
+name = "Others"
 icon = "🎈️"
 is_section = true
 
