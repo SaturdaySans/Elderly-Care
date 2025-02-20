@@ -2,7 +2,7 @@ import streamlit as st
 import os
 import pandas as pd
 import random
-from st_pages import get_nav_from_toml, hide_pages
+from st_pages import get_nav_from_toml, hide_pages # type: ignore
 
 
 # File to store account data
