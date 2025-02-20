@@ -149,6 +149,3 @@ elif st.session_state["page"] == "login":
     login()
 elif st.session_state["page"] == "create_account":
     create_account()
-
-pg = setup_navigation()  # Call the function to setup navigation
-pg.run()
