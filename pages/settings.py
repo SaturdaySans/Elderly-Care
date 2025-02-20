@@ -139,6 +139,12 @@ def create_account():
         st.session_state["UID"] = UID
         st.session_state["page"] = "settings"
         st.rerun()
+        if str(st.session_state["UID"])[-1] == "0":
+            st.session_state["role"] = "Admin"  # For example, assign role as "Admin"
+        else:
+            # Handle the case where the last character is not "0"
+            st.session_state["role"] = "User"
+
 
 
 # **Navigation Handling**
@@ -148,3 +154,5 @@ elif st.session_state["page"] == "login":
     login()
 elif st.session_state["page"] == "create_account":
     create_account()
+if st.session_state["role"] == "Admin":
+    st.page_link("pages/admin.py", label="Go to Admin Page", icon="⚙️")
