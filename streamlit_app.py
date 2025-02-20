@@ -14,7 +14,7 @@ st.set_page_config(
 nav = get_nav_from_toml(".streamlit/pages_sections.toml")
 
 # Display app logo
-st.logo("resources/calendar.png", width=100)
+st.logo("resources/calendar.png")
 
 # Ensure session state role exists
 if "role" not in st.session_state:
