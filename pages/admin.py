@@ -1,7 +1,5 @@
 import streamlit as st
-import os
 import pandas as pd
-
 
 ACCOUNTS_FILE = "accounts.csv"
 

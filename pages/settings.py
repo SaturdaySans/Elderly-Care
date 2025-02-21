@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import random
 from st_pages import get_nav_from_toml, hide_pages
-
+# settings.py
 import streamlit as st
 import os
 import pandas as pd
@@ -56,18 +56,17 @@ if not st.session_state["logged_in"]:
     st.stop()
 
 def create_account():
-    """Create a new user account"""
-    new_username = st.text_input("New Username")
+    """Create a new admin account"""
+    new_username = st.text_input("New Admin Username")
     new_email = st.text_input("Email")
     new_password = st.text_input("Password", type="password")
-    new_role = st.selectbox("Role", ["user", "admin"])
-    if st.button("Create User"):
+    if st.button("Create Admin Account"):
         accounts = load_accounts()
         if new_username in accounts["username"].values:
             st.error("Username already exists!")
         else:
-            new_user = pd.DataFrame([[new_username, new_email, new_password, new_role]],
+            new_user = pd.DataFrame([[new_username, new_email, new_password, "admin"]],
                                     columns=["username", "email", "password", "role"])
             accounts = pd.concat([accounts, new_user], ignore_index=True)
             accounts.to_csv(ACCOUNTS_FILE, index=False)
-            st.success("User created successfully!")
+            st.success("Admin account created successfully!")
