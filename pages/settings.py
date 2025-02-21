@@ -90,10 +90,10 @@ if st.session_state["page"] == "settings":
 elif st.session_state["page"] == "login":
     login()
 
-st.write("Session State Debug:", {
-    "logged_in": st.session_state.get("logged_in"),
-    "username": st.session_state.get("username"),
-    "UID": st.session_state.get("UID"),
-    "role": st.session_state.get("role"),
-    "page": st.session_state.get("page"),
-})
+#st.write("Session State Debug:", {
+    #"logged_in": st.session_state.get("logged_in"),
+    #"username": st.session_state.get("username"),
+    #"UID": st.session_state.get("UID"),
+    #"role": st.session_state.get("role"),
+    #"page": st.session_state.get("page"),
+#})

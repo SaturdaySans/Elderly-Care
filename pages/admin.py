@@ -169,6 +169,8 @@ def admin_ui():
         st.session_state["adminpage"] = "show_users"
     if st.button("Event Edit"):
         st.session_state["adminpage"] = "events"
+    if st.button("Profile Viewer"):
+        st.session_state["adminpage"] = "profile"
 
 def medication_ui():
     """Medication Tracker UI"""
@@ -181,8 +183,8 @@ def events_ui():
     # Form to add a new event
     st.text("Add a New Event")
     event_title = st.text_input("Event Title")
-    event_start = st.date_input("Start Date")
-    event_end = st.date_input("End Date")
+    event_start = st.datetime_input("Start Date and Time")
+    event_end = st.datetime_input("End Date and Time")
     event_resource = st.text_input("Resource ID")
 
     if st.button("Add Event"):
@@ -245,7 +247,11 @@ if "role" in st.session_state and st.session_state["role"] == "Admin":
         if st.button("Back"):
             st.session_state["adminpage"] = "admin"  # Go back to the admin page
     elif st.session_state["adminpage"] == "events":
-        events_ui()
+        events_ui() #Load Events UI
+        if st.button("Back"):
+            st.session_state["adminpage"] = "admin"  # Go back to the admin page
+    elif st.session_state["adminpage"] == "profile":
+        st.write("Placeholder")
         if st.button("Back"):
             st.session_state["adminpage"] = "admin"  # Go back to the admin page
 else:
