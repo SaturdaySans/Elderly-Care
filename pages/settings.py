@@ -54,8 +54,3 @@ if st.button("Login"):
 
 if not st.session_state["logged_in"]:
     st.stop()
-
-# --------------------- ADMIN PAGE (Separate Script) ---------------------
-
-# Save the following as admin.py
-
