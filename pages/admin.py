@@ -2,7 +2,8 @@ import streamlit as st
 import pandas as pd
 
 ACCOUNTS_FILE = "accounts.csv"
-MEDICATION_FILE = "medication.csv"  
+MEDICATION_FILE = "medication.csv"
+EVENTS_FILE = "events.csv"
 
 def load_accounts():
     """Load the accounts from the CSV file"""
@@ -20,10 +21,18 @@ def save_medications(df):
     """Save the updated medications back to the CSV file"""
     df.to_csv(MEDICATION_FILE, index=False)
 
+def load_events():
+    """Load the events from the CSV file"""
+    return pd.read_csv(EVENTS_FILE)
+
+def save_events(df):
+    """Save the updated events back to the CSV file"""
+    df.to_csv(EVENTS_FILE, index=False)
+
 def generate_uid():
     """Generate a UID starting from 1000 and incrementing"""
     accounts = load_accounts()
-    # Get the highest UID from the existing accounts 
+    # Get the highest UID from the existing accounts
     if not accounts.empty:
         last_uid = accounts["UID"].max()
         return str(int(last_uid) + 1)
@@ -68,10 +77,10 @@ def manage_account():
 
     if st.button("Delete User"):
         accounts = load_accounts()
-        
+
         # Ensure the UID is an integer and strip any extra spaces
         delete_uid = delete_uid.strip()
-        
+
         # Check if UID exists in the accounts
         if delete_uid.isdigit() and int(delete_uid) in accounts["UID"].values:
             # Remove the user by UID
@@ -131,6 +140,16 @@ def manage_medications():
     else:
         st.write("No medications found.")
 
+    # Delete medication entry
+    st.subheader("Delete Medication Entry")
+    medication_to_delete = st.selectbox("Select Medication to Delete", medications["Medication"].unique())
+
+    if st.button("Delete Medication"):
+        # Delete the selected medication from the list
+        medications = medications[medications["Medication"] != medication_to_delete]
+        save_medications(medications)
+        st.success(f"Medication '{medication_to_delete}' has been deleted.")
+
 def show_all_users():
     """Show a table of all users"""
     st.subheader("All Users")
@@ -154,6 +173,52 @@ def admin_ui():
 def medication_ui():
     """Medication Tracker UI"""
     manage_medications()
+
+def events_ui():
+    """Event Management UI for Admin"""
+    st.subheader("Manage Events")
+
+    # Form to add a new event
+    st.text("Add a New Event")
+    event_title = st.text_input("Event Title")
+    event_start = st.date_input("Start Date")
+    event_end = st.date_input("End Date")
+    event_resource = st.text_input("Resource ID")
+
+    if st.button("Add Event"):
+        # Check if all fields are filled
+        if not event_title or not event_start or not event_end or not event_resource:
+            st.error("All fields are required!")
+            return
+
+        events = load_events()
+
+        # Add the new event to the list
+        new_event = pd.DataFrame([[event_title, event_start, event_end, event_resource]],
+                                 columns=["title", "start", "end", "resourceId"])
+        events = pd.concat([events, new_event], ignore_index=True)
+        save_events(events)
+        st.success("Event added successfully!")
+
+    # Display existing events
+    st.subheader("Existing Events")
+    events = load_events()
+    if not events.empty:
+        st.write(events)
+
+        # Delete an event
+        event_to_delete = st.selectbox("Select Event to Delete", events["title"].unique())
+
+        if st.button("Delete Event"):
+            # Delete the selected event from the list
+            events = events[events["title"] != event_to_delete]
+            save_events(events)
+            st.success(f"Event '{event_to_delete}' has been deleted.")
+    else:
+        st.write("No events found.")
+
+# Navigation UI remains the same as before
+# Handle the admin UI rendering and manage other sections like "accounts", "medications", etc.
 
 # Navigation UI
 st.title("Admin Page")
@@ -180,7 +245,7 @@ if "role" in st.session_state and st.session_state["role"] == "Admin":
         if st.button("Back"):
             st.session_state["adminpage"] = "admin"  # Go back to the admin page
     elif st.session_state["adminpage"] == "events":
-        st.write("Event Edit Page")  # Placeholder for event edit page
+        events_ui()
         if st.button("Back"):
             st.session_state["adminpage"] = "admin"  # Go back to the admin page
 else:
