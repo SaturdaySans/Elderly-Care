@@ -50,8 +50,10 @@ def login():
             st.session_state["role"] = user.iloc[0]["role"]
 
             # Check role and hide pages if not admin
-            if st.session_state["role"] != "Admin":
-                hide_pages(["admin_page"])  # Replace "admin_page" with actual page names that should be hidden for users.
+            if st.session_state["role"] == "Admin":
+                hide_pages([])
+            else:
+                hide_pages(["Admin"])  
 
             st.session_state["page"] = "settings"
             st.rerun()
