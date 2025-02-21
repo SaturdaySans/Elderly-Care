@@ -183,17 +183,23 @@ def events_ui():
     # Form to add a new event
     st.text("Add a New Event")
     event_title = st.text_input("Event Title")
-    event_start = st.datetime_input("Start Date and Time")
-    event_end = st.datetime_input("End Date and Time")
+    event_start_date = st.date_input("Start Date")
+    event_start_time = st.time_input("Start Time")
+    event_end_date = st.date_input("End Date")
+    event_end_time = st.time_input("End Time")
     event_resource = st.text_input("Resource ID")
 
     if st.button("Add Event"):
         # Check if all fields are filled
-        if not event_title or not event_start or not event_end or not event_resource:
+        if not event_title or not event_start_date or not event_start_time or not event_end_date or not event_end_time or not event_resource:
             st.error("All fields are required!")
             return
 
         events = load_events()
+
+        # Combine date and time
+        event_start = pd.to_datetime(f"{event_start_date} {event_start_time}")
+        event_end = pd.to_datetime(f"{event_end_date} {event_end_time}")
 
         # Add the new event to the list
         new_event = pd.DataFrame([[event_title, event_start, event_end, event_resource]],
