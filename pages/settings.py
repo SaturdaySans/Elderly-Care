@@ -135,3 +135,7 @@ elif st.session_state["page"] == "login":
     login()
 elif st.session_state["page"] == "create_account":
     create_account()
+st.write(
+    st.session_state["logged_in", "username", "UID", "role", "page"]
+)
+
