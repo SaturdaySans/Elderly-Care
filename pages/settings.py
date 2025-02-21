@@ -35,7 +35,7 @@ def load_accounts():
 
 def login():
     """Login User"""
-    st.write("\n--- Login ---")
+    st.title("\n--- Login ---")
     identifier = st.text_input("Enter username or email:").strip()
     password = st.text_input("Enter password:", type="password").strip()
 
