@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 
 ACCOUNTS_FILE = "accounts.csv"
+MEDICATION_FILE = "medications.csv"  # New file for medications
 
 def load_accounts():
     """Load the accounts from the CSV file"""
@@ -10,6 +11,14 @@ def load_accounts():
 def save_accounts(df):
     """Save the updated accounts back to the CSV file"""
     df.to_csv(ACCOUNTS_FILE, index=False)
+
+def load_medications():
+    """Load the medication data from the CSV file"""
+    return pd.read_csv(MEDICATION_FILE)
+
+def save_medications(df):
+    """Save the updated medications back to the CSV file"""
+    df.to_csv(MEDICATION_FILE, index=False)
 
 def generate_uid():
     """Generate a UID starting from 1000 and incrementing"""
@@ -72,6 +81,57 @@ def manage_account():
         else:
             st.error(f"No user found with UID: {delete_uid}")
 
+def manage_medications():
+    """Add or edit medications in the CSV file"""
+    st.subheader("Manage Medications")
+
+    # Form to add new medication entry
+    medication_name = st.text_input("Medication Name")
+    time_of_day = st.selectbox("Time of Day", ["Morning", "Afternoon", "Evening", "Night"])
+    taken = st.selectbox("Taken?", ["Yes", "No"])
+    uid = st.text_input("UID of Patient")
+
+    if st.button("Add Medication"):
+        # Check if all fields are filled
+        if not medication_name or not time_of_day or not taken or not uid:
+            st.error("All fields are required!")
+            return
+
+        medications = load_medications()
+
+        # Add the new medication to the list
+        new_medication = pd.DataFrame([[medication_name, time_of_day, taken, uid]],
+                                      columns=["Medication", "Time", "Taken", "UID"])
+        medications = pd.concat([medications, new_medication], ignore_index=True)
+        save_medications(medications)
+        st.success("Medication added successfully!")
+
+    # Edit existing medication entry
+    st.subheader("Edit Existing Medication Entry")
+
+    # Display existing medications
+    medications = load_medications()
+    if not medications.empty:
+        st.write(medications)
+
+        medication_to_edit = st.selectbox("Select Medication to Edit", medications["Medication"].unique())
+
+        # Get the selected medication details
+        selected_medication = medications[medications["Medication"] == medication_to_edit]
+
+        # Edit form
+        new_time = st.selectbox("Edit Time of Day", ["Morning", "Afternoon", "Evening", "Night"], index=["Morning", "Afternoon", "Evening", "Night"].index(selected_medication["Time"].values[0]))
+        new_taken = st.selectbox("Edit Taken?", ["Yes", "No"], index=["Yes", "No"].index(selected_medication["Taken"].values[0]))
+        new_uid = st.text_input("Edit UID of Patient", value=selected_medication["UID"].values[0])
+
+        if st.button("Save Changes"):
+            # Update the selected medication entry
+            medications.loc[medications["Medication"] == medication_to_edit, ["Time", "Taken", "UID"]] = [new_time, new_taken, new_uid]
+            save_medications(medications)
+            st.success("Medication details updated successfully!")
+
+    else:
+        st.write("No medications found.")
 
 def show_all_users():
     """Show a table of all users"""
@@ -86,17 +146,16 @@ def admin_ui():
     """UI for Admin to manage users and pages"""
     if st.button("Manage Accounts"):
         st.session_state["adminpage"] = "accounts"
+    if st.button("Manage Medications"):
+        st.session_state["adminpage"] = "medications"
     if st.button("Show All Users"):
         st.session_state["adminpage"] = "show_users"
-    if st.button("Medication Tracker"):
-        st.session_state["adminpage"] = "medication"
     if st.button("Event Edit"):
         st.session_state["adminpage"] = "events"
 
 def medication_ui():
-    if st.button("Back"):
-            st.session_state["adminpage"] = "admin"  # Go back to the admin page
-
+    """Medication Tracker UI"""
+    manage_medications()
 
 # Navigation UI
 st.title("Admin Page")
@@ -118,9 +177,8 @@ if "role" in st.session_state and st.session_state["role"] == "Admin":
         show_all_users()  # Show all users
         if st.button("Back"):
             st.session_state["adminpage"] = "admin"  # Go back to the admin page
-    elif st.session_state["adminpage"] == "medication":
-        st.write("Medication Tracker Page")  # Placeholder for medication page
-        medication_ui()
+    elif st.session_state["adminpage"] == "medications":
+        medication_ui()  # Medication management UI
     elif st.session_state["adminpage"] == "events":
         st.write("Event Edit Page")  # Placeholder for event edit page
         if st.button("Back"):
