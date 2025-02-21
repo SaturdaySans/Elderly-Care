@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 ACCOUNTS_FILE = "accounts.csv"
-MEDICATION_FILE = "medications.csv"  # New file for medications
+MEDICATION_FILE = "medication.csv"  
 
 def load_accounts():
     """Load the accounts from the CSV file"""
