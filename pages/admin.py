@@ -14,12 +14,12 @@ def save_accounts(df):
 def generate_uid():
     """Generate a UID starting from 6543 and incrementing"""
     accounts = load_accounts()
-    # Get the highest UID from the existing accounts or start from 6543 if empty
+    # Get the highest UID from the existing accounts 
     if not accounts.empty:
         last_uid = accounts["UID"].max()
         return str(int(last_uid) + 1)
     else:
-        return "6543"  # Start from 6543 if no users exist
+        return "1000"  # Start from UID 1000 if no users currently exist
 
 def create_account():
     """Create a new user account"""
@@ -50,6 +50,8 @@ def create_account():
             accounts = pd.concat([accounts, new_user], ignore_index=True)
             save_accounts(accounts)
             st.success(f"User created successfully with UID: {new_uid}")
+    if st.button("Back"):
+            st.session_state["adminpage"] = "admin"  # Go back to the admin page
 
 def admin_ui():
     """UI for Admin to manage users and pages"""
@@ -59,6 +61,11 @@ def admin_ui():
         st.session_state["adminpage"] = "medication"
     if st.button("Event Edit"):
         st.session_state["adminpage"] = "events"
+
+def medication_ui():
+    if st.button("Back"):
+            st.session_state["adminpage"] = "admin"  # Go back to the admin page
+
 
 # Navigation UI
 st.title("Admin Page")
@@ -78,8 +85,7 @@ if "role" in st.session_state and st.session_state["role"] == "Admin":
             st.session_state["adminpage"] = "admin"  # Go back to the admin page
     elif st.session_state["adminpage"] == "medication":
         st.write("Medication Tracker Page")  # Placeholder for medication page
-        if st.button("Back"):
-            st.session_state["adminpage"] = "admin"  # Go back to the admin page
+        medication_ui()
     elif st.session_state["adminpage"] == "events":
         st.write("Event Edit Page")  # Placeholder for event edit page
         if st.button("Back"):
