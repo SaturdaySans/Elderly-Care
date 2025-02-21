@@ -46,7 +46,6 @@ def account_UI():
             logout()
         if st.session_state["role"] == "Admin":
             hide_pages([])
-            st.page_link("pages/admin.py", label="Go to Admin Page", icon="⚙️")
         else:
             hide_pages(["Admin"])
     else:
@@ -161,3 +160,11 @@ elif st.session_state["page"] == "login":
     login()
 elif st.session_state["page"] == "create_account":
     create_account()
+
+st.write("Session State Debug:", {
+    "logged_in": st.session_state.get("logged_in"),
+    "username": st.session_state.get("username"),
+    "UID": st.session_state.get("UID"),
+    "role": st.session_state.get("role"),
+    "page": st.session_state.get("page"),
+})
