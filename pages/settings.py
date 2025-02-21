@@ -67,16 +67,17 @@ def create_account():
         new_user = pd.DataFrame([[username, email, password, UID]], columns=["username", "email", "password", "UID"])
         new_user.to_csv(ACCOUNTS_FILE, mode='a', header=False, index=False)
         st.write(f"✅ Account created successfully! UID: **{UID}**")
-
-        if is_admin:
-            st.session_state["role"] = "Admin"
-            hide_pages([])
-        else:
-            hide_pages(["Admin"])
         
-        if not is_admin:
-            st.session_state["page"] = "settings"
-            st.rerun()
+        # Update session state after successful registration
+        st.session_state["logged_in"] = True
+        st.session_state["username"] = username
+        st.session_state["UID"] = UID
+        st.session_state["role"] = "Admin" if UID[-1] == "0" else "User"
+        
+        hide_pages([] if st.session_state["role"] == "Admin" else ["Admin"])
+        
+        st.session_state["page"] = "settings"
+        st.rerun()
 
 def login():
     """Login User."""
@@ -142,5 +143,3 @@ st.write("Session State Debug:", {
     "role": st.session_state.get("role"),
     "page": st.session_state.get("page"),
 })
-
-
