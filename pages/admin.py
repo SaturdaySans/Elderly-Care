@@ -11,6 +11,16 @@ def save_accounts(df):
     """Save the updated accounts back to the CSV file"""
     df.to_csv(ACCOUNTS_FILE, index=False)
 
+def generate_uid():
+    """Generate a UID starting from 6543 and incrementing"""
+    accounts = load_accounts()
+    # Get the highest UID from the existing accounts or start from 6543 if empty
+    if not accounts.empty:
+        last_uid = accounts["UID"].max()
+        return str(int(last_uid) + 1)
+    else:
+        return "6543"  # Start from 6543 if no users exist
+
 def create_account():
     """Create a new user account"""
     st.subheader("Create a New User")
@@ -31,12 +41,15 @@ def create_account():
         if new_username in accounts["username"].values:
             st.error("Username already exists!")
         else:
-            # Add the new user with the role of "user"
-            new_user = pd.DataFrame([[new_username, new_email, new_password, "user"]],
-                                    columns=["username", "email", "password", "role"])
+            # Generate UID for the new user
+            new_uid = generate_uid()
+
+            # Add the new user with the role of "user" and the generated UID
+            new_user = pd.DataFrame([[new_username, new_email, new_password, "user", new_uid]],
+                                    columns=["username", "email", "password", "role", "UID"])
             accounts = pd.concat([accounts, new_user], ignore_index=True)
             save_accounts(accounts)
-            st.success("User created successfully!")
+            st.success(f"User created successfully with UID: {new_uid}")
 
 def admin_ui():
     """UI for Admin to manage users and pages"""
