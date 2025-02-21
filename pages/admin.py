@@ -50,8 +50,6 @@ def create_account():
             accounts = pd.concat([accounts, new_user], ignore_index=True)
             save_accounts(accounts)
             st.success(f"User created successfully with UID: {new_uid}")
-    if st.button("Back"):
-            st.session_state["adminpage"] = "admin"  # Go back to the admin page
 
 def admin_ui():
     """UI for Admin to manage users and pages"""
