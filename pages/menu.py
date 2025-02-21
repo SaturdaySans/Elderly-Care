@@ -5,7 +5,7 @@ from st_pages import add_page_title, get_nav_from_toml
 from utils import update_navigation  # Import function
 
 
-st.title("--- Elderly Care -")
+st.title("--- Elderly Care ---")
 st.divider()
 st.page_link("pages/settings.py", label="Settings", icon="⚙️")
 st.page_link("pages/routine.py", label="Routine", icon="🗓️")
