@@ -119,14 +119,13 @@ def manage_medications():
         # Get the selected medication details
         selected_medication = medications[medications["Medication"] == medication_to_edit]
 
-        # Edit form
+        # Edit form (but do not allow editing the "Taken" field)
         new_time = st.selectbox("Edit Time of Day", ["Morning", "Afternoon", "Evening", "Night"], index=["Morning", "Afternoon", "Evening", "Night"].index(selected_medication["Time"].values[0]))
-        new_taken = st.selectbox("Edit Taken?", ["Yes", "No"], index=["Yes", "No"].index(selected_medication["Taken"].values[0]))
         new_uid = st.text_input("Edit UID of Patient", value=selected_medication["UID"].values[0])
 
         if st.button("Save Changes"):
-            # Update the selected medication entry
-            medications.loc[medications["Medication"] == medication_to_edit, ["Time", "Taken", "UID"]] = [new_time, new_taken, new_uid]
+            # Update the selected medication entry (skip "Taken" field)
+            medications.loc[medications["Medication"] == medication_to_edit, ["Time", "UID"]] = [new_time, new_uid]
             save_medications(medications)
             st.success("Medication details updated successfully!")
 
