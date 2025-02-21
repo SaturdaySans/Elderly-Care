@@ -239,6 +239,7 @@ def profile_viewer_ui():
 
         # Clean up the UID (strip spaces)
         uid_to_view = uid_to_view.strip()
+        st.write(f"Entered UID: {uid_to_view}")  # Debugging line
 
         if not uid_to_view.isdigit():
             st.error("Please enter a valid UID.")
@@ -249,24 +250,27 @@ def profile_viewer_ui():
 
         # Check if UID exists in the accounts
         user_data = accounts[accounts["UID"] == uid_to_view]
+        st.write(f"Found User Data: {user_data}")  # Debugging line
 
         if user_data.empty:
             st.error(f"No user found with UID: {uid_to_view}")
         else:
-            # Display User details: Username, Email, and Password
+            # Display User details
             st.write("### User Details")
             st.write(f"**Username**: {user_data['username'].values[0]}")
             st.write(f"**Email**: {user_data['email'].values[0]}")
             st.write(f"**Password**: {user_data['password'].values[0]}")  # You might want to hide this in a real app
 
-            # Now display the medications for the given UID
+            # Display the medications for the given UID
             user_medications = medications[medications["UID"] == uid_to_view]
+            st.write(f"User Medications: {user_medications}")  # Debugging line
 
             if not user_medications.empty:
                 st.write("### Medications")
                 st.write(user_medications[["Medication", "Time"]])  # Display medication name and time of day
             else:
                 st.write("No medications found for this user.")
+
 
 
 # Navigation UI remains the same as before
