@@ -68,14 +68,15 @@ def create_account():
         new_user.to_csv(ACCOUNTS_FILE, mode='a', header=False, index=False)
         st.write(f"✅ Account created successfully! UID: **{UID}**")
         
-        # Update session state after successful registration
+        # Store new user in session state
         st.session_state["logged_in"] = True
         st.session_state["username"] = username
         st.session_state["UID"] = UID
         st.session_state["role"] = "Admin" if UID[-1] == "0" else "User"
-        
+
         hide_pages([] if st.session_state["role"] == "Admin" else ["Admin"])
-        
+
+        # Navigate to settings page
         st.session_state["page"] = "settings"
         st.rerun()
 
@@ -143,3 +144,5 @@ st.write("Session State Debug:", {
     "role": st.session_state.get("role"),
     "page": st.session_state.get("page"),
 })
+
+
