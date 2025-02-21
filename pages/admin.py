@@ -245,7 +245,9 @@ def profile_viewer_ui():
             st.error("Please enter a valid UID.")
             return
 
+        # Load accounts and ensure UID is treated as a string
         accounts = load_accounts()
+        accounts["UID"] = accounts["UID"].astype(str)  # Ensure the UID column is treated as a string
         medications = load_medications()
 
         # Check if UID exists in the accounts
@@ -270,6 +272,7 @@ def profile_viewer_ui():
                 st.write(user_medications[["Medication", "Time"]])  # Display medication name and time of day
             else:
                 st.write("No medications found for this user.")
+
 
 
 
