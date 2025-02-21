@@ -45,9 +45,15 @@ if "role" in st.session_state and st.session_state["role"] == "Admin":
         admin_ui()
     elif st.session_state["adminpage"] == "accounts":
         create_account()
+        if st.button("Back"):
+            st.session_state["adminpage"] = "admin"  # Go back to the admin page
     elif st.session_state["adminpage"] == "medication":
         st.write("Medication Tracker Page")  # Placeholder for medication page
+        if st.button("Back"):
+            st.session_state["adminpage"] = "admin"  # Go back to the admin page
     elif st.session_state["adminpage"] == "events":
         st.write("Event Edit Page")  # Placeholder for event edit page
+        if st.button("Back"):
+            st.session_state["adminpage"] = "admin"  # Go back to the admin page
 else:
     st.error("Access denied. Admins only.")
