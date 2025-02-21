@@ -10,7 +10,7 @@ def save_accounts(df):
     df.to_csv(ACCOUNTS_FILE, index=False)
     
 st.title("Admin Page")
-if "role" in st.session_state["role"] == "admin":
+if "role" in st.session_state["role"] == "Admin":
     st.subheader("Create a New User")
     new_username = st.text_input("New Username")
     new_email = st.text_input("Email")
