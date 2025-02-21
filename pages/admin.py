@@ -225,6 +225,45 @@ def events_ui():
     else:
         st.write("No events found.")
 
+def profile_viewer_ui():
+    """Profile Viewer UI for Admin to view user details based on UID"""
+    st.subheader("Profile Viewer")
+
+    # Input field to enter UID to view user profile
+    uid_to_view = st.text_input("Enter UID of the user to view their profile")
+
+    if st.button("View Profile"):
+        if not uid_to_view:
+            st.error("Please enter a UID.")
+            return
+
+        accounts = load_accounts()
+        medications = load_medications()
+
+        # Check if UID exists in the accounts
+        user_data = accounts[accounts["UID"] == uid_to_view.strip()]
+
+        if user_data.empty:
+            st.error(f"No user found with UID: {uid_to_view}")
+        else:
+            # Display User details: Username, Email, and Password
+            st.write("### User Details")
+            st.write(f"**Username**: {user_data['username'].values[0]}")
+            st.write(f"**Email**: {user_data['email'].values[0]}")
+            st.write(f"**Password**: {user_data['password'].values[0]}")  # You might want to hide this in a real app
+
+            # Now display the medications for the given UID
+            user_medications = medications[medications["UID"] == uid_to_view.strip()]
+
+            if not user_medications.empty:
+                st.write("### Medications")
+                st.write(user_medications[["Medication", "Time"]])  # Display medication name and time of day
+            else:
+                st.write("No medications found for this user.")
+
+    if st.button("Back"):
+        st.session_state["adminpage"] = "admin"  # Go back to the admin page
+
 # Navigation UI remains the same as before
 # Handle the admin UI rendering and manage other sections like "accounts", "medications", etc.
 
@@ -257,7 +296,7 @@ if "role" in st.session_state and st.session_state["role"] == "Admin":
         if st.button("Back"):
             st.session_state["adminpage"] = "admin"  # Go back to the admin page
     elif st.session_state["adminpage"] == "profile":
-        st.write("Placeholder")
+        profile_viewer_ui()
         if st.button("Back"):
             st.session_state["adminpage"] = "admin"  # Go back to the admin page
 else:
