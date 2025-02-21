@@ -1,7 +1,7 @@
 Medication,Time,Taken,UID
-Donepezil,Morning,Yes,UID001
-Memantine,Morning,No,UID001
-Rivastigmine,Morning,Yes,UID001
-Memantine,Afternoon,No,UID001
-Donepezil,Evening,Yes,UID001
-Antidepressants & Anti-Anxiety,Night,No,UID001
+Donepezil,Morning,Yes,1000
+Memantine,Morning,No,1000
+Rivastigmine,Morning,Yes,1000
+Memantine,Afternoon,No,1000
+Donepezil,Evening,Yes,1000
+Antidepressants & Anti-Anxiety,Night,No,1000
