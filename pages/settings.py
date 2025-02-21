@@ -3,15 +3,13 @@ import os
 import pandas as pd
 import random
 from st_pages import get_nav_from_toml, hide_pages
-# settings.py
-import streamlit as st
-import os
-import pandas as pd
+
 
 # File to store account data
 ACCOUNTS_FILE = "accounts.csv"
 
 # Initialize session state
+
 if "logged_in" not in st.session_state:
     st.session_state["logged_in"] = False
 if "username" not in st.session_state:
@@ -70,3 +68,5 @@ def create_account():
             accounts = pd.concat([accounts, new_user], ignore_index=True)
             accounts.to_csv(ACCOUNTS_FILE, index=False)
             st.success("Admin account created successfully!")
+
+st.write("test")
