@@ -33,13 +33,11 @@ def admin_ui():
     if st.button("Event Edit"):
         st.session_state["adminpage"] = "events"
 
-st.session_state["role"] == "Admin"
-
 #Navigation UI
 st.title("Admin Page")
 if "role" in st.session_state and st.session_state["role"] == "Admin":
     if "adminpage" not in st.session_state:
-        st.session_state["adminpage"] = "admin"
+        st.session_state["adminpage"] = "admin"  
     
     if st.session_state["adminpage"] == "admin":
         admin_ui()
