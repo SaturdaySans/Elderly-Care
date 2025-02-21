@@ -232,7 +232,7 @@ def profile_viewer_ui():
     # Input field to enter UID to view user profile
     uid_to_view = st.text_input("Enter UID of the user to view their profile")
 
-    if st.button("View Profile"):
+    if st.button("View Profile", key="view_profile_button"):
         if not uid_to_view:
             st.error("Please enter a UID.")
             return
@@ -261,8 +261,9 @@ def profile_viewer_ui():
             else:
                 st.write("No medications found for this user.")
 
-    if st.button("Back"):
+    if st.button("Back", key="back_profile"):  # Unique key for the Back button
         st.session_state["adminpage"] = "admin"  # Go back to the admin page
+
 
 # Navigation UI remains the same as before
 # Handle the admin UI rendering and manage other sections like "accounts", "medications", etc.
