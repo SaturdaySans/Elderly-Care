@@ -230,33 +230,45 @@ def profile_viewer_ui():
     st.subheader("Profile Viewer")
 
     # Input field to enter UID to view user profile
-    uid_to_view = st.text_input("Enter UID of the user to view their profile")
+    uid_to_view = st.text_input("Enter UID of the user to view their profile", key="uid_input_profile")
 
     if st.button("View Profile", key="view_profile_button"):
         if not uid_to_view:
             st.error("Please enter a UID.")
             return
 
+        # Clean up the UID (strip spaces)
+        uid_to_view = uid_to_view.strip()
+        st.write(f"Entered UID: {uid_to_view}")  # Debugging line
+
+        if not uid_to_view.isdigit():
+            st.error("Please enter a valid UID.")
+            return
+
+        # Load accounts and ensure UID is treated as a string
         accounts = load_accounts()
+        accounts["UID"] = accounts["UID"].astype(str)  # Ensure the UID column is treated as a string
         medications = load_medications()
 
-        # Clean up the UID input and ensure it's a string for comparison
-        uid_to_view = str(uid_to_view).strip()
+        # Ensure the medications UID is treated as a string as well
+        medications["UID"] = medications["UID"].astype(str)  # Ensure medications UID is a string
 
         # Check if UID exists in the accounts
         user_data = accounts[accounts["UID"] == uid_to_view]
+        st.write(f"Found User Data: {user_data}")  # Debugging line
 
         if user_data.empty:
             st.error(f"No user found with UID: {uid_to_view}")
         else:
-            # Display User details: Username, Email, and Password
+            # Display User details
             st.write("### User Details")
             st.write(f"**Username**: {user_data['username'].values[0]}")
             st.write(f"**Email**: {user_data['email'].values[0]}")
             st.write(f"**Password**: {user_data['password'].values[0]}")  # You might want to hide this in a real app
 
-            # Now display the medications for the given UID
+            # Display the medications for the given UID
             user_medications = medications[medications["UID"] == uid_to_view]
+            st.write(f"User Medications: {user_medications}")  # Debugging line
 
             if not user_medications.empty:
                 st.write("### Medications")
