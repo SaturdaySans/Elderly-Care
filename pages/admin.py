@@ -1,59 +1,49 @@
 import streamlit as st
+import os
 import pandas as pd
+import time
 
-ACCOUNTS_FILE = "accounts.csv"
+st.title("---Medication Tracker---")
 
-def load_accounts():
-    return pd.read_csv(ACCOUNTS_FILE)
+file_path = "medication.csv"
 
-def save_accounts(df):
-    df.to_csv(ACCOUNTS_FILE, index=False)
-
-def create_account():
-    st.subheader("Create a New User")
-    new_username = st.text_input("New Username")
-    new_email = st.text_input("Email")
-    new_password = st.text_input("Password", type="password")
-    if st.button("Create User"):
-        accounts = load_accounts()
-        if new_username in accounts["username"].values:
-            st.error("Username already exists!")
-        else:
-            new_user = pd.DataFrame([[new_username, new_email, new_password, "user"]],
-                                    columns=["username", "email", "password", "role"])
-            accounts = pd.concat([accounts, new_user], ignore_index=True)
-            save_accounts(accounts)
-            st.success("User created successfully!")
-
-def admin_ui():
-    if st.button("Manage Accounts"):
-        st.session_state["adminpage"] = "accounts"
-    if st.button("Medication Tracker"):
-        st.session_state["adminpage"] = "medication"
-    if st.button("Event Edit"):
-        st.session_state["adminpage"] = "events"
-
-# Navigation UI
-st.title("Admin Page")
-if "role" in st.session_state and st.session_state["role"] == "Admin":
-    # Check if session_state["adminpage"] exists; if not, initialize it
-    if "adminpage" not in st.session_state:
-        st.session_state["adminpage"] = "admin"
-    
-    # Handle page rendering based on the selected admin page
-    if st.session_state["adminpage"] == "admin":
-        admin_ui()
-    elif st.session_state["adminpage"] == "accounts":
-        create_account()
-        if st.button("Back"):
-            st.session_state["adminpage"] = "admin"  # Go back to the admin page
-    elif st.session_state["adminpage"] == "medication":
-        st.write("Medication Tracker Page")  # Placeholder for medication page
-        if st.button("Back"):
-            st.session_state["adminpage"] = "admin"  # Go back to the admin page
-    elif st.session_state["adminpage"] == "events":
-        st.write("Event Edit Page")  # Placeholder for event edit page
-        if st.button("Back"):
-            st.session_state["adminpage"] = "admin"  # Go back to the admin page
+# Load CSV if it exists, otherwise create an empty DataFrame
+if os.path.exists(file_path):
+    try:
+        medication = pd.read_csv(file_path)
+        if medication.empty:
+            st.warning("The CSV file is empty.")
+    except Exception as e:
+        st.error(f"Error reading file: {e}")
+        medication = pd.DataFrame(columns=["Medication", "Time", "Taken", "UID"])
 else:
-    st.error("Access denied. Admins only.")
+    medication = pd.DataFrame(columns=["Medication", "Time", "Taken", "UID"])  # Empty DataFrame
+
+# Get the current user's UID from session state
+current_user_uid = str(st.session_state.get('UID', ''))  # Ensure it's a string
+
+# Ensure the user is logged in and has a UID
+if not current_user_uid:
+    st.warning("Please log in to view your medication tracker.")
+else:
+    # Ensure the UID in the medication DataFrame is also a string
+    medication['UID'] = medication['UID'].astype(str)
+
+    # Drop rows where 'UID' is missing or empty
+    medication = medication.dropna(subset=['UID'])
+    
+    # Filter medications for the current user's UID
+    medication_for_user = medication[medication['UID'] == current_user_uid]
+
+    # Display medication list with checkboxes
+    updated_status = []
+
+    for index, row in medication_for_user.iterrows():
+        checked = st.checkbox(f"{row['Medication']} ({row['Time']})", value=(row['Taken'] == "Yes"), key=index)
+        updated_status.append("Yes" if checked else "No")
+
+    # Update the DataFrame with the new values
+    if st.button("Update Medication Status"):
+        medication.loc[medication['UID'] == current_user_uid, "Taken"] = updated_status
+        medication.to_csv(file_path, index=False)
+        st.success("Medication status updated!")
