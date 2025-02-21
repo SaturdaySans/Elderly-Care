@@ -28,7 +28,7 @@ def manage_account():
     # Create a new user
     st.text("Create a New User")
     new_username = st.text_input("New Username")
-    new_email = st.text_input("Email")  # Fixed typo here
+    new_email = st.text_input("Email")
     new_password = st.text_input("Password", type="password")
 
     if st.button("Create User"):
@@ -52,6 +52,26 @@ def manage_account():
             accounts = pd.concat([accounts, new_user], ignore_index=True)
             save_accounts(accounts)
             st.success(f"User created successfully with UID: {new_uid}")
+
+    # Delete an existing user by UID
+    st.text("Delete a User by UID")
+    delete_uid = st.text_input("Enter UID of user to delete")
+
+    if st.button("Delete User"):
+        accounts = load_accounts()
+        
+        # Ensure the UID is an integer and strip any extra spaces
+        delete_uid = delete_uid.strip()
+        
+        # Check if UID exists in the accounts
+        if delete_uid.isdigit() and int(delete_uid) in accounts["UID"].values:
+            # Remove the user by UID
+            accounts = accounts[accounts["UID"] != int(delete_uid)]  # Convert to integer for comparison
+            save_accounts(accounts)
+            st.success(f"User with UID: {delete_uid} has been deleted.")
+        else:
+            st.error(f"No user found with UID: {delete_uid}")
+
 
     # Delete an existing user by UID
     st.text("Delete a User by UID")
