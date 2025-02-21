@@ -1,7 +1,6 @@
 import streamlit as st
 import os
 import pandas as pd
-import random
 from st_pages import get_nav_from_toml, hide_pages
 
 # File to store account data
@@ -16,7 +15,6 @@ if "UID" not in st.session_state:
     st.session_state["UID"] = None
 if "role" not in st.session_state:
     st.session_state["role"] = None
-
 if "page" not in st.session_state:
     st.session_state["page"] = "settings"  # Default to settings page
 
@@ -30,36 +28,58 @@ def load_accounts():
     """Load accounts from CSV safely"""
     check_or_create_file()
     try:
-        return pd.read_csv(ACCOUNTS_FILE, dtype=str)  # Ensure UID is treated as a string
+        return pd.read_csv(ACCOUNTS_FILE, dtype=str)
     except pd.errors.EmptyDataError:
         return pd.DataFrame(columns=["username", "email", "password", "UID"])
 
-def account_UI():
-    """Display Account Settings UI"""
-    st.title("\n -- Account Settings --")
+def generate_UID(is_admin):
+    """Generate UID based on account type."""
+    df = load_accounts()
+    existing_uids = set(df["UID"].tolist())
+    suffix = "0" if is_admin else "1"
+    uid_base = len(existing_uids) + 1  # Ensures unique ID
+    while f"{uid_base}{suffix}" in existing_uids:
+        uid_base += 1
+    return f"{uid_base}{suffix}"
 
-    if st.session_state["logged_in"]:
-        st.write(f"Logged in as: **{st.session_state['username']}**")
-        st.write(f"UID: **{st.session_state['UID']}**")
-        if st.button("Logout"):
-            logout()
-        if st.button("Create user account"):
-            st.session_state["page"] = "create_account"
-        if st.button("Login"):
-            st.session_state["page"] = "login"
-        if st.session_state["role"] == "Admin":
-            hide_pages([])  # Unhide all pages for Admin
+def create_account():
+    """Create a new account."""
+    st.write("\n--- Create New Account ---")
+    username = st.text_input("Enter username:").strip()
+    email = st.text_input("Enter email:").strip()
+    password = st.text_input("Enter password:", type="password").strip()
+    is_admin = st.checkbox("Create as Admin") if st.session_state["role"] == "Admin" else False
+
+    if st.button("Register"):
+        if not username or not email or not password:
+            st.write("❌ All fields are required.")
+            return
+        if "@" not in email:
+            st.write("❌ Invalid email format.")
+            return
+
+        df = load_accounts()
+        if username in df["username"].values or email in df["email"].values:
+            st.write("❌ Username or email already taken.")
+            return
+
+        UID = generate_UID(is_admin)
+        new_user = pd.DataFrame([[username, email, password, UID]], columns=["username", "email", "password", "UID"])
+        new_user.to_csv(ACCOUNTS_FILE, mode='a', header=False, index=False)
+        st.write(f"✅ Account created successfully! UID: **{UID}**")
+
+        if is_admin:
+            st.session_state["role"] = "Admin"
+            hide_pages([])
         else:
-            hide_pages(["Admin"])  # Hide Admin page for normal users
+            hide_pages(["Admin"])
         
-    else:
-        if st.button("Create Account"):
-            st.session_state["page"] = "create_account"
-        if st.button("Login"):
-            st.session_state["page"] = "login"
+        if not is_admin:
+            st.session_state["page"] = "settings"
+            st.rerun()
 
 def login():
-    """Login User"""
+    """Login User."""
     st.write("\n--- Login ---")
     identifier = st.text_input("Enter username or email:").strip()
     password = st.text_input("Enter password:", type="password").strip()
@@ -71,99 +91,42 @@ def login():
             st.session_state["logged_in"] = True
             st.session_state["username"] = user.iloc[0]["username"]
             st.session_state["UID"] = user.iloc[0]["UID"]
-
-            # Check if the UID ends with "0" for Admin role
-            if str(st.session_state["UID"])[-1] == "0":
-                st.session_state["role"] = "Admin"
-                hide_pages([])  # Unhide all pages for Admin
-            else:
-                st.session_state["role"] = "User"
-                hide_pages(["Admin"])  # Hide Admin page for normal users
-
+            st.session_state["role"] = "Admin" if str(user.iloc[0]["UID"])[-1] == "0" else "User"
+            hide_pages([] if st.session_state["role"] == "Admin" else ["Admin"])
             st.session_state["page"] = "settings"
             st.rerun()
         else:
             st.write("❌ Invalid username/email or password.")
-
     if st.button("Back"):
         st.session_state["page"] = "settings"
         st.rerun()
 
 def logout():
-    """Logout User"""
+    """Logout User."""
     st.session_state.clear()
     st.session_state["page"] = "settings"
-    hide_pages(["Admin"])  # Hide Admin page after logout
+    hide_pages(["Admin"])
     st.rerun()
 
-def generate_UID(_username, admin_UID=None):
-    """Generate UID for admin and sub-accounts."""
-    first_part = _username[:4]
-    
-    df = load_accounts()
-    existing_uids = df["UID"].tolist()
-    
-    if admin_UID:  # If admin is creating a sub-account
-        base_UID = admin_UID[:-1]  # Remove last digit (0)
-        existing_uids = load_accounts()["UID"].tolist()
-        suffix = 1  # Start with "1"
-        while base_UID + str(suffix) in existing_uids:
-            suffix += 1
-        return base_UID + str(suffix)
-    
-    # Generate UID for new admin or user account
-    is_admin = str(st.session_state.get("UID", "")).endswith("0")
-    user_type = "0" if is_admin else "1"
-    suffix = 1
-    while first_part + user_type + f"{suffix:02d}" in existing_uids:
-        suffix += 1
-    return first_part + user_type + f"{suffix:02d}"
+def account_UI():
+    """Display Account Settings UI."""
+    st.title("\n -- Account Settings --")
 
-def create_account():
-    """Create a new account and save to CSV"""
-    st.write("\n--- Create New Account ---")
-    username = st.text_input("Enter username:").strip()
-    email = st.text_input("Enter email:").strip()
-    password = st.text_input("Enter password:", type="password").strip()
-
-    if st.button("Register"):
-        if not username or not email or not password:
-            st.write("❌ All fields are required.")
-            return
-        if "@" not in email:
-            st.write("❌ Invalid email format.")
-            return
-
-        df = load_accounts()
-        if username in df["username"].values:
-            st.write("❌ Username already taken.")
-            return
-        if email in df["email"].values:
-            st.write("❌ Email already in use. Please login.")
-            return
-
-        # Generate UID for regular user
-        UID = generate_UID(username)
-        
-        # Append new user
-        new_user = pd.DataFrame([[username, email, password, UID]], columns=["username", "email", "password", "UID"])
-        new_user.to_csv(ACCOUNTS_FILE, mode='a', header=False, index=False)
-
-        st.write(f"✅ Account created successfully! Your UID: **{UID}**")
-        st.session_state["logged_in"] = True
-        st.session_state["username"] = username
-        st.session_state["UID"] = UID
-
-        # Check for Admin role based on UID
-        if str(UID)[-1] == "0":
-            st.session_state["role"] = "Admin"
-            hide_pages([])
-        else:
-            st.session_state["role"] = "User"
-            hide_pages(["Admin"])
-
-        st.session_state["page"] = "settings"
-        st.rerun()
+    if st.session_state["logged_in"]:
+        st.write(f"Logged in as: **{st.session_state['username']}**")
+        st.write(f"UID: **{st.session_state['UID']}**")
+        if st.button("Logout"):
+            logout()
+        if st.session_state["role"] == "Admin" and st.button("Create User Account"):
+            st.session_state["page"] = "create_account"
+        if st.button("Login"):
+            st.session_state["page"] = "login"
+        hide_pages([] if st.session_state["role"] == "Admin" else ["Admin"])
+    else:
+        if st.button("Create Account"):
+            st.session_state["page"] = "create_account"
+        if st.button("Login"):
+            st.session_state["page"] = "login"
 
 # **Navigation Handling**
 if st.session_state["page"] == "settings":
