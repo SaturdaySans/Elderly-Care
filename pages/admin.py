@@ -8,7 +8,7 @@ def load_accounts():
 
 def save_accounts(df):
     df.to_csv(ACCOUNTS_FILE, index=False)
-
+    
 st.title("Admin Page")
 if "role" in st.session_state and st.session_state["role"] == "admin":
     st.subheader("Create a New User")

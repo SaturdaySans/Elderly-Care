@@ -43,10 +43,15 @@ def account_UI():
         st.write(f"UID: **{st.session_state['UID']}**")
         if st.button("Logout"):
             logout()
+        if st.button("Create user account"):
+            st.session_state["page"] = "create_account"
+        if st.button("Login"):
+            st.session_state["page"] = "login"
         if st.session_state["role"] == "Admin":
             hide_pages([])  # Unhide all pages for Admin
         else:
             hide_pages(["Admin"])  # Hide Admin page for normal users
+        
     else:
         if st.button("Create Account"):
             st.session_state["page"] = "create_account"
