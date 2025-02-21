@@ -55,7 +55,7 @@ def manage_account():
 
     # Delete an existing user by UID
     st.text("Delete a User by UID")
-    delete_uid = st.text_input("Enter UID of user to delete")
+    delete_uid = st.text_input("Enter UID of user to delete", key="delete_uid_input")  # Unique key for UID input
 
     if st.button("Delete User"):
         accounts = load_accounts()
@@ -71,6 +71,7 @@ def manage_account():
             st.success(f"User with UID: {delete_uid} has been deleted.")
         else:
             st.error(f"No user found with UID: {delete_uid}")
+
 
 
     # Delete an existing user by UID
