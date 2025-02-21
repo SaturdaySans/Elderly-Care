@@ -41,6 +41,8 @@ if "role" in st.session_state and st.session_state["role"] == "Admin":
     
     if st.session_state["adminpage"] == "admin":
         admin_ui()
+    elif st.session_state["adminpage"] == "mainaccounts":
+        create_account()
     
 else:
     st.error("Access denied. Admins only.")
