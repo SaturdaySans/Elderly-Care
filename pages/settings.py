@@ -1,3 +1,4 @@
+#Tyler
 import streamlit as st
 import os
 import pandas as pd
@@ -19,22 +20,22 @@ if "role" not in st.session_state:
 if "page" not in st.session_state:
     st.session_state["page"] = "login"  # Default to login page
 
-def check_or_create_file():
-    """Ensure the accounts CSV file exists with headers"""
+def check_or_create_file(): #Check if file exists, and create the file if it does not
+    #Ensure the accounts CSV file exists with headers
     if not os.path.exists(ACCOUNTS_FILE) or os.stat(ACCOUNTS_FILE).st_size == 0:
         df = pd.DataFrame(columns=["username", "email", "password", "role", "UID"])
         df.to_csv(ACCOUNTS_FILE, index=False)
 
 def load_accounts():
-    """Load accounts from CSV safely"""
+    #Load accounts from CSV safely
     check_or_create_file()
     try:
-        return pd.read_csv(ACCOUNTS_FILE, dtype=str)  # Ensure UID is treated as a string
+        return pd.read_csv(ACCOUNTS_FILE, dtype=str)
     except pd.errors.EmptyDataError:
         return pd.DataFrame(columns=["username", "email", "password", "role", "UID"])
 
 def login():
-    """Login User"""
+    #Login User
     st.title("\n--- Login ---")
     identifier = st.text_input("Enter username or email:").strip()
     password = st.text_input("Enter password:", type="password").strip()
@@ -65,7 +66,7 @@ def login():
         st.rerun()
 
 def account_UI():
-    """Display Account Settings UI"""
+    #Display Account Settings UI
     st.title("\n -- Account Settings --")
 
     if st.session_state["logged_in"]:
@@ -78,7 +79,7 @@ def account_UI():
             st.session_state["page"] = "login"
 
 def logout():
-    """Logout User"""
+    #Logout User
     st.session_state.clear()
     st.session_state["page"] = "settings"
     st.rerun()
