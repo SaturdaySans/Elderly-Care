@@ -1,7 +1,6 @@
 import streamlit as st
 import os
 import pandas as pd
-import time
 
 st.title("---Medication Tracker---")
 
@@ -31,19 +30,23 @@ else:
 
     # Drop rows where 'UID' is missing or empty
     medication = medication.dropna(subset=['UID'])
-    
-    # Filter medications for the current user's UID
-    medication_for_user = medication[medication['UID'] == current_user_uid]
 
-    # Display medication list with checkboxes
-    updated_status = []
+    # Check if current_user_uid exists in the DataFrame and filter by it
+    if current_user_uid in medication['UID'].values:
+        # Filter medications for the current user's UID
+        medication_for_user = medication[medication['UID'] == current_user_uid]
 
-    for index, row in medication_for_user.iterrows():
-        checked = st.checkbox(f"{row['Medication']} ({row['Time']})", value=(row['Taken'] == "Yes"), key=index)
-        updated_status.append("Yes" if checked else "No")
+        # Display medication list with checkboxes
+        updated_status = []
 
-    # Update the DataFrame with the new values
-    if st.button("Update Medication Status"):
-        medication.loc[medication['UID'] == current_user_uid, "Taken"] = updated_status
-        medication.to_csv(file_path, index=False)
-        st.success("Medication status updated!")
+        for index, row in medication_for_user.iterrows():
+            checked = st.checkbox(f"{row['Medication']} ({row['Time']})", value=(row['Taken'] == "Yes"), key=index)
+            updated_status.append("Yes" if checked else "No")
+
+        # Update the DataFrame with the new values
+        if st.button("Update Medication Status"):
+            medication.loc[medication['UID'] == current_user_uid, "Taken"] = updated_status
+            medication.to_csv(file_path, index=False)
+            st.success("Medication status updated!")
+    else:
+        st.error("No medications found for the current user.")
