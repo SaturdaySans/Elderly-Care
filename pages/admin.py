@@ -26,18 +26,12 @@ def create_account():
             st.success("User created successfully!")
 
 def admin_ui():
-    # Use session state to manage navigation buttons
-    col1, col2, col3 = st.columns(3)  # Optional, for better layout
-
-    with col1:
-        if st.button("Manage Accounts"):
-            st.session_state["adminpage"] = "accounts"
-    with col2:
-        if st.button("Medication Tracker"):
-            st.session_state["adminpage"] = "medication"
-    with col3:
-        if st.button("Event Edit"):
-            st.session_state["adminpage"] = "events"
+    if st.button("Manage Accounts"):
+        st.session_state["adminpage"] = "accounts"
+    if st.button("Medication Tracker"):
+        st.session_state["adminpage"] = "medication"
+    if st.button("Event Edit"):
+        st.session_state["adminpage"] = "events"
 
 # Navigation UI
 st.title("Admin Page")
