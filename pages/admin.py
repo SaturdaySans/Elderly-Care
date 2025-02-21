@@ -21,14 +21,16 @@ def generate_uid():
     else:
         return "6543"  # Start from UID 6543 if no users currently exist
 
-def create_account():
-    """Create a new user account"""
-    st.subheader("Create a New User")
-    
+def manage_account():
+    """Create a new user account or delete an existing account"""
+    st.subheader("Manage User Accounts")
+
+    # Create a new user
+    st.text("Create a New User")
     new_username = st.text_input("New Username")
     new_email = st.text_input("Email")
     new_password = st.text_input("Password", type="password")
-    
+
     if st.button("Create User"):
         # Check if the required fields are filled
         if not new_username or not new_email or not new_password:
@@ -50,6 +52,22 @@ def create_account():
             accounts = pd.concat([accounts, new_user], ignore_index=True)
             save_accounts(accounts)
             st.success(f"User created successfully with UID: {new_uid}")
+
+    # Delete an existing user by UID
+    st.text("Delete a User by UID")
+    delete_uid = st.text_input("Enter UID of user to delete")
+
+    if st.button("Delete User"):
+        accounts = load_accounts()
+        
+        # Check if UID exists in the accounts
+        if delete_uid not in accounts["UID"].values:
+            st.error(f"No user found with UID: {delete_uid}")
+        else:
+            # Remove the user by UID
+            accounts = accounts[accounts["UID"] != delete_uid]
+            save_accounts(accounts)
+            st.success(f"User with UID: {delete_uid} has been deleted.")
 
 def show_all_users():
     """Show a table of all users"""
@@ -89,7 +107,7 @@ if "role" in st.session_state and st.session_state["role"] == "Admin":
     if st.session_state["adminpage"] == "admin":
         admin_ui()
     elif st.session_state["adminpage"] == "accounts":
-        create_account()  # Admin can create user accounts
+        manage_account()  # Admin can create and delete user accounts
         if st.button("Back"):
             st.session_state["adminpage"] = "admin"  # Go back to the admin page
     elif st.session_state["adminpage"] == "show_users":
