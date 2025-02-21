@@ -4,7 +4,6 @@ import pandas as pd
 import random
 from st_pages import get_nav_from_toml, hide_pages
 
-
 # File to store account data
 ACCOUNTS_FILE = "accounts.csv"
 
@@ -45,9 +44,9 @@ def account_UI():
         if st.button("Logout"):
             logout()
         if st.session_state["role"] == "Admin":
-            hide_pages([])
+            hide_pages([])  # Unhide all pages for Admin
         else:
-            hide_pages(["Admin"])
+            hide_pages(["Admin"])  # Hide Admin page for normal users
     else:
         if st.button("Create Account"):
             st.session_state["page"] = "create_account"
@@ -62,18 +61,19 @@ def login():
 
     if st.button("Submit"):
         df = load_accounts()
-
         user = df[(df["username"] == identifier) | (df["email"] == identifier)]
         if not user.empty and user.iloc[0]["password"] == password:
             st.session_state["logged_in"] = True
             st.session_state["username"] = user.iloc[0]["username"]
-            st.session_state["UID"] = user.iloc[0]["UID"]  # Set UID after login
+            st.session_state["UID"] = user.iloc[0]["UID"]
 
             # Check if the UID ends with "0" for Admin role
             if str(st.session_state["UID"])[-1] == "0":
                 st.session_state["role"] = "Admin"
+                hide_pages([])  # Unhide all pages for Admin
             else:
                 st.session_state["role"] = "User"
+                hide_pages(["Admin"])  # Hide Admin page for normal users
 
             st.session_state["page"] = "settings"
             st.rerun()
@@ -88,6 +88,7 @@ def logout():
     """Logout User"""
     st.session_state.clear()
     st.session_state["page"] = "settings"
+    hide_pages(["Admin"])  # Hide Admin page after logout
     st.rerun()
 
 def generate_UID(_username, admin_UID=None):
@@ -106,7 +107,7 @@ def generate_UID(_username, admin_UID=None):
         return base_UID + str(suffix)
     
     # Generate UID for new admin or user account
-    is_admin = st.session_state.get("UID", "").endswith("0")
+    is_admin = str(st.session_state.get("UID", "")).endswith("0")
     user_type = "0" if is_admin else "1"
     suffix = 1
     while first_part + user_type + f"{suffix:02d}" in existing_uids:
@@ -129,7 +130,6 @@ def create_account():
             return
 
         df = load_accounts()
-
         if username in df["username"].values:
             st.write("❌ Username already taken.")
             return
@@ -139,7 +139,7 @@ def create_account():
 
         # Generate UID for regular user
         UID = generate_UID(username)
-
+        
         # Append new user
         new_user = pd.DataFrame([[username, email, password, UID]], columns=["username", "email", "password", "UID"])
         new_user.to_csv(ACCOUNTS_FILE, mode='a', header=False, index=False)
@@ -152,12 +152,13 @@ def create_account():
         # Check for Admin role based on UID
         if str(UID)[-1] == "0":
             st.session_state["role"] = "Admin"
+            hide_pages([])
         else:
             st.session_state["role"] = "User"
+            hide_pages(["Admin"])
 
         st.session_state["page"] = "settings"
         st.rerun()
-
 
 # **Navigation Handling**
 if st.session_state["page"] == "settings":
