@@ -55,7 +55,7 @@ def manage_account():
 
     # Delete an existing user by UID
     st.text("Delete a User by UID")
-    delete_uid = st.text_input("Enter UID of user to delete", key="delete_uid_input")  # Unique key for UID input
+    delete_uid = st.text_input("Enter UID of user to delete", key=f"delete_uid_input_{st.session_state.get('adminpage', 'admin')}")  # Dynamic key
 
     if st.button("Delete User"):
         accounts = load_accounts()
@@ -72,23 +72,6 @@ def manage_account():
         else:
             st.error(f"No user found with UID: {delete_uid}")
 
-
-
-    # Delete an existing user by UID
-    st.text("Delete a User by UID")
-    delete_uid = st.text_input("Enter UID of user to delete")
-
-    if st.button("Delete User"):
-        accounts = load_accounts()
-        
-        # Check if UID exists in the accounts
-        if delete_uid not in accounts["UID"].values:
-            st.error(f"No user found with UID: {delete_uid}")
-        else:
-            # Remove the user by UID
-            accounts = accounts[accounts["UID"] != delete_uid]
-            save_accounts(accounts)
-            st.success(f"User with UID: {delete_uid} has been deleted.")
 
 def show_all_users():
     """Show a table of all users"""
