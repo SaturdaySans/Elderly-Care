@@ -69,4 +69,4 @@ def create_account():
             accounts.to_csv(ACCOUNTS_FILE, index=False)
             st.success("Admin account created successfully!")
 
-st.write("test")
+create_account()
