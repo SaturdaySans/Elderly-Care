@@ -19,7 +19,7 @@ def generate_uid():
         last_uid = accounts["UID"].max()
         return str(int(last_uid) + 1)
     else:
-        return "1000"  # Start from UID 1000 if no users currently exist
+        return "6543"  # Start from UID 6543 if no users currently exist
 
 def create_account():
     """Create a new user account"""
@@ -51,10 +51,21 @@ def create_account():
             save_accounts(accounts)
             st.success(f"User created successfully with UID: {new_uid}")
 
+def show_all_users():
+    """Show a table of all users"""
+    st.subheader("All Users")
+    accounts = load_accounts()
+    if not accounts.empty:
+        st.write(accounts)
+    else:
+        st.write("No users found.")
+
 def admin_ui():
     """UI for Admin to manage users and pages"""
     if st.button("Manage Accounts"):
         st.session_state["adminpage"] = "accounts"
+    if st.button("Show All Users"):
+        st.session_state["adminpage"] = "show_users"
     if st.button("Medication Tracker"):
         st.session_state["adminpage"] = "medication"
     if st.button("Event Edit"):
@@ -79,6 +90,10 @@ if "role" in st.session_state and st.session_state["role"] == "Admin":
         admin_ui()
     elif st.session_state["adminpage"] == "accounts":
         create_account()  # Admin can create user accounts
+        if st.button("Back"):
+            st.session_state["adminpage"] = "admin"  # Go back to the admin page
+    elif st.session_state["adminpage"] == "show_users":
+        show_all_users()  # Show all users
         if st.button("Back"):
             st.session_state["adminpage"] = "admin"  # Go back to the admin page
     elif st.session_state["adminpage"] == "medication":
