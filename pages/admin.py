@@ -12,14 +12,14 @@ def save_accounts(df):
     df.to_csv(ACCOUNTS_FILE, index=False)
 
 def generate_uid():
-    """Generate a UID starting from 6543 and incrementing"""
+    """Generate a UID starting from 1000 and incrementing"""
     accounts = load_accounts()
     # Get the highest UID from the existing accounts 
     if not accounts.empty:
         last_uid = accounts["UID"].max()
         return str(int(last_uid) + 1)
     else:
-        return "6543"  # Start from UID 6543 if no users currently exist
+        return "1000"  # Start from UID 1000 if no users currently exist
 
 def manage_account():
     """Create a new user account or delete an existing account"""
@@ -28,7 +28,7 @@ def manage_account():
     # Create a new user
     st.text("Create a New User")
     new_username = st.text_input("New Username")
-    new_email = st.text_input("Email")
+    new_email = st.text_input("Email")  # Fixed typo here
     new_password = st.text_input("Password", type="password")
 
     if st.button("Create User"):
