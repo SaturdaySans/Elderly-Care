@@ -85,22 +85,21 @@ def manage_medications():
     """Add or edit medications in the CSV file"""
     st.subheader("Manage Medications")
 
-    # Form to add new medication entry
+    # Form to add new medication entry (without "Taken" field)
     medication_name = st.text_input("Medication Name")
     time_of_day = st.selectbox("Time of Day", ["Morning", "Afternoon", "Evening", "Night"])
-    taken = st.selectbox("Taken?", ["Yes", "No"])
     uid = st.text_input("UID of Patient")
 
     if st.button("Add Medication"):
         # Check if all fields are filled
-        if not medication_name or not time_of_day or not taken or not uid:
+        if not medication_name or not time_of_day or not uid:
             st.error("All fields are required!")
             return
 
         medications = load_medications()
 
-        # Add the new medication to the list
-        new_medication = pd.DataFrame([[medication_name, time_of_day, taken, uid]],
+        # Add the new medication to the list (no "Taken" field)
+        new_medication = pd.DataFrame([[medication_name, time_of_day, "No", uid]],  # Default "Taken" as "No"
                                       columns=["Medication", "Time", "Taken", "UID"])
         medications = pd.concat([medications, new_medication], ignore_index=True)
         save_medications(medications)
@@ -178,6 +177,8 @@ if "role" in st.session_state and st.session_state["role"] == "Admin":
             st.session_state["adminpage"] = "admin"  # Go back to the admin page
     elif st.session_state["adminpage"] == "medications":
         medication_ui()  # Medication management UI
+        if st.button("Back"):
+            st.session_state["adminpage"] = "admin"  # Go back to the admin page
     elif st.session_state["adminpage"] == "events":
         st.write("Event Edit Page")  # Placeholder for event edit page
         if st.button("Back"):
