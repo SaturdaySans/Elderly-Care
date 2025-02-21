@@ -239,7 +239,6 @@ def profile_viewer_ui():
 
         # Clean up the UID (strip spaces)
         uid_to_view = uid_to_view.strip()
-        st.write(f"Entered UID: {uid_to_view}")  # Debugging line
 
         if not uid_to_view.isdigit():
             st.error("Please enter a valid UID.")
@@ -255,7 +254,6 @@ def profile_viewer_ui():
 
         # Check if UID exists in the accounts
         user_data = accounts[accounts["UID"] == uid_to_view]
-        st.write(f"Found User Data: {user_data}")  # Debugging line
 
         if user_data.empty:
             st.error(f"No user found with UID: {uid_to_view}")
@@ -268,13 +266,14 @@ def profile_viewer_ui():
 
             # Display the medications for the given UID
             user_medications = medications[medications["UID"] == uid_to_view]
-            st.write(f"User Medications: {user_medications}")  # Debugging line
 
             if not user_medications.empty:
                 st.write("### Medications")
-                st.write(user_medications[["Medication", "Time"]])  # Display medication name and time of day
+                # Display medication name, time, and taken status
+                st.write(user_medications[["Medication", "Time", "Taken"]])  # Include "Taken" column
             else:
                 st.write("No medications found for this user.")
+
 
 
 
