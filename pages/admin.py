@@ -8,7 +8,7 @@ def load_accounts():
 
 def save_accounts(df):
     df.to_csv(ACCOUNTS_FILE, index=False)
-    
+
 def create_account():
     st.subheader("Create a New User")
     new_username = st.text_input("New Username")
@@ -26,23 +26,34 @@ def create_account():
             st.success("User created successfully!")
 
 def admin_ui():
-    if st.button("Manage Accounts"):
-        st.session_state["adminpage"] = "mainaccounts"
-    if st.button("Medication Tracker"):
-        st.session_state["adminpage"] = "medication"
-    if st.button("Event Edit"):
-        st.session_state["adminpage"] = "events"
+    # Use session state to manage navigation buttons
+    col1, col2, col3 = st.columns(3)  # Optional, for better layout
 
-#Navigation UI
+    with col1:
+        if st.button("Manage Accounts"):
+            st.session_state["adminpage"] = "accounts"
+    with col2:
+        if st.button("Medication Tracker"):
+            st.session_state["adminpage"] = "medication"
+    with col3:
+        if st.button("Event Edit"):
+            st.session_state["adminpage"] = "events"
+
+# Navigation UI
 st.title("Admin Page")
 if "role" in st.session_state and st.session_state["role"] == "Admin":
+    # Check if session_state["adminpage"] exists; if not, initialize it
     if "adminpage" not in st.session_state:
-        st.session_state["adminpage"] = "admin"  
+        st.session_state["adminpage"] = "admin"
     
+    # Handle page rendering based on the selected admin page
     if st.session_state["adminpage"] == "admin":
         admin_ui()
-    elif st.session_state["adminpage"] == "mainaccounts":
+    elif st.session_state["adminpage"] == "accounts":
         create_account()
-    
+    elif st.session_state["adminpage"] == "medication":
+        st.write("Medication Tracker Page")  # Placeholder for medication page
+    elif st.session_state["adminpage"] == "events":
+        st.write("Event Edit Page")  # Placeholder for event edit page
 else:
     st.error("Access denied. Admins only.")
