@@ -12,6 +12,7 @@ import pandas as pd
 ACCOUNTS_FILE = "accounts.csv"
 
 # Initialize session state
+
 if "logged_in" not in st.session_state:
     st.session_state["logged_in"] = False
 if "username" not in st.session_state:
@@ -70,3 +71,5 @@ def create_account():
             accounts = pd.concat([accounts, new_user], ignore_index=True)
             accounts.to_csv(ACCOUNTS_FILE, index=False)
             st.success("Admin account created successfully!")
+
+st.write("test")
