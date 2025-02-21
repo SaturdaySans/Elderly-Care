@@ -9,8 +9,7 @@ def load_accounts():
 def save_accounts(df):
     df.to_csv(ACCOUNTS_FILE, index=False)
     
-st.title("Admin Page")
-if "role" in st.session_state and st.session_state["role"] == "Admin":
+def create_account():
     st.subheader("Create a New User")
     new_username = st.text_input("New Username")
     new_email = st.text_input("Email")
@@ -25,5 +24,22 @@ if "role" in st.session_state and st.session_state["role"] == "Admin":
             accounts = pd.concat([accounts, new_user], ignore_index=True)
             save_accounts(accounts)
             st.success("User created successfully!")
+
+def admin_ui():
+    if st.button("Manage Accounts"):
+        st.session_state["adminpage"] = "mainaccounts"
+    if st.button("Medication Tracker"):
+        st.session_state["adminpage"] = "medication"
+    if st.button("Event Edit"):
+        st.session_state["adminpage"] = "events"
+
+st.title("Admin Page")
+if "role" in st.session_state and st.session_state["role"] == "Admin":
+    if "adminpage" not in st.session_state:
+        st.session_state["adminpage"] = "admin"
+    
+    if st.session_state["adminpage"] == "admin":
+        admin_ui()
+    
 else:
     st.error("Access denied. Admins only.")
