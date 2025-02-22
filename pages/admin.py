@@ -78,7 +78,10 @@ def manage_account(): #For managing accounts
         delete_uid = delete_uid.strip()
 
         # Check if UID exists in the accounts
-        if delete_uid.isdigit() and int(delete_uid) in accounts["UID"].values:
+        if delete_uid == "1000": #You cant remove my admin rights 
+            st.error("The user with UID 1000 cannot be deleted.")  # Prevent deletion of UID 1000
+            return
+        elif delete_uid.isdigit() and int(delete_uid) in accounts["UID"].values:
             # Remove the user by UID
             accounts = accounts[accounts["UID"] != int(delete_uid)]  # Convert to integer for comparison
             save_accounts(accounts)
@@ -310,7 +313,7 @@ def routine_editor_ui(): #Routine editor
         routine_to_edit = st.selectbox("Select Routine", routines["Events"].unique()) # Selectbox
         selected_routine = routines[routines["Events"] == routine_to_edit] #Selected routine
         
-        # Convert time
+        #Convert time
         start_hour = selected_routine["Start"].values[0] // 100 
         start_minute = selected_routine["Start"].values[0] % 100
         end_hour = selected_routine["End"].values[0] // 100
@@ -319,7 +322,7 @@ def routine_editor_ui(): #Routine editor
         new_start_time = st.time_input("Edit Start Time", value=pd.to_datetime(f"2022-01-01 {start_hour}:{start_minute}").time())
         new_end_time = st.time_input("Edit End Time", value=pd.to_datetime(f"2022-01-01 {end_hour}:{end_minute}").time())
 
-        # Calculate new duration
+        #Calculate new duration
         new_start = new_start_time.hour * 100 + new_start_time.minute
         new_end = new_end_time.hour * 100 + new_end_time.minute
         new_duration = (new_end - new_start) if new_end >= new_start else (new_end + 2400 - new_start)  # Handle crossing midnight
