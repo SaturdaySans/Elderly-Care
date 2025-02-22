@@ -356,11 +356,11 @@ def routine_editor_ui():
 
 
 
-# Navigation UI remains the same as before
-# Handle the admin UI rendering and manage other sections like "accounts", "medications", etc.
+
+
 
 # Navigation UI
-st.title("Admin Page")
+st.title("---Admin Page---")
 
 # Check if the user is an Admin
 if "role" in st.session_state and st.session_state["role"] == "Admin":

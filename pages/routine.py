@@ -20,4 +20,3 @@ else:
 
 st.write(routine)
 
-st.page_link("pages/menu.py", label="Menu")
