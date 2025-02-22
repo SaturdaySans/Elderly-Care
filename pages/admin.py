@@ -104,6 +104,7 @@ def manage_medications():
             st.error("All fields are required!") # errror message
             return
 
+
         medications = load_medications() #loads medicine
 
         #Add the new medication to the list (no "Taken" field)
@@ -212,6 +213,7 @@ def events_ui(): #Events management ui
 
         #delete event
         event_to_delete = st.selectbox("Select Event to Delete", events["title"].unique())
+
 
         if st.button("Delete Event"): #button to delete event
             # Delete the selected event from the list
