@@ -171,6 +171,8 @@ def admin_ui():
         st.session_state["adminpage"] = "events"
     if st.button("Profile Viewer"):
         st.session_state["adminpage"] = "profile"
+    if st.button("Routine Edit"):
+        st.session_state["adminpage"] = "routine"
 
 def medication_ui():
     """Medication Tracker UI"""
@@ -275,7 +277,67 @@ def profile_viewer_ui():
                 st.write("No medications found for this user.")
 
 
+def load_routines():
+    """Load the routines from the CSV file"""
+    return pd.read_csv("routines.csv")
 
+def save_routines(df):
+    """Save the updated routines back to the CSV file"""
+    df.to_csv("routines.csv", index=False)
+
+def routine_editor_ui():
+    """Routine Editor UI for Admin"""
+    st.subheader("Manage Routines")
+    
+    # Load existing routines
+    routines = load_routines()
+    
+    # Display existing routines
+    if not routines.empty:
+        st.write(routines)
+    else:
+        st.write("No routines found.")
+    
+    # Form to add a new routine
+    st.text("Add a New Routine")
+    routine_name = st.text_input("Routine Name")
+    routine_time = st.time_input("Routine Time")
+    uid = st.text_input("UID of Patient")
+    
+    if st.button("Add Routine"):
+        if not routine_name or not uid:
+            st.error("All fields are required!")
+            return
+        
+        new_routine = pd.DataFrame([[routine_name, routine_time, uid]],
+                                    columns=["Routine", "Time", "UID"])
+        routines = pd.concat([routines, new_routine], ignore_index=True)
+        save_routines(routines)
+        st.success("Routine added successfully!")
+    
+    # Edit an existing routine
+    st.subheader("Edit Existing Routine")
+    if not routines.empty:
+        routine_to_edit = st.selectbox("Select Routine to Edit", routines["Routine"].unique())
+        selected_routine = routines[routines["Routine"] == routine_to_edit]
+        
+        new_time = st.time_input("Edit Routine Time", selected_routine["Time"].values[0])
+        new_uid = st.text_input("Edit UID of Patient", value=selected_routine["UID"].values[0])
+        
+        if st.button("Save Changes"):
+            routines.loc[routines["Routine"] == routine_to_edit, ["Time", "UID"]] = [new_time, new_uid]
+            save_routines(routines)
+            st.success("Routine details updated successfully!")
+    
+    # Delete a routine
+    st.subheader("Delete Routine")
+    if not routines.empty:
+        routine_to_delete = st.selectbox("Select Routine to Delete", routines["Routine"].unique())
+        
+        if st.button("Delete Routine"):
+            routines = routines[routines["Routine"] != routine_to_delete]
+            save_routines(routines)
+            st.success(f"Routine '{routine_to_delete}' has been deleted.")
 
 
 
@@ -309,10 +371,14 @@ if "role" in st.session_state and st.session_state["role"] == "Admin":
     elif st.session_state["adminpage"] == "events":
         events_ui() #Load Events UI
         if st.button("Back"):
-            st.session_state["adminpage"] = "admin"  # Go back to the admin page
+            st.session_state["adminpage"] = "admin" # Go back to the admin page
     elif st.session_state["adminpage"] == "profile":
         profile_viewer_ui()
         if st.button("Back"):
             st.session_state["adminpage"] = "admin"  # Go back to the admin page
+    elif st.session_state["adminpage"] == "routine":
+        load_routines()
+        if st.button("Back"):
+            st.session_state["adminpage"] = "admin" # Go back to the admin page
 else:
     st.error("Access denied. Admins only.")
