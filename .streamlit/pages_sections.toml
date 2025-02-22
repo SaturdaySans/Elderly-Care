@@ -36,4 +36,4 @@ icon = "⚙️"
 [[pages]]
 path = "pages/admin.py"
 name = "Admin"
-icon = "⚙️"
+icon = "🛠️"
