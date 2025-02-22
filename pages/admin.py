@@ -303,13 +303,15 @@ def routine_editor_ui():
     event_name = st.text_input("Event Name")
     start_time = st.time_input("Start Time")
     end_time = st.time_input("End Time")
-    duration = st.number_input("Duration (minutes)", min_value=1)
 
     if st.button("Add Routine"):
         if event_name:
             start = start_time.hour * 100 + start_time.minute  # Convert to military time
             end = end_time.hour * 100 + end_time.minute  # Convert to military time
-            duration = duration if duration > 0 else (end - start)
+            # Calculate duration based on start and end time
+            duration = (end - start) if end >= start else (end + 2400 - start)  # Handle crossing midnight
+
+            # Ensure the duration is always positive
             new_routine = pd.DataFrame([[event_name, start, end, duration]],
                                         columns=["Events", "Start", "End", "Duration"])
             routines = pd.concat([routines, new_routine], ignore_index=True)
@@ -330,12 +332,14 @@ def routine_editor_ui():
 
         new_start_time = st.time_input("Edit Start Time", value=pd.to_datetime(f"2022-01-01 {start_hour}:{start_minute}").time())
         new_end_time = st.time_input("Edit End Time", value=pd.to_datetime(f"2022-01-01 {end_hour}:{end_minute}").time())
-        new_duration = st.number_input("Edit Duration", value=selected_routine["Duration"].values[0])
+
+        # Calculate the new duration automatically based on start and end time
+        new_start = new_start_time.hour * 100 + new_start_time.minute
+        new_end = new_end_time.hour * 100 + new_end_time.minute
+        new_duration = (new_end - new_start) if new_end >= new_start else (new_end + 2400 - new_start)  # Handle crossing midnight
 
         if st.button("Save Changes"):
-            start = new_start_time.hour * 100 + new_start_time.minute  # Convert to military time
-            end = new_end_time.hour * 100 + new_end_time.minute  # Convert to military time
-            routines.loc[routines["Events"] == routine_to_edit, ["Start", "End", "Duration"]] = [start, end, new_duration]
+            routines.loc[routines["Events"] == routine_to_edit, ["Start", "End", "Duration"]] = [new_start, new_end, new_duration]
             save_routines(routines)
             st.success("Routine updated successfully!")
 
@@ -347,6 +351,7 @@ def routine_editor_ui():
             routines = routines[routines["Events"] != routine_to_delete]
             save_routines(routines)
             st.success(f"Routine '{routine_to_delete}' deleted.")
+
 
 
 
