@@ -4,6 +4,7 @@ import pandas as pd
 ACCOUNTS_FILE = "accounts.csv"
 MEDICATION_FILE = "medication.csv"
 EVENTS_FILE = "events.csv"
+ROUTINE_FILE = "routines.csv"
 
 def load_accounts():
     """Load the accounts from the CSV file"""
@@ -279,65 +280,74 @@ def profile_viewer_ui():
 
 def load_routines():
     """Load the routines from the CSV file"""
-    return pd.read_csv("routines.csv")
+    return pd.read_csv(ROUTINE_FILE)
 
 def save_routines(df):
     """Save the updated routines back to the CSV file"""
-    df.to_csv("routines.csv", index=False)
+    df.to_csv(ROUTINE_FILE, index=False)
 
 def routine_editor_ui():
     """Routine Editor UI for Admin"""
     st.subheader("Manage Routines")
-    
+
     # Load existing routines
     routines = load_routines()
-    
-    # Display existing routines
+
     if not routines.empty:
         st.write(routines)
     else:
         st.write("No routines found.")
-    
-    # Form to add a new routine
+
+    # Add a new routine
     st.text("Add a New Routine")
-    routine_name = st.text_input("Routine Name")
-    routine_time = st.time_input("Routine Time")
-    uid = st.text_input("UID of Patient")
-    
+    event_name = st.text_input("Event Name")
+    start_time = st.time_input("Start Time")
+    end_time = st.time_input("End Time")
+    duration = st.number_input("Duration (minutes)", min_value=1)
+
     if st.button("Add Routine"):
-        if not routine_name or not uid:
-            st.error("All fields are required!")
-            return
-        
-        new_routine = pd.DataFrame([[routine_name, routine_time, uid]],
-                                    columns=["Routine", "Time", "UID"])
-        routines = pd.concat([routines, new_routine], ignore_index=True)
-        save_routines(routines)
-        st.success("Routine added successfully!")
-    
+        if event_name:
+            start = start_time.hour * 100 + start_time.minute  # Convert to military time
+            end = end_time.hour * 100 + end_time.minute  # Convert to military time
+            duration = duration if duration > 0 else (end - start)
+            new_routine = pd.DataFrame([[event_name, start, end, duration]],
+                                        columns=["Events", "Start", "End", "Duration"])
+            routines = pd.concat([routines, new_routine], ignore_index=True)
+            save_routines(routines)
+            st.success("Routine added successfully!")
+
     # Edit an existing routine
-    st.subheader("Edit Existing Routine")
     if not routines.empty:
-        routine_to_edit = st.selectbox("Select Routine to Edit", routines["Routine"].unique())
-        selected_routine = routines[routines["Routine"] == routine_to_edit]
+        st.subheader("Edit Existing Routine")
+        routine_to_edit = st.selectbox("Select Routine", routines["Events"].unique())
+        selected_routine = routines[routines["Events"] == routine_to_edit]
         
-        new_time = st.time_input("Edit Routine Time", selected_routine["Time"].values[0])
-        new_uid = st.text_input("Edit UID of Patient", value=selected_routine["UID"].values[0])
-        
+        # Convert stored military time back to time objects
+        start_hour = selected_routine["Start"].values[0] // 100
+        start_minute = selected_routine["Start"].values[0] % 100
+        end_hour = selected_routine["End"].values[0] // 100
+        end_minute = selected_routine["End"].values[0] % 100
+
+        new_start_time = st.time_input("Edit Start Time", value=pd.to_datetime(f"2022-01-01 {start_hour}:{start_minute}").time())
+        new_end_time = st.time_input("Edit End Time", value=pd.to_datetime(f"2022-01-01 {end_hour}:{end_minute}").time())
+        new_duration = st.number_input("Edit Duration", value=selected_routine["Duration"].values[0])
+
         if st.button("Save Changes"):
-            routines.loc[routines["Routine"] == routine_to_edit, ["Time", "UID"]] = [new_time, new_uid]
+            start = new_start_time.hour * 100 + new_start_time.minute  # Convert to military time
+            end = new_end_time.hour * 100 + new_end_time.minute  # Convert to military time
+            routines.loc[routines["Events"] == routine_to_edit, ["Start", "End", "Duration"]] = [start, end, new_duration]
             save_routines(routines)
-            st.success("Routine details updated successfully!")
-    
+            st.success("Routine updated successfully!")
+
     # Delete a routine
-    st.subheader("Delete Routine")
     if not routines.empty:
-        routine_to_delete = st.selectbox("Select Routine to Delete", routines["Routine"].unique())
-        
+        st.subheader("Delete Routine")
+        routine_to_delete = st.selectbox("Select Routine to Delete", routines["Events"].unique())
         if st.button("Delete Routine"):
-            routines = routines[routines["Routine"] != routine_to_delete]
+            routines = routines[routines["Events"] != routine_to_delete]
             save_routines(routines)
-            st.success(f"Routine '{routine_to_delete}' has been deleted.")
+            st.success(f"Routine '{routine_to_delete}' deleted.")
+
 
 
 
