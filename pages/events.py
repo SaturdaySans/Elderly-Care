@@ -1,11 +1,10 @@
 #Yong Hong
 import streamlit as st
-from streamlit_calendar import calendar
+from streamlit_calendar import calendar #For calendar ui woo
 import pandas as pd
 
 
-# Read the event data from the CSV file
-file_path = "events.csv"
+file_path = "events.csv" # Read the event data from the CSV file
 
 # Read the CSV into a pandas DataFrame
 df = pd.read_csv(file_path)
@@ -25,6 +24,7 @@ for index, row in df.iterrows():
 calendar_display = calendar(
     events=calendar_events,
     key='calendar',
-)
+) 
+#Referenced frm source: https://github.com/im-perativa/streamlit-calendar
 
 st.write(calendar_display)

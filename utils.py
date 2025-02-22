@@ -1,17 +1,16 @@
 import streamlit as st
-from st_pages import get_nav_from_toml, hide_pages
+from st_pages import get_nav_from_toml, hide_pages #For managine sidebar pages
 
 def setup_navigation():
     """Global function to setup navigation with role-based access."""
     # Load navigation pages from the TOML file
     nav = get_nav_from_toml(".streamlit/pages_sections.toml")
 
-    # Display app logo
-    st.logo("resources/calendar.png")
+    st.logo("resources/calendar.png") # Display app logo (Sidebar)
 
     # Ensure session state role exists
-    if "role" not in st.session_state:
-        st.session_state.role = None
+    if "role" not in st.session_state: 
+        st.session_state.role = None #Should be moved to admin.py alrd
 
     if "UID" not in st.session_state:
         st.session_state["UID"] = [1]  # Default non-admin UID
@@ -25,7 +24,7 @@ def setup_navigation():
 
     return pg  # Return the navigation object
 
-def update_navigation():
+def update_navigation(): #Pretty sure this isnt used anywhere
     """Function to update the navigation and trigger a rerun."""
     # Call setup_navigation to refresh the navigation
     pg = setup_navigation()
