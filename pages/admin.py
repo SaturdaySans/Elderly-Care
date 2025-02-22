@@ -4,7 +4,7 @@ import pandas as pd
 ACCOUNTS_FILE = "accounts.csv"
 MEDICATION_FILE = "medication.csv"
 EVENTS_FILE = "events.csv"
-ROUTINE_FILE = "routines.csv"
+ROUTINE_FILE = "daily.routines.csv"
 
 def load_accounts():
     """Load the accounts from the CSV file"""
