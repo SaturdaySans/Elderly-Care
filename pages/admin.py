@@ -387,7 +387,7 @@ if "role" in st.session_state and st.session_state["role"] == "Admin":
         if st.button("Back"):
             st.session_state["adminpage"] = "admin"  # Go back to the admin page
     elif st.session_state["adminpage"] == "routine":
-        load_routines()
+        routine_editor_ui()
         if st.button("Back"):
             st.session_state["adminpage"] = "admin" # Go back to the admin page
 else:
