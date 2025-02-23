@@ -65,7 +65,7 @@ Admin Login Details (Modify within accounts.csv):
 2. Password: admin123
 3. UID: 1000 
 
-We recommend you to deploy the app instead of running it locally.
+We highly recommend you to deploy the app instead of running it locally.
 
 
 
