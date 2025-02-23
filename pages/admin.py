@@ -392,3 +392,4 @@ else:
     st.error("Access denied. Admins only.")
 
 # Sorry for the Gramatical errors
+# We couldnt fix the need to double click to switch pages (st.rerun)

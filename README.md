@@ -4,7 +4,7 @@ This app is an app designed to assist the staff of elder homes in disseminating 
 
 
 
-[![Open in Streamlit](https://alzheimerapp.streamlit.app/)]
+[![Open in Streamlit](https://elderlycarecenter.streamlit.app/)]
 
 
 
