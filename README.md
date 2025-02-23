@@ -61,9 +61,9 @@ Users are able to:
 3. Check the daily routine
 
 Admin Login Details (Modify within accounts.csv):
-User: admin
-Password: admin123
-UID: 1000 
+1. User: admin
+2. Password: admin123
+3. UID: 1000 
 
 We recommend you to deploy the app instead of running it locally.
 
