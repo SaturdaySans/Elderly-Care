@@ -66,7 +66,7 @@ Admin Login Details (Modify within accounts.csv):
 3. UID: 1000 
 
 We strongly recommend you to deploy the app instead of running it locally.
-
+[Example](https://elderlycarecenter.streamlit.app/)
 
 
 
