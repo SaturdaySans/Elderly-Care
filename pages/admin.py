@@ -223,7 +223,7 @@ def events_ui(): #Events management ui
     else:
         st.write("No events found.") #No found events
 
-def profile_viewer_ui(): # Admins to view usuer uid, medicaint status & email pswd
+def profile_viewer_ui(): # Admins to view user uid, medication status & email pswd
     st.subheader("Profile Viewer") #Headers
 
     #Input field to enter UID to view user profile
@@ -373,7 +373,7 @@ if "role" in st.session_state and st.session_state["role"] == "Admin":
     elif st.session_state["adminpage"] == "medications":
         medication_ui()  # Medication management UI
         if st.button("Back"):
-            st.session_state["adminpage"] = "admin"  # Go back to the admin page
+            st.session_state["adminpage"] = "admin" # Go back to the admin page
     elif st.session_state["adminpage"] == "events":
         events_ui() #Load Events UI
         if st.button("Back"):
@@ -381,11 +381,11 @@ if "role" in st.session_state and st.session_state["role"] == "Admin":
     elif st.session_state["adminpage"] == "profile":
         profile_viewer_ui()
         if st.button("Back"):
-            st.session_state["adminpage"] = "admin"  # Go back to the admin page
+            st.session_state["adminpage"] = "admin"# Go back to the admin page
     elif st.session_state["adminpage"] == "routine":
         routine_editor_ui()
         if st.button("Back"):
-            st.session_state["adminpage"] = "admin" # Go back to the admin page
+            st.session_state["adminpage"] = "admin"# Go back to the admin page
 else:
     st.error("Access denied. Admins only.")
 

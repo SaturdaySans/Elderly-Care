@@ -1,6 +1,6 @@
 [[pages]]
 name = "Main Menu"
-icon = "🎈️"
+icon = "📌"
 is_section = true
 
 [[pages]]
@@ -25,7 +25,7 @@ icon = "📆"
 
 [[pages]]
 name = "Others"
-icon = "🎈️"
+icon = "🔧"
 is_section = true
 
 [[pages]]
