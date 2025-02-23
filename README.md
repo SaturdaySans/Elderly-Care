@@ -63,7 +63,9 @@ Users are able to:
 Admin Login Details (Modify within accounts.csv):
 User: admin
 Password: admin123
-UID: 1000 (Do not change)
+UID: 1000 
+
+We recommend you to deploy the app instead of running it locally.
 
 
 
