@@ -60,9 +60,10 @@ Users are able to:
 2. View upcoming events
 3. Check the daily routine
 
-Default Admin Login Details (Change within accounts.csv):
+Admin Login Details (Modify within accounts.csv):
 User: admin
 Password: admin123
+UID: 1000 (Do not change)
 
 
 
@@ -95,3 +96,4 @@ Should you encounter any problems that you are unable to resolve with the steps 
 Email: 
 jayden_tan_yi_zhe@s2022.ssts.edu.sg
 ang_jia_hao_tyler@s2022.ssts.edu.sg
+koh_yong_hong@s2022.ssts.edu.sg
