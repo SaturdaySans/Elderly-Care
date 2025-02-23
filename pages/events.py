@@ -25,6 +25,6 @@ calendar_display = calendar(
     events=calendar_events,
     key='calendar',
 ) 
-#Referenced frm source: https://github.com/im-perativa/streamlit-calendar
+#Referenced from source: https://github.com/im-perativa/streamlit-calendar
 
 st.write(calendar_display)
