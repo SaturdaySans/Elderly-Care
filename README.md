@@ -52,13 +52,13 @@ The web-app contains several functions designed to assist both staff and residen
 
 
 Admins are able to:
-1. Create admin accounts
-2. Create user(residents) accounts
-3. Manage the daily routine, medication timers and event tracker for residents
+1. Create & manage user(residents) accounts
+2. Manage the daily routine, medication timers and event tracker for residents
+3. Medication status of users
 
-
-
-
+Default Admin Login Details (Change within accounts.csv):
+User: admin
+Password: admin123
 
 
 
