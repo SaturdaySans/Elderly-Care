@@ -50,11 +50,15 @@ The web-app contains several functions designed to assist both staff and residen
 1. Admins manage residents accounts and events etc, 
 2. A screen/TV would be in residents room/mobile devices, allowing them to easily refer to their schedules
 
-
 Admins are able to:
 1. Create & manage user(residents) accounts
 2. Manage the daily routine, medication timers and event tracker for residents
 3. Medication status of users
+
+Users are able to:
+1. Track medication
+2. View upcoming events
+3. Check the daily routine
 
 Default Admin Login Details (Change within accounts.csv):
 User: admin
