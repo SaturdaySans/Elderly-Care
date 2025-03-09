@@ -81,8 +81,6 @@ def manage_account(): #For managing accounts
         if delete_uid == "1000": #You cant remove my admin rights 
             st.error("The user with UID 1000 cannot be deleted.")  # Prevent deletion of UID 1000
             return
-        elif not user_data.empty and user_data.iloc[0]["Role"] == "Admin":
-            st.error("Cannot delete an Admin account.") #admin accounts cannot delete
         elif delete_uid.isdigit() and int(delete_uid) in accounts["UID"].values:
             # Remove the user by UID
             accounts = accounts[accounts["UID"] != int(delete_uid)]  # Convert to integer for comparison
